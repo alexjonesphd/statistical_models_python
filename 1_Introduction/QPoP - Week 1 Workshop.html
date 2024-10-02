@@ -1,0 +1,4043 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Introduction &#8212; Statistical Modelling with Python</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '1_Introduction/QPoP - Week 1 Workshop';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Using Python for Data Analysis - Exercises &amp; Answers" href="QPoP%20-%20Week%201%20Exercises%20-%20Answers.html" />
+    <link rel="prev" title="Statistical Modelling with Python" href="../intro.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt="Statistical Modelling with Python - Home"/>
+    <script>document.write(`<img src="../_static/logo.png" class="logo__image only-dark" alt="Statistical Modelling with Python - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    Statistical Modelling with Python
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Python Basics</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="QPoP%20-%20Week%201%20Exercises%20-%20Answers.html">Using Python for Data Analysis - Exercises &amp; Answers</a></li>
+
+
+
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">The GLM</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../2_The_GLM/QPoP%20-%20Week%202%20Workshop.html">2 - The General Linear Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../2_The_GLM/QPoP%20-%20Week%202%20Exercises%20-%20Answers.html">Getting to grips with linear models in Python - Exercises &amp; Answers</a></li>
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Advancing the GLM</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../3_Advancing_GLM/QPoP%20-%20Week%203%20Workshop.html">3 - Advancing the general linear model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../3_Advancing_GLM/QPoP%20-%20Week%203%20Exercises%20-%20Answers.html">Checking assumptions and including interactions - Exercises &amp; Answers</a></li>
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">The art of prediction</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../4_Prediction/QPoP%20-%20Week%204%20Workshop.html">4 - The art of prediction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../4_Prediction/QPoP%20-%20Week%204%20Exercises%20-%20Answers.html">Asking scientific questions of models - Exercises &amp; Answers</a></li>
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Binary outcome models</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../5_Binary/QPoP%20-%20Week%205%20Workshop.html">5 - Binary outcome models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../5_Binary/QPoP%20-%20Week%205%20Exercises%20-%20Answers.html">Using and understanding probit models - Exercises &amp; Answers</a></li>
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Applications and other kinds of hypotheses</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../6_Applications/QPoP%20-%20Week%206%20Workshop.html">6 - Precision in Predictions</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../6_Applications/QPoP%20-%20Week%206%20Exercises%20-%20Answers.html">Quantitative Perspectives on Psychology</a></li>
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Linear Mixed Effects Models</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../7_MixedModel/QPoP%20-%20Week%207%20Workshop.html">7 - Linear mixed effects models</a></li>
+
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2F1_Introduction/QPoP - Week 1 Workshop.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/1_Introduction/QPoP - Week 1 Workshop.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Introduction</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#using-python-for-data-analysis">Using Python for Data Analysis</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#part-1-basic-syntax">Part 1 - Basic syntax</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#variables">Variables</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#types">Types</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#data-containers">Data Containers</a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#lists">Lists</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#dictionaries">Dictionaries</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#part-2-pandas">Part 2 - Pandas</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#data-at-a-glance-describe-and-info">Data at a glance - .describe() and .info()</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#accessing-data-in-pandas">Accessing data in Pandas</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#filtering-a-dataframe">Filtering a dataframe</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#dropping-data-imputing-values-and-getting-a-summary-statistic">Dropping data, imputing values, and getting a summary statistic</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#aggregating">Aggregating</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#aggregating-by-groups">Aggregating by groups</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#reshaping-data">Reshaping data</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#wide-to-long">Wide to long</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#long-to-wide">Long to wide</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#part-3-statistical-plots-with-seaborn">Part 3 - Statistical Plots with Seaborn</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="introduction">
+<h1>Introduction<a class="headerlink" href="#introduction" title="Link to this heading">#</a></h1>
+<section id="using-python-for-data-analysis">
+<h2>Using Python for Data Analysis<a class="headerlink" href="#using-python-for-data-analysis" title="Link to this heading">#</a></h2>
+<p>Python is a vast programming language with almost unlimited flexibility. Our focus in this module will be to use it to:</p>
+<ul class="simple">
+<li><p>Read data and do basic manipulations of it</p></li>
+<li><p>Fit statistical models to this data</p></li>
+<li><p>Visualise the data through plots</p></li>
+</ul>
+<p>While there are a range of uses for the tools we will cover, particularly the art of ‘data wrangling’, these are outside the scope of the content. You will however get the skills to learn these more advanced approaches and there are many resources to advance you.</p>
+<section id="part-1-basic-syntax">
+<h3>Part 1 - Basic syntax<a class="headerlink" href="#part-1-basic-syntax" title="Link to this heading">#</a></h3>
+<p>Here, we take a look at the basic syntax, or rules, we can use to get Python working for us.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># This is a comment. </span>
+<span class="c1"># Anything following the &#39;#&#39; symbol is ignored, but it lets us write notes to ourselves</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Python is capable of very basic mathematical operations!</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Addition</span>
+<span class="nb">print</span><span class="p">(</span><span class="mi">10</span> <span class="o">+</span> <span class="mi">5</span><span class="p">)</span>
+
+<span class="c1"># Subtraction</span>
+<span class="nb">print</span><span class="p">(</span><span class="mi">10</span> <span class="o">-</span> <span class="mi">5</span><span class="p">)</span>
+
+<span class="c1"># Division</span>
+<span class="nb">print</span><span class="p">(</span><span class="mi">10</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+
+<span class="c1"># Multiplication</span>
+<span class="nb">print</span><span class="p">(</span><span class="mi">10</span> <span class="o">*</span> <span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>15
+5
+5.0
+20
+</pre></div>
+</div>
+</div>
+</div>
+<section id="variables">
+<h4>Variables<a class="headerlink" href="#variables" title="Link to this heading">#</a></h4>
+<p>We will do more than simple maths with Python, and this involves using <strong>variables</strong> to store information, or the results of operations, or even vast collections of data, under a single name - think of it like a box you place results in.</p>
+<p>Naming a variable is a simple but strict process:</p>
+<ul class="simple">
+<li><p><strong>Must</strong> begin with a letter (a-z, A-Z) or an underscore, _</p></li>
+<li><p>Other characters may be letters, numbers or underscores</p></li>
+<li><p>Variables are <strong>case sensitive</strong>. <code class="docutils literal notranslate"><span class="pre">my_variable</span></code> is different to <code class="docutils literal notranslate"><span class="pre">My_variable</span></code>!</p></li>
+<li><p>Can be any length, but be sensible.</p></li>
+<li><p>Some words you cannot use as a variable name, because Python has reserved them</p>
+<ul>
+<li><p>Examples include <code class="docutils literal notranslate"><span class="pre">and</span></code>, <code class="docutils literal notranslate"><span class="pre">or</span></code>, <code class="docutils literal notranslate"><span class="pre">for</span></code>, <code class="docutils literal notranslate"><span class="pre">return</span></code>, <code class="docutils literal notranslate"><span class="pre">del</span></code>, <code class="docutils literal notranslate"><span class="pre">def</span></code>, <code class="docutils literal notranslate"><span class="pre">in</span></code>, <code class="docutils literal notranslate"><span class="pre">yield</span></code>, <code class="docutils literal notranslate"><span class="pre">True</span></code>, <code class="docutils literal notranslate"><span class="pre">False</span></code></p></li>
+</ul>
+</li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># An example</span>
+<span class="n">weight</span> <span class="o">=</span> <span class="mi">90</span>
+<span class="n">height</span> <span class="o">=</span> <span class="mf">1.90</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">weight</span><span class="p">,</span> <span class="n">height</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>90 1.9
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can now work with these variables as if they were the numbers themselves.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Make a new variable</span>
+<span class="n">BMI</span> <span class="o">=</span> <span class="n">weight</span> <span class="o">/</span> <span class="p">(</span><span class="n">height</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">BMI</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>24.930747922437675
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="types">
+<h4>Types<a class="headerlink" href="#types" title="Link to this heading">#</a></h4>
+<p>There are several common data types that you see during analysis.</p>
+<ul class="simple">
+<li><p>Integers, known as <code class="docutils literal notranslate"><span class="pre">int</span></code>. These are whole numbers, e.g. <code class="docutils literal notranslate"><span class="pre">1</span></code>, <code class="docutils literal notranslate"><span class="pre">45</span></code>.</p></li>
+<li><p>Floating points, or <code class="docutils literal notranslate"><span class="pre">float</span></code>. These are numbers with extra precision, e.g. <code class="docutils literal notranslate"><span class="pre">3.894</span></code>, <code class="docutils literal notranslate"><span class="pre">99.100000003</span></code></p></li>
+<li><p>Booleans, or <code class="docutils literal notranslate"><span class="pre">bool</span></code>. These are special variables that are represented by <code class="docutils literal notranslate"><span class="pre">True</span></code> and <code class="docutils literal notranslate"><span class="pre">False</span></code>. These have a range of uses in <strong>comparing</strong> variables, or checking whether certain conditions are met.</p></li>
+<li><p>Strings, or <code class="docutils literal notranslate"><span class="pre">str</span></code>. These represent text data and have a range of uses in data analysis.</p></li>
+</ul>
+<p>How do you know what type your variable is? Use the <code class="docutils literal notranslate"><span class="pre">type</span></code> function!</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Make an integer</span>
+<span class="n">an_integer</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">an_integer</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;int&#39;&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Make a float</span>
+<span class="n">a_float</span> <span class="o">=</span> <span class="mf">5.78</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">a_float</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;float&#39;&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Booleans already exist, but we can assign them to a variable</span>
+<span class="n">is_true</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">is_true</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;bool&#39;&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Make a string</span>
+<span class="n">option1</span> <span class="o">=</span> <span class="s1">&#39;Hello world&#39;</span>
+<span class="n">option2</span> <span class="o">=</span> <span class="s2">&quot;Hello again&quot;</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">option1</span><span class="p">),</span> <span class="nb">type</span><span class="p">(</span><span class="n">option2</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;str&#39;&gt; &lt;class &#39;str&#39;&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<p>Working with different types of data can lead to unusual outcomes, so its important to know what type your data is before you do something with it. For example…</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Adding an integer and a float makes sense</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">an_integer</span> <span class="o">+</span> <span class="n">a_float</span><span class="p">)</span>
+
+<span class="c1"># Adding an integer and a boolean works</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">an_integer</span> <span class="o">+</span> <span class="n">is_true</span><span class="p">)</span>
+
+<span class="c1"># Adding strings together also works</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">option1</span> <span class="o">+</span> <span class="n">option2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>6.78
+2
+Hello worldHello again
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="data-containers">
+<h4>Data Containers<a class="headerlink" href="#data-containers" title="Link to this heading">#</a></h4>
+<p>Variables are not just single numbers or strings. Often they are collections of information. There are many containers but two you <em>must</em> know about are <strong>lists</strong> and <strong>dictionaries</strong>.</p>
+<section id="lists">
+<h5>Lists<a class="headerlink" href="#lists" title="Link to this heading">#</a></h5>
+<p>A <strong>list</strong> is an ordered collection of other bits of data that is all kept together in a single group. You use square brackets <code class="docutils literal notranslate"><span class="pre">[]</span></code> to indicate a list and everything that is to go inside it is separated with a comma.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># An example list</span>
+<span class="n">list1</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mf">3.45</span><span class="p">,</span> <span class="s1">&#39;inside the list&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="p">[</span><span class="mi">100</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">300</span><span class="p">]]</span>
+
+<span class="c1"># You can get things out of a list by &#39;indexing&#39; them, like so</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">list1</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+
+<span class="c1"># Or if you know something is in a list, you can ask it for the location, like this:</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">list1</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="mf">3.45</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">list1</span><span class="p">[</span><span class="n">list1</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="mf">3.45</span><span class="p">)])</span>
+
+<span class="c1"># You can retrieve items even from the &#39;nested&#39; parts, like this</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">list1</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>inside the list
+1
+3.45
+100
+</pre></div>
+</div>
+</div>
+</div>
+<p>Some statistical output will be given to you in a list, or you will specify inputs to analysis programs, plots, and so on, as lists.</p>
+</section>
+<section id="dictionaries">
+<h5>Dictionaries<a class="headerlink" href="#dictionaries" title="Link to this heading">#</a></h5>
+<p>A <strong>dictionary</strong> is an <em>un</em>ordered collection of other bits of data that is also kept together in a single group. You use curly brackets <code class="docutils literal notranslate"><span class="pre">{}</span></code> to indicate a dictionary, but the difference is that everything that goes in needs a ‘key’ that is associated with a ‘value’, like a real dictionary that has entries and definitions. The keys are strings, but the values can be anything!</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Dictionary example</span>
+<span class="n">dict1</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;one&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;two&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">],</span> <span class="s1">&#39;three&#39;</span><span class="p">:</span> <span class="mi">4500</span><span class="p">}</span>
+
+<span class="c1"># Getting things out requires the key</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">dict1</span><span class="p">[</span><span class="s1">&#39;three&#39;</span><span class="p">])</span>
+
+<span class="c1"># You can examine all keys by asking for the .keys() attribute</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">dict1</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+
+<span class="c1"># You can add things to a dictionary with the &#39;update&#39; method</span>
+<span class="n">dict1</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s1">&#39;four&#39;</span><span class="p">:</span> <span class="mi">999</span><span class="p">})</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">dict1</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>4500
+dict_keys([&#39;one&#39;, &#39;two&#39;, &#39;three&#39;])
+dict_keys([&#39;one&#39;, &#39;two&#39;, &#39;three&#39;, &#39;four&#39;])
+</pre></div>
+</div>
+</div>
+</div>
+<p>Dictionaries are again often used to give inputs to statistical methods or plots, or you will have results returned to you in a dictionary.</p>
+</section>
+</section>
+</section>
+<section id="part-2-pandas">
+<h3>Part 2 - Pandas<a class="headerlink" href="#part-2-pandas" title="Link to this heading">#</a></h3>
+<p>We come now to the workhorse of our Python journey - pandas (<strong>Pan</strong>el <strong>Da</strong>ta). This package allows us to read in and manipulate data, and also to pass this data off to various other packages that will do our statistics and plots for us. A good way to think of it is the ‘Excel’ of Python, but the data is stored in something called a <strong>DataFrame</strong>.</p>
+<p>In order to work with pandas, we must first <code class="docutils literal notranslate"><span class="pre">import</span></code> it, as it is an ‘add-on’ to basic Python.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># We import packages like so - we will often import things!</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span> <span class="c1"># an alias to make typing easier</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now we have access to some advanced data handling techniques.</p>
+<p>Where can we find some data? If we know a URL for a dataset, it can be read straight from the internet! Here, we read a small dataset about cars from the internet - specifically, a comma-separated-values file (csv).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Demonstrate read_csv, grab a dataset from the internet</span>
+<span class="n">mtcars</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;https://gist.githubusercontent.com/seankross/a412dfbd88b3db70b74b/raw/5f23f993cd87c283ce766e7ac6b329ee7cc2e1d1/mtcars.csv&#39;</span><span class="p">)</span>
+
+<span class="c1"># Use the head method to see a sneak preview of this data</span>
+<span class="n">display</span><span class="p">(</span><span class="n">mtcars</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>model</th>
+      <th>mpg</th>
+      <th>cyl</th>
+      <th>disp</th>
+      <th>hp</th>
+      <th>drat</th>
+      <th>wt</th>
+      <th>qsec</th>
+      <th>vs</th>
+      <th>am</th>
+      <th>gear</th>
+      <th>carb</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Mazda RX4</td>
+      <td>21.0</td>
+      <td>6</td>
+      <td>160.0</td>
+      <td>110</td>
+      <td>3.90</td>
+      <td>2.620</td>
+      <td>16.46</td>
+      <td>0</td>
+      <td>1</td>
+      <td>4</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Mazda RX4 Wag</td>
+      <td>21.0</td>
+      <td>6</td>
+      <td>160.0</td>
+      <td>110</td>
+      <td>3.90</td>
+      <td>2.875</td>
+      <td>17.02</td>
+      <td>0</td>
+      <td>1</td>
+      <td>4</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Datsun 710</td>
+      <td>22.8</td>
+      <td>4</td>
+      <td>108.0</td>
+      <td>93</td>
+      <td>3.85</td>
+      <td>2.320</td>
+      <td>18.61</td>
+      <td>1</td>
+      <td>1</td>
+      <td>4</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Hornet 4 Drive</td>
+      <td>21.4</td>
+      <td>6</td>
+      <td>258.0</td>
+      <td>110</td>
+      <td>3.08</td>
+      <td>3.215</td>
+      <td>19.44</td>
+      <td>1</td>
+      <td>0</td>
+      <td>3</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Hornet Sportabout</td>
+      <td>18.7</td>
+      <td>8</td>
+      <td>360.0</td>
+      <td>175</td>
+      <td>3.15</td>
+      <td>3.440</td>
+      <td>17.02</td>
+      <td>0</td>
+      <td>0</td>
+      <td>3</td>
+      <td>2</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Alternatively, if a copy is available on our own machine, in the same folder as our notebook, we simply pass the filename:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># From file</span>
+<span class="n">mtcars_file</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;mtcars.csv&#39;</span><span class="p">)</span>
+
+<span class="c1"># Display</span>
+<span class="n">display</span><span class="p">(</span><span class="n">mtcars_file</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>model</th>
+      <th>mpg</th>
+      <th>cyl</th>
+      <th>disp</th>
+      <th>hp</th>
+      <th>drat</th>
+      <th>wt</th>
+      <th>qsec</th>
+      <th>vs</th>
+      <th>am</th>
+      <th>gear</th>
+      <th>carb</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Mazda RX4</td>
+      <td>21.0</td>
+      <td>6</td>
+      <td>160.0</td>
+      <td>110</td>
+      <td>3.9</td>
+      <td>2.620</td>
+      <td>16.46</td>
+      <td>0</td>
+      <td>1</td>
+      <td>4</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Mazda RX4 Wag</td>
+      <td>21.0</td>
+      <td>6</td>
+      <td>160.0</td>
+      <td>110</td>
+      <td>3.9</td>
+      <td>2.875</td>
+      <td>17.02</td>
+      <td>0</td>
+      <td>1</td>
+      <td>4</td>
+      <td>4</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<section id="data-at-a-glance-describe-and-info">
+<h4>Data at a glance - .describe() and .info()<a class="headerlink" href="#data-at-a-glance-describe-and-info" title="Link to this heading">#</a></h4>
+<p>With a dataset now ‘in memory’, analysis can begin. DataFrames come with a few methods give you some at a glance information about your data.</p>
+<p><code class="docutils literal notranslate"><span class="pre">.info()</span></code> returns information about the size and shape of the DataFrame, as well as the type of the data in each column. Very useful to check as sometimes data will be in the wrong format - e.g. strings as numbers.
+<code class="docutils literal notranslate"><span class="pre">.describe()</span></code> computes summary statistics for any numeric data columns, including mean, quartiles, and range.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Get info on mtcars</span>
+<span class="n">mtcars</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
+RangeIndex: 32 entries, 0 to 31
+Data columns (total 12 columns):
+ #   Column  Non-Null Count  Dtype  
+---  ------  --------------  -----  
+ 0   model   32 non-null     object 
+ 1   mpg     32 non-null     float64
+ 2   cyl     32 non-null     int64  
+ 3   disp    32 non-null     float64
+ 4   hp      32 non-null     int64  
+ 5   drat    32 non-null     float64
+ 6   wt      32 non-null     float64
+ 7   qsec    32 non-null     float64
+ 8   vs      32 non-null     int64  
+ 9   am      32 non-null     int64  
+ 10  gear    32 non-null     int64  
+ 11  carb    32 non-null     int64  
+dtypes: float64(5), int64(6), object(1)
+memory usage: 3.1+ KB
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Describe mtcars</span>
+<span class="n">mtcars</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>mpg</th>
+      <th>cyl</th>
+      <th>disp</th>
+      <th>hp</th>
+      <th>drat</th>
+      <th>wt</th>
+      <th>qsec</th>
+      <th>vs</th>
+      <th>am</th>
+      <th>gear</th>
+      <th>carb</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>count</th>
+      <td>32.000000</td>
+      <td>32.000000</td>
+      <td>32.000000</td>
+      <td>32.000000</td>
+      <td>32.000000</td>
+      <td>32.000000</td>
+      <td>32.000000</td>
+      <td>32.000000</td>
+      <td>32.000000</td>
+      <td>32.000000</td>
+      <td>32.0000</td>
+    </tr>
+    <tr>
+      <th>mean</th>
+      <td>20.090625</td>
+      <td>6.187500</td>
+      <td>230.721875</td>
+      <td>146.687500</td>
+      <td>3.596563</td>
+      <td>3.217250</td>
+      <td>17.848750</td>
+      <td>0.437500</td>
+      <td>0.406250</td>
+      <td>3.687500</td>
+      <td>2.8125</td>
+    </tr>
+    <tr>
+      <th>std</th>
+      <td>6.026948</td>
+      <td>1.785922</td>
+      <td>123.938694</td>
+      <td>68.562868</td>
+      <td>0.534679</td>
+      <td>0.978457</td>
+      <td>1.786943</td>
+      <td>0.504016</td>
+      <td>0.498991</td>
+      <td>0.737804</td>
+      <td>1.6152</td>
+    </tr>
+    <tr>
+      <th>min</th>
+      <td>10.400000</td>
+      <td>4.000000</td>
+      <td>71.100000</td>
+      <td>52.000000</td>
+      <td>2.760000</td>
+      <td>1.513000</td>
+      <td>14.500000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>3.000000</td>
+      <td>1.0000</td>
+    </tr>
+    <tr>
+      <th>25%</th>
+      <td>15.425000</td>
+      <td>4.000000</td>
+      <td>120.825000</td>
+      <td>96.500000</td>
+      <td>3.080000</td>
+      <td>2.581250</td>
+      <td>16.892500</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>3.000000</td>
+      <td>2.0000</td>
+    </tr>
+    <tr>
+      <th>50%</th>
+      <td>19.200000</td>
+      <td>6.000000</td>
+      <td>196.300000</td>
+      <td>123.000000</td>
+      <td>3.695000</td>
+      <td>3.325000</td>
+      <td>17.710000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>4.000000</td>
+      <td>2.0000</td>
+    </tr>
+    <tr>
+      <th>75%</th>
+      <td>22.800000</td>
+      <td>8.000000</td>
+      <td>326.000000</td>
+      <td>180.000000</td>
+      <td>3.920000</td>
+      <td>3.610000</td>
+      <td>18.900000</td>
+      <td>1.000000</td>
+      <td>1.000000</td>
+      <td>4.000000</td>
+      <td>4.0000</td>
+    </tr>
+    <tr>
+      <th>max</th>
+      <td>33.900000</td>
+      <td>8.000000</td>
+      <td>472.000000</td>
+      <td>335.000000</td>
+      <td>4.930000</td>
+      <td>5.424000</td>
+      <td>22.900000</td>
+      <td>1.000000</td>
+      <td>1.000000</td>
+      <td>5.000000</td>
+      <td>8.0000</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># You can check the datatypes using the `.dtypes` accessor</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">mtcars</span><span class="o">.</span><span class="n">dtypes</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>model     object
+mpg      float64
+cyl        int64
+disp     float64
+hp         int64
+drat     float64
+wt       float64
+qsec     float64
+vs         int64
+am         int64
+gear       int64
+carb       int64
+dtype: object
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="accessing-data-in-pandas">
+<h4>Accessing data in Pandas<a class="headerlink" href="#accessing-data-in-pandas" title="Link to this heading">#</a></h4>
+<p>You can access data in pandas much like a dictionary, and sometimes you’ll need to do this. You can get a single column, or multiple columns, via using column names in a list. You’ll need to do this sometimes for some applications!</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Get model and mpg</span>
+<span class="n">display</span><span class="p">(</span><span class="n">mtcars</span><span class="p">[[</span><span class="s1">&#39;model&#39;</span><span class="p">,</span> <span class="s1">&#39;mpg&#39;</span><span class="p">]])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>model</th>
+      <th>mpg</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Mazda RX4</td>
+      <td>21.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Mazda RX4 Wag</td>
+      <td>21.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Datsun 710</td>
+      <td>22.8</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Hornet 4 Drive</td>
+      <td>21.4</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Hornet Sportabout</td>
+      <td>18.7</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>Valiant</td>
+      <td>18.1</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>Duster 360</td>
+      <td>14.3</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>Merc 240D</td>
+      <td>24.4</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>Merc 230</td>
+      <td>22.8</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>Merc 280</td>
+      <td>19.2</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>Merc 280C</td>
+      <td>17.8</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>Merc 450SE</td>
+      <td>16.4</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>Merc 450SL</td>
+      <td>17.3</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>Merc 450SLC</td>
+      <td>15.2</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>Cadillac Fleetwood</td>
+      <td>10.4</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>Lincoln Continental</td>
+      <td>10.4</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>Chrysler Imperial</td>
+      <td>14.7</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>Fiat 128</td>
+      <td>32.4</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>Honda Civic</td>
+      <td>30.4</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>Toyota Corolla</td>
+      <td>33.9</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>Toyota Corona</td>
+      <td>21.5</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>Dodge Challenger</td>
+      <td>15.5</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>AMC Javelin</td>
+      <td>15.2</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>Camaro Z28</td>
+      <td>13.3</td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>Pontiac Firebird</td>
+      <td>19.2</td>
+    </tr>
+    <tr>
+      <th>25</th>
+      <td>Fiat X1-9</td>
+      <td>27.3</td>
+    </tr>
+    <tr>
+      <th>26</th>
+      <td>Porsche 914-2</td>
+      <td>26.0</td>
+    </tr>
+    <tr>
+      <th>27</th>
+      <td>Lotus Europa</td>
+      <td>30.4</td>
+    </tr>
+    <tr>
+      <th>28</th>
+      <td>Ford Pantera L</td>
+      <td>15.8</td>
+    </tr>
+    <tr>
+      <th>29</th>
+      <td>Ferrari Dino</td>
+      <td>19.7</td>
+    </tr>
+    <tr>
+      <th>30</th>
+      <td>Maserati Bora</td>
+      <td>15.0</td>
+    </tr>
+    <tr>
+      <th>31</th>
+      <td>Volvo 142E</td>
+      <td>21.4</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="filtering-a-dataframe">
+<h4>Filtering a dataframe<a class="headerlink" href="#filtering-a-dataframe" title="Link to this heading">#</a></h4>
+<p>Selecting specific rows is easy. We use the <code class="docutils literal notranslate"><span class="pre">.query</span></code> method on a dataframe, and using a short expression to say what we want variables to be equal to, or less or more than:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Get only the cars with 4 or more gears</span>
+<span class="n">gears</span> <span class="o">=</span> <span class="n">mtcars</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;gear &gt; 3&#39;</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">gears</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>model</th>
+      <th>mpg</th>
+      <th>cyl</th>
+      <th>disp</th>
+      <th>hp</th>
+      <th>drat</th>
+      <th>wt</th>
+      <th>qsec</th>
+      <th>vs</th>
+      <th>am</th>
+      <th>gear</th>
+      <th>carb</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Mazda RX4</td>
+      <td>21.0</td>
+      <td>6</td>
+      <td>160.0</td>
+      <td>110</td>
+      <td>3.90</td>
+      <td>2.620</td>
+      <td>16.46</td>
+      <td>0</td>
+      <td>1</td>
+      <td>4</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Mazda RX4 Wag</td>
+      <td>21.0</td>
+      <td>6</td>
+      <td>160.0</td>
+      <td>110</td>
+      <td>3.90</td>
+      <td>2.875</td>
+      <td>17.02</td>
+      <td>0</td>
+      <td>1</td>
+      <td>4</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Datsun 710</td>
+      <td>22.8</td>
+      <td>4</td>
+      <td>108.0</td>
+      <td>93</td>
+      <td>3.85</td>
+      <td>2.320</td>
+      <td>18.61</td>
+      <td>1</td>
+      <td>1</td>
+      <td>4</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>Merc 240D</td>
+      <td>24.4</td>
+      <td>4</td>
+      <td>146.7</td>
+      <td>62</td>
+      <td>3.69</td>
+      <td>3.190</td>
+      <td>20.00</td>
+      <td>1</td>
+      <td>0</td>
+      <td>4</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>Merc 230</td>
+      <td>22.8</td>
+      <td>4</td>
+      <td>140.8</td>
+      <td>95</td>
+      <td>3.92</td>
+      <td>3.150</td>
+      <td>22.90</td>
+      <td>1</td>
+      <td>0</td>
+      <td>4</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>Merc 280</td>
+      <td>19.2</td>
+      <td>6</td>
+      <td>167.6</td>
+      <td>123</td>
+      <td>3.92</td>
+      <td>3.440</td>
+      <td>18.30</td>
+      <td>1</td>
+      <td>0</td>
+      <td>4</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>Merc 280C</td>
+      <td>17.8</td>
+      <td>6</td>
+      <td>167.6</td>
+      <td>123</td>
+      <td>3.92</td>
+      <td>3.440</td>
+      <td>18.90</td>
+      <td>1</td>
+      <td>0</td>
+      <td>4</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>Fiat 128</td>
+      <td>32.4</td>
+      <td>4</td>
+      <td>78.7</td>
+      <td>66</td>
+      <td>4.08</td>
+      <td>2.200</td>
+      <td>19.47</td>
+      <td>1</td>
+      <td>1</td>
+      <td>4</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>Honda Civic</td>
+      <td>30.4</td>
+      <td>4</td>
+      <td>75.7</td>
+      <td>52</td>
+      <td>4.93</td>
+      <td>1.615</td>
+      <td>18.52</td>
+      <td>1</td>
+      <td>1</td>
+      <td>4</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>Toyota Corolla</td>
+      <td>33.9</td>
+      <td>4</td>
+      <td>71.1</td>
+      <td>65</td>
+      <td>4.22</td>
+      <td>1.835</td>
+      <td>19.90</td>
+      <td>1</td>
+      <td>1</td>
+      <td>4</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>25</th>
+      <td>Fiat X1-9</td>
+      <td>27.3</td>
+      <td>4</td>
+      <td>79.0</td>
+      <td>66</td>
+      <td>4.08</td>
+      <td>1.935</td>
+      <td>18.90</td>
+      <td>1</td>
+      <td>1</td>
+      <td>4</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>26</th>
+      <td>Porsche 914-2</td>
+      <td>26.0</td>
+      <td>4</td>
+      <td>120.3</td>
+      <td>91</td>
+      <td>4.43</td>
+      <td>2.140</td>
+      <td>16.70</td>
+      <td>0</td>
+      <td>1</td>
+      <td>5</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>27</th>
+      <td>Lotus Europa</td>
+      <td>30.4</td>
+      <td>4</td>
+      <td>95.1</td>
+      <td>113</td>
+      <td>3.77</td>
+      <td>1.513</td>
+      <td>16.90</td>
+      <td>1</td>
+      <td>1</td>
+      <td>5</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>28</th>
+      <td>Ford Pantera L</td>
+      <td>15.8</td>
+      <td>8</td>
+      <td>351.0</td>
+      <td>264</td>
+      <td>4.22</td>
+      <td>3.170</td>
+      <td>14.50</td>
+      <td>0</td>
+      <td>1</td>
+      <td>5</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>29</th>
+      <td>Ferrari Dino</td>
+      <td>19.7</td>
+      <td>6</td>
+      <td>145.0</td>
+      <td>175</td>
+      <td>3.62</td>
+      <td>2.770</td>
+      <td>15.50</td>
+      <td>0</td>
+      <td>1</td>
+      <td>5</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>30</th>
+      <td>Maserati Bora</td>
+      <td>15.0</td>
+      <td>8</td>
+      <td>301.0</td>
+      <td>335</td>
+      <td>3.54</td>
+      <td>3.570</td>
+      <td>14.60</td>
+      <td>0</td>
+      <td>1</td>
+      <td>5</td>
+      <td>8</td>
+    </tr>
+    <tr>
+      <th>31</th>
+      <td>Volvo 142E</td>
+      <td>21.4</td>
+      <td>4</td>
+      <td>121.0</td>
+      <td>109</td>
+      <td>4.11</td>
+      <td>2.780</td>
+      <td>18.60</td>
+      <td>1</td>
+      <td>1</td>
+      <td>4</td>
+      <td>2</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Combinations of filtering is simple</span>
+<span class="n">gears2</span> <span class="o">=</span> <span class="n">mtcars</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;gear &gt; 3 and am == 0&#39;</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">gears2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>model</th>
+      <th>mpg</th>
+      <th>cyl</th>
+      <th>disp</th>
+      <th>hp</th>
+      <th>drat</th>
+      <th>wt</th>
+      <th>qsec</th>
+      <th>vs</th>
+      <th>am</th>
+      <th>gear</th>
+      <th>carb</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>7</th>
+      <td>Merc 240D</td>
+      <td>24.4</td>
+      <td>4</td>
+      <td>146.7</td>
+      <td>62</td>
+      <td>3.69</td>
+      <td>3.19</td>
+      <td>20.0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>4</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>Merc 230</td>
+      <td>22.8</td>
+      <td>4</td>
+      <td>140.8</td>
+      <td>95</td>
+      <td>3.92</td>
+      <td>3.15</td>
+      <td>22.9</td>
+      <td>1</td>
+      <td>0</td>
+      <td>4</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>Merc 280</td>
+      <td>19.2</td>
+      <td>6</td>
+      <td>167.6</td>
+      <td>123</td>
+      <td>3.92</td>
+      <td>3.44</td>
+      <td>18.3</td>
+      <td>1</td>
+      <td>0</td>
+      <td>4</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>Merc 280C</td>
+      <td>17.8</td>
+      <td>6</td>
+      <td>167.6</td>
+      <td>123</td>
+      <td>3.92</td>
+      <td>3.44</td>
+      <td>18.9</td>
+      <td>1</td>
+      <td>0</td>
+      <td>4</td>
+      <td>4</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>You can filter data according to the following syntax rules:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">&gt;</span></code> means ‘greater than’, while <code class="docutils literal notranslate"><span class="pre">&gt;=</span></code> means ‘equal to or greater than’. So for example, <code class="docutils literal notranslate"><span class="pre">5</span> <span class="pre">&gt;</span> <span class="pre">5</span></code> would result in Python saying <code class="docutils literal notranslate"><span class="pre">False</span></code>, while <code class="docutils literal notranslate"><span class="pre">5</span> <span class="pre">&gt;=</span> <span class="pre">5</span></code> is a <code class="docutils literal notranslate"><span class="pre">True</span></code>.</p></li>
+<li><p>Similarly, <code class="docutils literal notranslate"><span class="pre">&lt;</span></code> means ‘less than’, and <code class="docutils literal notranslate"><span class="pre">&lt;=</span></code> means ‘equal to or less than’.</p></li>
+<li><p>Conversely, a pair of double equal symbols, <code class="docutils literal notranslate"><span class="pre">==</span></code> exactly means ‘is equal to’. This works with strings too, so <code class="docutils literal notranslate"><span class="pre">'Hello'</span> <span class="pre">==</span> <span class="pre">'Hello'</span></code> is True, while <code class="docutils literal notranslate"><span class="pre">'Hello</span> <span class="pre">==</span> <span class="pre">'hello'</span></code> is <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p></li>
+<li><p>You can modify the double equals symbols to mean ‘not equal’, like this: <code class="docutils literal notranslate"><span class="pre">!=</span></code>. So <code class="docutils literal notranslate"><span class="pre">4</span> <span class="pre">!=</span> <span class="pre">3</span></code> is True, while <code class="docutils literal notranslate"><span class="pre">5</span> <span class="pre">!=</span> <span class="pre">5</span></code> is False.</p></li>
+<li><p>You can combine these operations with the keywords <code class="docutils literal notranslate"><span class="pre">and</span></code>, <code class="docutils literal notranslate"><span class="pre">or</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">and</span></code> will take two comparisons and return True if they are BOTH true. For example, <code class="docutils literal notranslate"><span class="pre">5</span> <span class="pre">==</span> <span class="pre">5</span> <span class="pre">and</span> <span class="pre">4</span> <span class="pre">==</span> <span class="pre">4</span></code> is True, while <code class="docutils literal notranslate"><span class="pre">5</span> <span class="pre">==</span> <span class="pre">5</span> <span class="pre">and</span> <span class="pre">4</span> <span class="pre">==</span> <span class="pre">3</span></code> is not.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">or</span></code> will take two comparisons and return True if ONE OR BOTH are true. For example, <code class="docutils literal notranslate"><span class="pre">5</span> <span class="pre">==</span> <span class="pre">5</span> <span class="pre">or</span> <span class="pre">4</span> <span class="pre">==</span> <span class="pre">4</span></code> is True, as well as <code class="docutils literal notranslate"><span class="pre">5</span> <span class="pre">==</span> <span class="pre">5</span> <span class="pre">or</span> <span class="pre">4</span> <span class="pre">==</span> <span class="pre">3</span></code> - because the first one is.</p></li>
+</ul>
+</section>
+<section id="dropping-data-imputing-values-and-getting-a-summary-statistic">
+<h4>Dropping data, imputing values, and getting a summary statistic<a class="headerlink" href="#dropping-data-imputing-values-and-getting-a-summary-statistic" title="Link to this heading">#</a></h4>
+<p>Sometimes, your data will have missing values. Here I replace a few values with a ‘missing’ indicator, and show how we can remove them, or replace them.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Make some data missing!</span>
+<span class="n">mtcars</span><span class="o">.</span><span class="n">loc</span><span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;mpg&#39;</span><span class="p">,</span> <span class="s1">&#39;gear&#39;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">NA</span>
+<span class="n">display</span><span class="p">(</span><span class="n">mtcars</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>model</th>
+      <th>mpg</th>
+      <th>cyl</th>
+      <th>disp</th>
+      <th>hp</th>
+      <th>drat</th>
+      <th>wt</th>
+      <th>qsec</th>
+      <th>vs</th>
+      <th>am</th>
+      <th>gear</th>
+      <th>carb</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Mazda RX4</td>
+      <td>NaN</td>
+      <td>6</td>
+      <td>160.0</td>
+      <td>110</td>
+      <td>3.90</td>
+      <td>2.620</td>
+      <td>16.46</td>
+      <td>0</td>
+      <td>1</td>
+      <td>NaN</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Mazda RX4 Wag</td>
+      <td>NaN</td>
+      <td>6</td>
+      <td>160.0</td>
+      <td>110</td>
+      <td>3.90</td>
+      <td>2.875</td>
+      <td>17.02</td>
+      <td>0</td>
+      <td>1</td>
+      <td>NaN</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Datsun 710</td>
+      <td>NaN</td>
+      <td>4</td>
+      <td>108.0</td>
+      <td>93</td>
+      <td>3.85</td>
+      <td>2.320</td>
+      <td>18.61</td>
+      <td>1</td>
+      <td>1</td>
+      <td>NaN</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Hornet 4 Drive</td>
+      <td>21.4</td>
+      <td>6</td>
+      <td>258.0</td>
+      <td>110</td>
+      <td>3.08</td>
+      <td>3.215</td>
+      <td>19.44</td>
+      <td>1</td>
+      <td>0</td>
+      <td>3.0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Hornet Sportabout</td>
+      <td>18.7</td>
+      <td>8</td>
+      <td>360.0</td>
+      <td>175</td>
+      <td>3.15</td>
+      <td>3.440</td>
+      <td>17.02</td>
+      <td>0</td>
+      <td>0</td>
+      <td>3.0</td>
+      <td>2</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Similarly, we can find the missing data using <code class="docutils literal notranslate"><span class="pre">.isna()</span></code>, which will highlight which values are missing.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Identify them</span>
+<span class="n">display</span><span class="p">(</span><span class="n">mtcars</span><span class="o">.</span><span class="n">isna</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>model</th>
+      <th>mpg</th>
+      <th>cyl</th>
+      <th>disp</th>
+      <th>hp</th>
+      <th>drat</th>
+      <th>wt</th>
+      <th>qsec</th>
+      <th>vs</th>
+      <th>am</th>
+      <th>gear</th>
+      <th>carb</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>False</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>True</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>False</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>True</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>False</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>True</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>False</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>True</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>False</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>True</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>25</th>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>26</th>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>27</th>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>28</th>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>29</th>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>30</th>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>31</th>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>To summarise each column, we can ask if <code class="docutils literal notranslate"><span class="pre">any</span></code> or <code class="docutils literal notranslate"><span class="pre">all</span></code> the results are missing, like this:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Find columns with missing values</span>
+<span class="n">display</span><span class="p">(</span><span class="n">mtcars</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">any</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>model    False
+mpg       True
+cyl      False
+disp     False
+hp       False
+drat     False
+wt       False
+qsec     False
+vs       False
+am       False
+gear      True
+carb     False
+dtype: bool
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># We can drop rows that have NaN</span>
+<span class="n">no_nan</span> <span class="o">=</span> <span class="n">mtcars</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">how</span><span class="o">=</span><span class="s1">&#39;any&#39;</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">no_nan</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>model</th>
+      <th>mpg</th>
+      <th>cyl</th>
+      <th>disp</th>
+      <th>hp</th>
+      <th>drat</th>
+      <th>wt</th>
+      <th>qsec</th>
+      <th>vs</th>
+      <th>am</th>
+      <th>gear</th>
+      <th>carb</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>3</th>
+      <td>Hornet 4 Drive</td>
+      <td>21.4</td>
+      <td>6</td>
+      <td>258.0</td>
+      <td>110</td>
+      <td>3.08</td>
+      <td>3.215</td>
+      <td>19.44</td>
+      <td>1</td>
+      <td>0</td>
+      <td>3.0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Hornet Sportabout</td>
+      <td>18.7</td>
+      <td>8</td>
+      <td>360.0</td>
+      <td>175</td>
+      <td>3.15</td>
+      <td>3.440</td>
+      <td>17.02</td>
+      <td>0</td>
+      <td>0</td>
+      <td>3.0</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>Duster 360</td>
+      <td>14.3</td>
+      <td>8</td>
+      <td>360.0</td>
+      <td>245</td>
+      <td>3.21</td>
+      <td>3.570</td>
+      <td>15.84</td>
+      <td>0</td>
+      <td>0</td>
+      <td>3.0</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>Merc 230</td>
+      <td>22.8</td>
+      <td>4</td>
+      <td>140.8</td>
+      <td>95</td>
+      <td>3.92</td>
+      <td>3.150</td>
+      <td>22.90</td>
+      <td>1</td>
+      <td>0</td>
+      <td>4.0</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>Merc 280</td>
+      <td>19.2</td>
+      <td>6</td>
+      <td>167.6</td>
+      <td>123</td>
+      <td>3.92</td>
+      <td>3.440</td>
+      <td>18.30</td>
+      <td>1</td>
+      <td>0</td>
+      <td>4.0</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>Merc 280C</td>
+      <td>17.8</td>
+      <td>6</td>
+      <td>167.6</td>
+      <td>123</td>
+      <td>3.92</td>
+      <td>3.440</td>
+      <td>18.90</td>
+      <td>1</td>
+      <td>0</td>
+      <td>4.0</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>Merc 450SE</td>
+      <td>16.4</td>
+      <td>8</td>
+      <td>275.8</td>
+      <td>180</td>
+      <td>3.07</td>
+      <td>4.070</td>
+      <td>17.40</td>
+      <td>0</td>
+      <td>0</td>
+      <td>3.0</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>Merc 450SL</td>
+      <td>17.3</td>
+      <td>8</td>
+      <td>275.8</td>
+      <td>180</td>
+      <td>3.07</td>
+      <td>3.730</td>
+      <td>17.60</td>
+      <td>0</td>
+      <td>0</td>
+      <td>3.0</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>Merc 450SLC</td>
+      <td>15.2</td>
+      <td>8</td>
+      <td>275.8</td>
+      <td>180</td>
+      <td>3.07</td>
+      <td>3.780</td>
+      <td>18.00</td>
+      <td>0</td>
+      <td>0</td>
+      <td>3.0</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>Cadillac Fleetwood</td>
+      <td>10.4</td>
+      <td>8</td>
+      <td>472.0</td>
+      <td>205</td>
+      <td>2.93</td>
+      <td>5.250</td>
+      <td>17.98</td>
+      <td>0</td>
+      <td>0</td>
+      <td>3.0</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>Lincoln Continental</td>
+      <td>10.4</td>
+      <td>8</td>
+      <td>460.0</td>
+      <td>215</td>
+      <td>3.00</td>
+      <td>5.424</td>
+      <td>17.82</td>
+      <td>0</td>
+      <td>0</td>
+      <td>3.0</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>Chrysler Imperial</td>
+      <td>14.7</td>
+      <td>8</td>
+      <td>440.0</td>
+      <td>230</td>
+      <td>3.23</td>
+      <td>5.345</td>
+      <td>17.42</td>
+      <td>0</td>
+      <td>0</td>
+      <td>3.0</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>Fiat 128</td>
+      <td>32.4</td>
+      <td>4</td>
+      <td>78.7</td>
+      <td>66</td>
+      <td>4.08</td>
+      <td>2.200</td>
+      <td>19.47</td>
+      <td>1</td>
+      <td>1</td>
+      <td>4.0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>Honda Civic</td>
+      <td>30.4</td>
+      <td>4</td>
+      <td>75.7</td>
+      <td>52</td>
+      <td>4.93</td>
+      <td>1.615</td>
+      <td>18.52</td>
+      <td>1</td>
+      <td>1</td>
+      <td>4.0</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>Toyota Corolla</td>
+      <td>33.9</td>
+      <td>4</td>
+      <td>71.1</td>
+      <td>65</td>
+      <td>4.22</td>
+      <td>1.835</td>
+      <td>19.90</td>
+      <td>1</td>
+      <td>1</td>
+      <td>4.0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>Toyota Corona</td>
+      <td>21.5</td>
+      <td>4</td>
+      <td>120.1</td>
+      <td>97</td>
+      <td>3.70</td>
+      <td>2.465</td>
+      <td>20.01</td>
+      <td>1</td>
+      <td>0</td>
+      <td>3.0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>Dodge Challenger</td>
+      <td>15.5</td>
+      <td>8</td>
+      <td>318.0</td>
+      <td>150</td>
+      <td>2.76</td>
+      <td>3.520</td>
+      <td>16.87</td>
+      <td>0</td>
+      <td>0</td>
+      <td>3.0</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>AMC Javelin</td>
+      <td>15.2</td>
+      <td>8</td>
+      <td>304.0</td>
+      <td>150</td>
+      <td>3.15</td>
+      <td>3.435</td>
+      <td>17.30</td>
+      <td>0</td>
+      <td>0</td>
+      <td>3.0</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>Camaro Z28</td>
+      <td>13.3</td>
+      <td>8</td>
+      <td>350.0</td>
+      <td>245</td>
+      <td>3.73</td>
+      <td>3.840</td>
+      <td>15.41</td>
+      <td>0</td>
+      <td>0</td>
+      <td>3.0</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>Pontiac Firebird</td>
+      <td>19.2</td>
+      <td>8</td>
+      <td>400.0</td>
+      <td>175</td>
+      <td>3.08</td>
+      <td>3.845</td>
+      <td>17.05</td>
+      <td>0</td>
+      <td>0</td>
+      <td>3.0</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>25</th>
+      <td>Fiat X1-9</td>
+      <td>27.3</td>
+      <td>4</td>
+      <td>79.0</td>
+      <td>66</td>
+      <td>4.08</td>
+      <td>1.935</td>
+      <td>18.90</td>
+      <td>1</td>
+      <td>1</td>
+      <td>4.0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>26</th>
+      <td>Porsche 914-2</td>
+      <td>26.0</td>
+      <td>4</td>
+      <td>120.3</td>
+      <td>91</td>
+      <td>4.43</td>
+      <td>2.140</td>
+      <td>16.70</td>
+      <td>0</td>
+      <td>1</td>
+      <td>5.0</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>27</th>
+      <td>Lotus Europa</td>
+      <td>30.4</td>
+      <td>4</td>
+      <td>95.1</td>
+      <td>113</td>
+      <td>3.77</td>
+      <td>1.513</td>
+      <td>16.90</td>
+      <td>1</td>
+      <td>1</td>
+      <td>5.0</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>28</th>
+      <td>Ford Pantera L</td>
+      <td>15.8</td>
+      <td>8</td>
+      <td>351.0</td>
+      <td>264</td>
+      <td>4.22</td>
+      <td>3.170</td>
+      <td>14.50</td>
+      <td>0</td>
+      <td>1</td>
+      <td>5.0</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>29</th>
+      <td>Ferrari Dino</td>
+      <td>19.7</td>
+      <td>6</td>
+      <td>145.0</td>
+      <td>175</td>
+      <td>3.62</td>
+      <td>2.770</td>
+      <td>15.50</td>
+      <td>0</td>
+      <td>1</td>
+      <td>5.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>30</th>
+      <td>Maserati Bora</td>
+      <td>15.0</td>
+      <td>8</td>
+      <td>301.0</td>
+      <td>335</td>
+      <td>3.54</td>
+      <td>3.570</td>
+      <td>14.60</td>
+      <td>0</td>
+      <td>1</td>
+      <td>5.0</td>
+      <td>8</td>
+    </tr>
+    <tr>
+      <th>31</th>
+      <td>Volvo 142E</td>
+      <td>21.4</td>
+      <td>4</td>
+      <td>121.0</td>
+      <td>109</td>
+      <td>4.11</td>
+      <td>2.780</td>
+      <td>18.60</td>
+      <td>1</td>
+      <td>1</td>
+      <td>4.0</td>
+      <td>2</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Or we can fill them with a specific value</span>
+<span class="n">display</span><span class="p">(</span><span class="n">mtcars</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">9999</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>model</th>
+      <th>mpg</th>
+      <th>cyl</th>
+      <th>disp</th>
+      <th>hp</th>
+      <th>drat</th>
+      <th>wt</th>
+      <th>qsec</th>
+      <th>vs</th>
+      <th>am</th>
+      <th>gear</th>
+      <th>carb</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Mazda RX4</td>
+      <td>9999.0</td>
+      <td>6</td>
+      <td>160.0</td>
+      <td>110</td>
+      <td>3.90</td>
+      <td>2.620</td>
+      <td>16.46</td>
+      <td>0</td>
+      <td>1</td>
+      <td>9999.0</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Mazda RX4 Wag</td>
+      <td>9999.0</td>
+      <td>6</td>
+      <td>160.0</td>
+      <td>110</td>
+      <td>3.90</td>
+      <td>2.875</td>
+      <td>17.02</td>
+      <td>0</td>
+      <td>1</td>
+      <td>9999.0</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Datsun 710</td>
+      <td>9999.0</td>
+      <td>4</td>
+      <td>108.0</td>
+      <td>93</td>
+      <td>3.85</td>
+      <td>2.320</td>
+      <td>18.61</td>
+      <td>1</td>
+      <td>1</td>
+      <td>9999.0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Hornet 4 Drive</td>
+      <td>21.4</td>
+      <td>6</td>
+      <td>258.0</td>
+      <td>110</td>
+      <td>3.08</td>
+      <td>3.215</td>
+      <td>19.44</td>
+      <td>1</td>
+      <td>0</td>
+      <td>3.0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Hornet Sportabout</td>
+      <td>18.7</td>
+      <td>8</td>
+      <td>360.0</td>
+      <td>175</td>
+      <td>3.15</td>
+      <td>3.440</td>
+      <td>17.02</td>
+      <td>0</td>
+      <td>0</td>
+      <td>3.0</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>Valiant</td>
+      <td>9999.0</td>
+      <td>6</td>
+      <td>225.0</td>
+      <td>105</td>
+      <td>2.76</td>
+      <td>3.460</td>
+      <td>20.22</td>
+      <td>1</td>
+      <td>0</td>
+      <td>9999.0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>Duster 360</td>
+      <td>14.3</td>
+      <td>8</td>
+      <td>360.0</td>
+      <td>245</td>
+      <td>3.21</td>
+      <td>3.570</td>
+      <td>15.84</td>
+      <td>0</td>
+      <td>0</td>
+      <td>3.0</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>Merc 240D</td>
+      <td>9999.0</td>
+      <td>4</td>
+      <td>146.7</td>
+      <td>62</td>
+      <td>3.69</td>
+      <td>3.190</td>
+      <td>20.00</td>
+      <td>1</td>
+      <td>0</td>
+      <td>9999.0</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>Merc 230</td>
+      <td>22.8</td>
+      <td>4</td>
+      <td>140.8</td>
+      <td>95</td>
+      <td>3.92</td>
+      <td>3.150</td>
+      <td>22.90</td>
+      <td>1</td>
+      <td>0</td>
+      <td>4.0</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>Merc 280</td>
+      <td>19.2</td>
+      <td>6</td>
+      <td>167.6</td>
+      <td>123</td>
+      <td>3.92</td>
+      <td>3.440</td>
+      <td>18.30</td>
+      <td>1</td>
+      <td>0</td>
+      <td>4.0</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>Merc 280C</td>
+      <td>17.8</td>
+      <td>6</td>
+      <td>167.6</td>
+      <td>123</td>
+      <td>3.92</td>
+      <td>3.440</td>
+      <td>18.90</td>
+      <td>1</td>
+      <td>0</td>
+      <td>4.0</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>Merc 450SE</td>
+      <td>16.4</td>
+      <td>8</td>
+      <td>275.8</td>
+      <td>180</td>
+      <td>3.07</td>
+      <td>4.070</td>
+      <td>17.40</td>
+      <td>0</td>
+      <td>0</td>
+      <td>3.0</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>Merc 450SL</td>
+      <td>17.3</td>
+      <td>8</td>
+      <td>275.8</td>
+      <td>180</td>
+      <td>3.07</td>
+      <td>3.730</td>
+      <td>17.60</td>
+      <td>0</td>
+      <td>0</td>
+      <td>3.0</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>Merc 450SLC</td>
+      <td>15.2</td>
+      <td>8</td>
+      <td>275.8</td>
+      <td>180</td>
+      <td>3.07</td>
+      <td>3.780</td>
+      <td>18.00</td>
+      <td>0</td>
+      <td>0</td>
+      <td>3.0</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>Cadillac Fleetwood</td>
+      <td>10.4</td>
+      <td>8</td>
+      <td>472.0</td>
+      <td>205</td>
+      <td>2.93</td>
+      <td>5.250</td>
+      <td>17.98</td>
+      <td>0</td>
+      <td>0</td>
+      <td>3.0</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>Lincoln Continental</td>
+      <td>10.4</td>
+      <td>8</td>
+      <td>460.0</td>
+      <td>215</td>
+      <td>3.00</td>
+      <td>5.424</td>
+      <td>17.82</td>
+      <td>0</td>
+      <td>0</td>
+      <td>3.0</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>Chrysler Imperial</td>
+      <td>14.7</td>
+      <td>8</td>
+      <td>440.0</td>
+      <td>230</td>
+      <td>3.23</td>
+      <td>5.345</td>
+      <td>17.42</td>
+      <td>0</td>
+      <td>0</td>
+      <td>3.0</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>Fiat 128</td>
+      <td>32.4</td>
+      <td>4</td>
+      <td>78.7</td>
+      <td>66</td>
+      <td>4.08</td>
+      <td>2.200</td>
+      <td>19.47</td>
+      <td>1</td>
+      <td>1</td>
+      <td>4.0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>Honda Civic</td>
+      <td>30.4</td>
+      <td>4</td>
+      <td>75.7</td>
+      <td>52</td>
+      <td>4.93</td>
+      <td>1.615</td>
+      <td>18.52</td>
+      <td>1</td>
+      <td>1</td>
+      <td>4.0</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>Toyota Corolla</td>
+      <td>33.9</td>
+      <td>4</td>
+      <td>71.1</td>
+      <td>65</td>
+      <td>4.22</td>
+      <td>1.835</td>
+      <td>19.90</td>
+      <td>1</td>
+      <td>1</td>
+      <td>4.0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>Toyota Corona</td>
+      <td>21.5</td>
+      <td>4</td>
+      <td>120.1</td>
+      <td>97</td>
+      <td>3.70</td>
+      <td>2.465</td>
+      <td>20.01</td>
+      <td>1</td>
+      <td>0</td>
+      <td>3.0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>Dodge Challenger</td>
+      <td>15.5</td>
+      <td>8</td>
+      <td>318.0</td>
+      <td>150</td>
+      <td>2.76</td>
+      <td>3.520</td>
+      <td>16.87</td>
+      <td>0</td>
+      <td>0</td>
+      <td>3.0</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>AMC Javelin</td>
+      <td>15.2</td>
+      <td>8</td>
+      <td>304.0</td>
+      <td>150</td>
+      <td>3.15</td>
+      <td>3.435</td>
+      <td>17.30</td>
+      <td>0</td>
+      <td>0</td>
+      <td>3.0</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>Camaro Z28</td>
+      <td>13.3</td>
+      <td>8</td>
+      <td>350.0</td>
+      <td>245</td>
+      <td>3.73</td>
+      <td>3.840</td>
+      <td>15.41</td>
+      <td>0</td>
+      <td>0</td>
+      <td>3.0</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>Pontiac Firebird</td>
+      <td>19.2</td>
+      <td>8</td>
+      <td>400.0</td>
+      <td>175</td>
+      <td>3.08</td>
+      <td>3.845</td>
+      <td>17.05</td>
+      <td>0</td>
+      <td>0</td>
+      <td>3.0</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>25</th>
+      <td>Fiat X1-9</td>
+      <td>27.3</td>
+      <td>4</td>
+      <td>79.0</td>
+      <td>66</td>
+      <td>4.08</td>
+      <td>1.935</td>
+      <td>18.90</td>
+      <td>1</td>
+      <td>1</td>
+      <td>4.0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>26</th>
+      <td>Porsche 914-2</td>
+      <td>26.0</td>
+      <td>4</td>
+      <td>120.3</td>
+      <td>91</td>
+      <td>4.43</td>
+      <td>2.140</td>
+      <td>16.70</td>
+      <td>0</td>
+      <td>1</td>
+      <td>5.0</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>27</th>
+      <td>Lotus Europa</td>
+      <td>30.4</td>
+      <td>4</td>
+      <td>95.1</td>
+      <td>113</td>
+      <td>3.77</td>
+      <td>1.513</td>
+      <td>16.90</td>
+      <td>1</td>
+      <td>1</td>
+      <td>5.0</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>28</th>
+      <td>Ford Pantera L</td>
+      <td>15.8</td>
+      <td>8</td>
+      <td>351.0</td>
+      <td>264</td>
+      <td>4.22</td>
+      <td>3.170</td>
+      <td>14.50</td>
+      <td>0</td>
+      <td>1</td>
+      <td>5.0</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>29</th>
+      <td>Ferrari Dino</td>
+      <td>19.7</td>
+      <td>6</td>
+      <td>145.0</td>
+      <td>175</td>
+      <td>3.62</td>
+      <td>2.770</td>
+      <td>15.50</td>
+      <td>0</td>
+      <td>1</td>
+      <td>5.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>30</th>
+      <td>Maserati Bora</td>
+      <td>15.0</td>
+      <td>8</td>
+      <td>301.0</td>
+      <td>335</td>
+      <td>3.54</td>
+      <td>3.570</td>
+      <td>14.60</td>
+      <td>0</td>
+      <td>1</td>
+      <td>5.0</td>
+      <td>8</td>
+    </tr>
+    <tr>
+      <th>31</th>
+      <td>Volvo 142E</td>
+      <td>21.4</td>
+      <td>4</td>
+      <td>121.0</td>
+      <td>109</td>
+      <td>4.11</td>
+      <td>2.780</td>
+      <td>18.60</td>
+      <td>1</td>
+      <td>1</td>
+      <td>4.0</td>
+      <td>2</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="aggregating">
+<h4>Aggregating<a class="headerlink" href="#aggregating" title="Link to this heading">#</a></h4>
+<p>We can aggregate columns to get specific statistics. pandas has shortcuts where we can state the name of a function we’d like to use as a string to the <code class="docutils literal notranslate"><span class="pre">agg</span></code> function in a dictionary - the key being the name of the column to work on!</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Get the mean and median of mpg, and std of disp</span>
+<span class="n">summaries</span> <span class="o">=</span> <span class="n">mtcars</span><span class="o">.</span><span class="n">agg</span><span class="p">({</span><span class="s1">&#39;mpg&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;mean&#39;</span><span class="p">,</span> <span class="s1">&#39;median&#39;</span><span class="p">],</span> <span class="s1">&#39;disp&#39;</span><span class="p">:</span> <span class="s1">&#39;std&#39;</span><span class="p">})</span>
+<span class="n">display</span><span class="p">(</span><span class="n">summaries</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>mpg</th>
+      <th>disp</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>mean</th>
+      <td>19.837037</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>median</th>
+      <td>18.700000</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>std</th>
+      <td>NaN</td>
+      <td>123.938694</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="aggregating-by-groups">
+<h4>Aggregating by groups<a class="headerlink" href="#aggregating-by-groups" title="Link to this heading">#</a></h4>
+<p>Often, we may wish to aggregate our data by a <em>specific</em> variable or sets of them. For example, if we wanted to compute the average horsepower (<code class="docutils literal notranslate"><span class="pre">hp</span></code>) of each of the manual and automatic (<code class="docutils literal notranslate"><span class="pre">am</span></code>) cars, we need to do a <code class="docutils literal notranslate"><span class="pre">groupby</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Grouped average</span>
+<span class="n">grouped</span> <span class="o">=</span> <span class="n">mtcars</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;am&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">agg</span><span class="p">({</span><span class="s1">&#39;hp&#39;</span><span class="p">:</span> <span class="s1">&#39;mean&#39;</span><span class="p">})</span>
+<span class="n">display</span><span class="p">(</span><span class="n">grouped</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>hp</th>
+    </tr>
+    <tr>
+      <th>am</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>160.263158</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>126.846154</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="reshaping-data">
+<h4>Reshaping data<a class="headerlink" href="#reshaping-data" title="Link to this heading">#</a></h4>
+<p>Data comes in two formats - <strong>wide</strong>, and <strong>long</strong>.</p>
+<ul class="simple">
+<li><p>Wide data has a single row per observation, and multiple columns that denote different variables. This is the format you’re used to seeing in programs like JASP or Excel.</p></li>
+<li><p>Long data has multiple rows for a single observation, and columns that ‘track’ the scores on the variables.</p></li>
+</ul>
+<p>You need to be able to move between these for things like plots or analysis functions. Fortunately, its not too difficult, but can take practice!</p>
+</section>
+<section id="wide-to-long">
+<h4>Wide to long<a class="headerlink" href="#wide-to-long" title="Link to this heading">#</a></h4>
+<p>To go from a wide dataset to a long one, we need to <code class="docutils literal notranslate"><span class="pre">melt</span></code> a dataframe.. This requires us to specify two things.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">id_vars</span></code> - the names of columns to keep as a ‘tracker’ for which observation the scores belong to.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">value_vars</span></code> - the names of columns we’d like to melt down into a single column, each entry tracking the name of a variable.</p></li>
+<li><p>If we want, <code class="docutils literal notranslate"><span class="pre">var_name</span></code> and <code class="docutils literal notranslate"><span class="pre">value_name</span></code> allow us to specify the names of the column that tracks the variable name, and the associated score.</p></li>
+</ul>
+<p>Let us melt the cars dataset, keeping the <code class="docutils literal notranslate"><span class="pre">model</span></code> as the identifier, and melting down the mpg, cyl, and disp variables.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Long mtcars</span>
+<span class="n">mtcar_long</span> <span class="o">=</span> <span class="n">mtcars</span><span class="o">.</span><span class="n">melt</span><span class="p">(</span><span class="n">id_vars</span><span class="o">=</span><span class="s1">&#39;model&#39;</span><span class="p">,</span> 
+                         <span class="n">value_vars</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;mpg&#39;</span><span class="p">,</span> <span class="s1">&#39;cyl&#39;</span><span class="p">,</span> <span class="s1">&#39;disp&#39;</span><span class="p">],</span>
+                         <span class="n">var_name</span><span class="o">=</span><span class="s1">&#39;engine&#39;</span><span class="p">,</span>
+                         <span class="n">value_name</span><span class="o">=</span><span class="s1">&#39;value&#39;</span><span class="p">)</span>
+
+<span class="c1"># Sort by the model, not necessary but helps</span>
+<span class="n">mtcar_long</span> <span class="o">=</span> <span class="n">mtcar_long</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s1">&#39;model&#39;</span><span class="p">)</span>
+
+<span class="c1"># Show</span>
+<span class="n">display</span><span class="p">(</span><span class="n">mtcar_long</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">6</span><span class="p">),</span> <span class="n">mtcar_long</span><span class="o">.</span><span class="n">tail</span><span class="p">(</span><span class="mi">6</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>model</th>
+      <th>engine</th>
+      <th>value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>86</th>
+      <td>AMC Javelin</td>
+      <td>disp</td>
+      <td>304.0</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>AMC Javelin</td>
+      <td>mpg</td>
+      <td>15.2</td>
+    </tr>
+    <tr>
+      <th>54</th>
+      <td>AMC Javelin</td>
+      <td>cyl</td>
+      <td>8.0</td>
+    </tr>
+    <tr>
+      <th>78</th>
+      <td>Cadillac Fleetwood</td>
+      <td>disp</td>
+      <td>472.0</td>
+    </tr>
+    <tr>
+      <th>46</th>
+      <td>Cadillac Fleetwood</td>
+      <td>cyl</td>
+      <td>8.0</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>Cadillac Fleetwood</td>
+      <td>mpg</td>
+      <td>10.4</td>
+    </tr>
+  </tbody>
+</table>
+</div></div><div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>model</th>
+      <th>engine</th>
+      <th>value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>69</th>
+      <td>Valiant</td>
+      <td>disp</td>
+      <td>225.0</td>
+    </tr>
+    <tr>
+      <th>37</th>
+      <td>Valiant</td>
+      <td>cyl</td>
+      <td>6.0</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>Valiant</td>
+      <td>mpg</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>31</th>
+      <td>Volvo 142E</td>
+      <td>mpg</td>
+      <td>21.4</td>
+    </tr>
+    <tr>
+      <th>63</th>
+      <td>Volvo 142E</td>
+      <td>cyl</td>
+      <td>4.0</td>
+    </tr>
+    <tr>
+      <th>95</th>
+      <td>Volvo 142E</td>
+      <td>disp</td>
+      <td>121.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="long-to-wide">
+<h4>Long to wide<a class="headerlink" href="#long-to-wide" title="Link to this heading">#</a></h4>
+<p>To go from a long dataframe to a wide one, we must <code class="docutils literal notranslate"><span class="pre">pivot</span></code> it. This requires us to specify three things:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">index</span></code>, the name of the column that represents the identifier keeping track of what observation is what.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">columns</span></code> - the name of the columns that contain the variables we’d like to push into new columns.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">values</span></code> - the name of the column that contains the scores.</p></li>
+</ul>
+<p>An example is instructive, undoing the earlier action of melting:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Long to wide - note the `reset index`</span>
+<span class="n">mtcar_wide</span> <span class="o">=</span> <span class="n">mtcar_long</span><span class="o">.</span><span class="n">pivot</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="s1">&#39;model&#39;</span><span class="p">,</span> 
+                              <span class="n">columns</span><span class="o">=</span><span class="s1">&#39;engine&#39;</span><span class="p">,</span>
+                              <span class="n">values</span><span class="o">=</span><span class="s1">&#39;value&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+<span class="n">display</span><span class="p">(</span><span class="n">mtcar_wide</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>engine</th>
+      <th>model</th>
+      <th>cyl</th>
+      <th>disp</th>
+      <th>mpg</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>AMC Javelin</td>
+      <td>8.0</td>
+      <td>304.0</td>
+      <td>15.2</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Cadillac Fleetwood</td>
+      <td>8.0</td>
+      <td>472.0</td>
+      <td>10.4</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Camaro Z28</td>
+      <td>8.0</td>
+      <td>350.0</td>
+      <td>13.3</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Chrysler Imperial</td>
+      <td>8.0</td>
+      <td>440.0</td>
+      <td>14.7</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Datsun 710</td>
+      <td>4.0</td>
+      <td>108.0</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>Dodge Challenger</td>
+      <td>8.0</td>
+      <td>318.0</td>
+      <td>15.5</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>Duster 360</td>
+      <td>8.0</td>
+      <td>360.0</td>
+      <td>14.3</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>Ferrari Dino</td>
+      <td>6.0</td>
+      <td>145.0</td>
+      <td>19.7</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>Fiat 128</td>
+      <td>4.0</td>
+      <td>78.7</td>
+      <td>32.4</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>Fiat X1-9</td>
+      <td>4.0</td>
+      <td>79.0</td>
+      <td>27.3</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+</section>
+<section id="part-3-statistical-plots-with-seaborn">
+<h3>Part 3 - Statistical Plots with Seaborn<a class="headerlink" href="#part-3-statistical-plots-with-seaborn" title="Link to this heading">#</a></h3>
+<p>Pandas gives us the power to work with raw data, but Seaborn allows us to <em>visualise</em> that data easily. Seaborn can produce a vast array of plots, and we will use it to visualise different aspects of the data we work with. Lets see some basic examples.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># First, import seaborn</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span> <span class="c1"># traditionally as `sns`</span>
+
+<span class="c1"># These lines are optional, but make our plots look nicer!</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">set_style</span><span class="p">(</span><span class="s1">&#39;whitegrid&#39;</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">set_context</span><span class="p">(</span><span class="s1">&#39;talk&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># produce a scatter plot of mpg against number of cylinders, </span>
+<span class="c1"># but colour points by automatic/manual</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">mtcars</span><span class="p">,</span>
+                <span class="n">x</span><span class="o">=</span><span class="s1">&#39;mpg&#39;</span><span class="p">,</span>
+                <span class="n">y</span><span class="o">=</span><span class="s1">&#39;cyl&#39;</span><span class="p">,</span>
+                <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;am&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Axes: xlabel=&#39;mpg&#39;, ylabel=&#39;cyl&#39;&gt;
+</pre></div>
+</div>
+<img alt="../_images/e7de223de53c1411f20bfc3f9fe9a40737a9f2daa481be7e3eea0171e8258775.png" src="../_images/e7de223de53c1411f20bfc3f9fe9a40737a9f2daa481be7e3eea0171e8258775.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Make a barplot of the number of gears for automatic/manual</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">barplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">mtcars</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;gear&#39;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;am&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Axes: ylabel=&#39;gear&#39;&gt;
+</pre></div>
+</div>
+<img alt="../_images/ae764b3b2e0b392298ec4e21c017f7d132ef11f2a71430cb6869f1f581d61357.png" src="../_images/ae764b3b2e0b392298ec4e21c017f7d132ef11f2a71430cb6869f1f581d61357.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Very complex plots can be made easily</span>
+<span class="c1"># using the &#39;relplot&#39; (for an association) </span>
+<span class="n">sns</span><span class="o">.</span><span class="n">relplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">mtcars</span><span class="p">,</span> 
+            <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;scatter&#39;</span><span class="p">,</span>
+            <span class="n">row</span><span class="o">=</span><span class="s1">&#39;am&#39;</span><span class="p">,</span>
+            <span class="n">col</span><span class="o">=</span><span class="s1">&#39;gear&#39;</span><span class="p">,</span>
+            <span class="n">x</span><span class="o">=</span><span class="s1">&#39;mpg&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;hp&#39;</span><span class="p">,</span>
+            <span class="n">s</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">.3</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/b8fac7a6bee60739a2ea90ec8d293dab6cac879e281b6a854349ca8c88bad15c.png" src="../_images/b8fac7a6bee60739a2ea90ec8d293dab6cac879e281b6a854349ca8c88bad15c.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># ...or `catplot` for categorical data</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">catplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">mtcars</span><span class="p">,</span> 
+            <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;violin&#39;</span><span class="p">,</span>
+            <span class="n">row</span><span class="o">=</span><span class="s1">&#39;am&#39;</span><span class="p">,</span>
+            <span class="n">col</span><span class="o">=</span><span class="s1">&#39;gear&#39;</span><span class="p">,</span>
+            <span class="n">y</span><span class="o">=</span><span class="s1">&#39;mpg&#39;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;carb&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/41d7ee4c118fef8c735f9bc2ab5c053a87990ee726cb24368a1e9a5fe972d1ef.png" src="../_images/41d7ee4c118fef8c735f9bc2ab5c053a87990ee726cb24368a1e9a5fe972d1ef.png" />
+</div>
+</div>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./1_Introduction"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../intro.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Statistical Modelling with Python</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="QPoP%20-%20Week%201%20Exercises%20-%20Answers.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Using Python for Data Analysis - Exercises &amp; Answers</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#using-python-for-data-analysis">Using Python for Data Analysis</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#part-1-basic-syntax">Part 1 - Basic syntax</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#variables">Variables</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#types">Types</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#data-containers">Data Containers</a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#lists">Lists</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#dictionaries">Dictionaries</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#part-2-pandas">Part 2 - Pandas</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#data-at-a-glance-describe-and-info">Data at a glance - .describe() and .info()</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#accessing-data-in-pandas">Accessing data in Pandas</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#filtering-a-dataframe">Filtering a dataframe</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#dropping-data-imputing-values-and-getting-a-summary-statistic">Dropping data, imputing values, and getting a summary statistic</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#aggregating">Aggregating</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#aggregating-by-groups">Aggregating by groups</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#reshaping-data">Reshaping data</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#wide-to-long">Wide to long</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#long-to-wide">Long to wide</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#part-3-statistical-plots-with-seaborn">Part 3 - Statistical Plots with Seaborn</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Alex Jones, Ph.D
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

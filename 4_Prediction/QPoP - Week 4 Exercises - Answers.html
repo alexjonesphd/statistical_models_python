@@ -1,0 +1,2052 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Asking scientific questions of models - Exercises &amp; Answers &#8212; Statistical Modelling with Python</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '4_Prediction/QPoP - Week 4 Exercises - Answers';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="5 - Binary outcome models" href="../5_Binary/QPoP%20-%20Week%205%20Workshop.html" />
+    <link rel="prev" title="4 - The art of prediction" href="QPoP%20-%20Week%204%20Workshop.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt="Statistical Modelling with Python - Home"/>
+    <script>document.write(`<img src="../_static/logo.png" class="logo__image only-dark" alt="Statistical Modelling with Python - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    Statistical Modelling with Python
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Python Basics</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../1_Introduction/QPoP%20-%20Week%201%20Workshop.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../1_Introduction/QPoP%20-%20Week%201%20Exercises%20-%20Answers.html">Using Python for Data Analysis - Exercises &amp; Answers</a></li>
+
+
+
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">The GLM</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../2_The_GLM/QPoP%20-%20Week%202%20Workshop.html">2 - The General Linear Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../2_The_GLM/QPoP%20-%20Week%202%20Exercises%20-%20Answers.html">Getting to grips with linear models in Python - Exercises &amp; Answers</a></li>
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Advancing the GLM</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../3_Advancing_GLM/QPoP%20-%20Week%203%20Workshop.html">3 - Advancing the general linear model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../3_Advancing_GLM/QPoP%20-%20Week%203%20Exercises%20-%20Answers.html">Checking assumptions and including interactions - Exercises &amp; Answers</a></li>
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">The art of prediction</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="QPoP%20-%20Week%204%20Workshop.html">4 - The art of prediction</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Asking scientific questions of models - Exercises &amp; Answers</a></li>
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Binary outcome models</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../5_Binary/QPoP%20-%20Week%205%20Workshop.html">5 - Binary outcome models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../5_Binary/QPoP%20-%20Week%205%20Exercises%20-%20Answers.html">Using and understanding probit models - Exercises &amp; Answers</a></li>
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Applications and other kinds of hypotheses</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../6_Applications/QPoP%20-%20Week%206%20Workshop.html">6 - Precision in Predictions</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../6_Applications/QPoP%20-%20Week%206%20Exercises%20-%20Answers.html">Quantitative Perspectives on Psychology</a></li>
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Linear Mixed Effects Models</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../7_MixedModel/QPoP%20-%20Week%207%20Workshop.html">7 - Linear mixed effects models</a></li>
+
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2F4_Prediction/QPoP - Week 4 Exercises - Answers.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/4_Prediction/QPoP - Week 4 Exercises - Answers.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Asking scientific questions of models - Exercises & Answers</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Asking scientific questions of models - Exercises &amp; Answers</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#traditional-approaches-from-a-model-based-perspective">Traditional approaches from a model-based perspective</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-imports">a. Imports</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#b-loading-up-data">b. Loading up data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#c-the-t-test-as-a-marginal-effect">c. The t-test as a marginal effect</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#d-carrying-out-an-anova-with-linear-models-and-marginal-effects">d. Carrying out an ANOVA with linear models and marginal effects</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#e-ancova-done-with-marginal-effects">e. ANCOVA done with marginal effects</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#f-knowledge-of-linear-models-gets-you-out-of-trouble">f. Knowledge of linear models gets you out of trouble</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#g-interpreting-complex-interactions-with-marginal-effects">g. Interpreting complex interactions with marginal effects</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#h-personalised-predictions">h. Personalised predictions</a></li>
+</ul>
+</li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="asking-scientific-questions-of-models-exercises-answers">
+<h1>Asking scientific questions of models - Exercises &amp; Answers<a class="headerlink" href="#asking-scientific-questions-of-models-exercises-answers" title="Link to this heading">#</a></h1>
+<p>The exercises here are designed to get you comfortable using models to make predictions and having them answer questions of interest, as opposed to relying on a suite of tests picked from a flowchart.</p>
+</section>
+<section id="traditional-approaches-from-a-model-based-perspective">
+<h1>Traditional approaches from a model-based perspective<a class="headerlink" href="#traditional-approaches-from-a-model-based-perspective" title="Link to this heading">#</a></h1>
+<p>To get things clear, lets do some standard approaches such as t-tests and ANOVAs from the perspective of a linear model. We won’t interpret the coefficients, we’ll just get the model to tell us the answer directly and compare it to the traditional answer.</p>
+<section id="a-imports">
+<h2>a. Imports<a class="headerlink" href="#a-imports" title="Link to this heading">#</a></h2>
+<p>Import <code class="docutils literal notranslate"><span class="pre">pandas</span></code>, <code class="docutils literal notranslate"><span class="pre">pingouin</span></code>, <code class="docutils literal notranslate"><span class="pre">statsmodels.formula.api</span></code>, <code class="docutils literal notranslate"><span class="pre">seaborn</span></code>, and also <code class="docutils literal notranslate"><span class="pre">marginaleffects</span></code>.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Your answer here</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">pingouin</span> <span class="k">as</span> <span class="nn">pg</span>
+<span class="kn">import</span> <span class="nn">statsmodels.formula.api</span> <span class="k">as</span> <span class="nn">smf</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">import</span> <span class="nn">marginaleffects</span> <span class="k">as</span> <span class="nn">me</span>
+
+<span class="n">sns</span><span class="o">.</span><span class="n">set_style</span><span class="p">(</span><span class="s1">&#39;whitegrid&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+</section>
+<section id="b-loading-up-data">
+<h2>b. Loading up data<a class="headerlink" href="#b-loading-up-data" title="Link to this heading">#</a></h2>
+<p>We will continue our exploration of the ‘Teaching Ratings’ dataset here, and use <code class="docutils literal notranslate"><span class="pre">marginaleffects</span></code> to explore the consequences of our models.</p>
+<p>The data can be found here: <a class="reference external" href="https://vincentarelbundock.github.io/Rdatasets/csv/AER/TeachingRatings.csv">https://vincentarelbundock.github.io/Rdatasets/csv/AER/TeachingRatings.csv</a></p>
+<p>Read it into a dataframe called <code class="docutils literal notranslate"><span class="pre">profs</span></code>, and show the top 5 rows.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Your answer here</span>
+<span class="c1"># Read in dataset</span>
+<span class="n">profs</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;https://vincentarelbundock.github.io/Rdatasets/csv/AER/TeachingRatings.csv&#39;</span><span class="p">)</span>
+<span class="n">profs</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>rownames</th>
+      <th>minority</th>
+      <th>age</th>
+      <th>gender</th>
+      <th>credits</th>
+      <th>beauty</th>
+      <th>eval</th>
+      <th>division</th>
+      <th>native</th>
+      <th>tenure</th>
+      <th>students</th>
+      <th>allstudents</th>
+      <th>prof</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>yes</td>
+      <td>36</td>
+      <td>female</td>
+      <td>more</td>
+      <td>0.289916</td>
+      <td>4.3</td>
+      <td>upper</td>
+      <td>yes</td>
+      <td>yes</td>
+      <td>24</td>
+      <td>43</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>no</td>
+      <td>59</td>
+      <td>male</td>
+      <td>more</td>
+      <td>-0.737732</td>
+      <td>4.5</td>
+      <td>upper</td>
+      <td>yes</td>
+      <td>yes</td>
+      <td>17</td>
+      <td>20</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3</td>
+      <td>no</td>
+      <td>51</td>
+      <td>male</td>
+      <td>more</td>
+      <td>-0.571984</td>
+      <td>3.7</td>
+      <td>upper</td>
+      <td>yes</td>
+      <td>yes</td>
+      <td>55</td>
+      <td>55</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4</td>
+      <td>no</td>
+      <td>40</td>
+      <td>female</td>
+      <td>more</td>
+      <td>-0.677963</td>
+      <td>4.3</td>
+      <td>upper</td>
+      <td>yes</td>
+      <td>yes</td>
+      <td>40</td>
+      <td>46</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5</td>
+      <td>no</td>
+      <td>31</td>
+      <td>female</td>
+      <td>more</td>
+      <td>1.509794</td>
+      <td>4.4</td>
+      <td>upper</td>
+      <td>yes</td>
+      <td>yes</td>
+      <td>42</td>
+      <td>48</td>
+      <td>5</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="c-the-t-test-as-a-marginal-effect">
+<h2>c. The t-test as a marginal effect<a class="headerlink" href="#c-the-t-test-as-a-marginal-effect" title="Link to this heading">#</a></h2>
+<p>We will recreate a t-test with model-based predictions.</p>
+<p>First, conduct a t-test with <code class="docutils literal notranslate"><span class="pre">pingouin</span></code>, comparing the evaluation score of male and female professors.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Your answer here</span>
+<span class="c1"># T-test with pingouin</span>
+<span class="n">pg</span><span class="o">.</span><span class="n">ttest</span><span class="p">(</span><span class="n">profs</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;gender == &quot;female&quot;&#39;</span><span class="p">)[</span><span class="s1">&#39;eval&#39;</span><span class="p">],</span>
+         <span class="n">profs</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;gender == &quot;male&quot;&#39;</span><span class="p">)[</span><span class="s1">&#39;eval&#39;</span><span class="p">]</span>
+        <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>T</th>
+      <th>dof</th>
+      <th>alternative</th>
+      <th>p-val</th>
+      <th>CI95%</th>
+      <th>cohen-d</th>
+      <th>BF10</th>
+      <th>power</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>T-test</th>
+      <td>-3.266711</td>
+      <td>425.755804</td>
+      <td>two-sided</td>
+      <td>0.001176</td>
+      <td>[-0.27, -0.07]</td>
+      <td>0.305901</td>
+      <td>17.548</td>
+      <td>0.900288</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Now fit a regression model with <code class="docutils literal notranslate"><span class="pre">statsmodels</span></code> predicting evaluations from gender. Call the model <code class="docutils literal notranslate"><span class="pre">ttest</span></code>. Check the summary, and remember the coefficient will equal the mean difference, which we can check our predictions against.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Your answer here</span>
+<span class="c1"># Fit the model</span>
+<span class="n">ttest</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="s1">&#39;eval ~ gender&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">profs</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="n">ttest</span><span class="o">.</span><span class="n">summary</span><span class="p">(</span><span class="n">slim</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_html"><table class="simpletable">
+<caption>OLS Regression Results</caption>
+<tr>
+  <th>Dep. Variable:</th>      <td>eval</td>    <th>  R-squared:         </th> <td>   0.022</td>
+</tr>
+<tr>
+  <th>Model:</th>               <td>OLS</td>    <th>  Adj. R-squared:    </th> <td>   0.020</td>
+</tr>
+<tr>
+  <th>No. Observations:</th>  <td>   463</td>   <th>  F-statistic:       </th> <td>   10.56</td>
+</tr>
+<tr>
+  <th>Covariance Type:</th>  <td>nonrobust</td> <th>  Prob (F-statistic):</th>  <td>0.00124</td>
+</tr>
+</table>
+<table class="simpletable">
+<tr>
+         <td></td>           <th>coef</th>     <th>std err</th>      <th>t</th>      <th>P>|t|</th>  <th>[0.025</th>    <th>0.975]</th>  
+</tr>
+<tr>
+  <th>Intercept</th>      <td>    3.9010</td> <td>    0.039</td> <td>   99.187</td> <td> 0.000</td> <td>    3.824</td> <td>    3.978</td>
+</tr>
+<tr>
+  <th>gender[T.male]</th> <td>    0.1680</td> <td>    0.052</td> <td>    3.250</td> <td> 0.001</td> <td>    0.066</td> <td>    0.270</td>
+</tr>
+</table><br/><br/>Notes:<br/>[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.</div></div>
+</div>
+<p>Next, use <code class="docutils literal notranslate"><span class="pre">marginaleffects</span></code> to create a datagrid that will give predictions for female and male professors, and pass it to <code class="docutils literal notranslate"><span class="pre">me.predictions</span></code> to make the predictions. Examine the values.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Your answer here</span>
+<span class="c1"># Datagrid</span>
+<span class="n">datagrid</span> <span class="o">=</span> <span class="n">me</span><span class="o">.</span><span class="n">datagrid</span><span class="p">(</span><span class="n">ttest</span><span class="p">,</span> <span class="n">gender</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;male&#39;</span><span class="p">,</span> <span class="s1">&#39;female&#39;</span><span class="p">])</span>
+
+<span class="c1"># Predictions</span>
+<span class="n">preds</span> <span class="o">=</span> <span class="n">me</span><span class="o">.</span><span class="n">predictions</span><span class="p">(</span><span class="n">ttest</span><span class="p">,</span> <span class="n">newdata</span><span class="o">=</span><span class="n">datagrid</span><span class="p">)</span>
+<span class="n">preds</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_html"><div><style>
+.dataframe > thead > tr,
+.dataframe > tbody > tr {
+  text-align: right;
+  white-space: pre-wrap;
+}
+</style>
+<small>shape: (2, 21)</small><table border="1" class="dataframe"><thead><tr><th>gender</th><th>rowid</th><th>estimate</th><th>std_error</th><th>statistic</th><th>p_value</th><th>s_value</th><th>conf_low</th><th>conf_high</th><th>rownames</th><th>minority</th><th>age</th><th>credits</th><th>beauty</th><th>eval</th><th>division</th><th>native</th><th>tenure</th><th>students</th><th>allstudents</th><th>prof</th></tr><tr><td>str</td><td>i32</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>i64</td><td>str</td><td>i64</td><td>str</td><td>f64</td><td>f64</td><td>str</td><td>str</td><td>str</td><td>i64</td><td>i64</td><td>i64</td></tr></thead><tbody><tr><td>&quot;male&quot;</td><td>0</td><td>4.06903</td><td>0.033548</td><td>121.288353</td><td>0.0</td><td>inf</td><td>4.003276</td><td>4.134784</td><td>293</td><td>&quot;no&quot;</td><td>52</td><td>&quot;more&quot;</td><td>6.2635e-8</td><td>3.998272</td><td>&quot;upper&quot;</td><td>&quot;yes&quot;</td><td>&quot;yes&quot;</td><td>12</td><td>15</td><td>34</td></tr><tr><td>&quot;female&quot;</td><td>1</td><td>3.901026</td><td>0.03933</td><td>99.187465</td><td>0.0</td><td>inf</td><td>3.823941</td><td>3.978111</td><td>293</td><td>&quot;no&quot;</td><td>52</td><td>&quot;more&quot;</td><td>6.2635e-8</td><td>3.998272</td><td>&quot;upper&quot;</td><td>&quot;yes&quot;</td><td>&quot;yes&quot;</td><td>12</td><td>15</td><td>34</td></tr></tbody></table></div></div></div>
+</div>
+<p>Repeat the predictions step but use the <code class="docutils literal notranslate"><span class="pre">hypothesis</span></code> test to get the difference between the predictions.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Your answer here</span>
+<span class="c1"># Comparison is done via hypothesis</span>
+<span class="n">me</span><span class="o">.</span><span class="n">predictions</span><span class="p">(</span><span class="n">ttest</span><span class="p">,</span> <span class="n">newdata</span><span class="o">=</span><span class="n">datagrid</span><span class="p">,</span> <span class="n">hypothesis</span><span class="o">=</span><span class="s1">&#39;pairwise&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_html"><div><style>
+.dataframe > thead > tr,
+.dataframe > tbody > tr {
+  text-align: right;
+  white-space: pre-wrap;
+}
+</style>
+<small>shape: (1, 8)</small><table border="1" class="dataframe"><thead><tr><th>term</th><th>estimate</th><th>std_error</th><th>statistic</th><th>p_value</th><th>s_value</th><th>conf_low</th><th>conf_high</th></tr><tr><td>str</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td></tr></thead><tbody><tr><td>&quot;Row 1 - Row 2&quot;</td><td>0.168004</td><td>0.051695</td><td>3.249939</td><td>0.001154</td><td>9.758768</td><td>0.066685</td><td>0.269324</td></tr></tbody></table></div></div></div>
+</div>
+</section>
+<section id="d-carrying-out-an-anova-with-linear-models-and-marginal-effects">
+<h2>d. Carrying out an ANOVA with linear models and marginal effects<a class="headerlink" href="#d-carrying-out-an-anova-with-linear-models-and-marginal-effects" title="Link to this heading">#</a></h2>
+<p>Lets now demonstrate how an ANOVA can be executed easily with a linear model and the examination of marginal effects.</p>
+<p>First, use <code class="docutils literal notranslate"><span class="pre">pinoguin</span></code> to carry out an ANOVA on teaching evaluations, using tenure and gender as the factors - that is, examine whether male and female professors differ in their evaluations depending on whether they have achieved tenure or not.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Your answer here</span>
+<span class="c1"># A Pingouin ANOVA</span>
+<span class="n">pg</span><span class="o">.</span><span class="n">anova</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">profs</span><span class="p">,</span> <span class="n">dv</span><span class="o">=</span><span class="s1">&#39;eval&#39;</span><span class="p">,</span> <span class="n">between</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;gender&#39;</span><span class="p">,</span> <span class="s1">&#39;tenure&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Source</th>
+      <th>SS</th>
+      <th>DF</th>
+      <th>MS</th>
+      <th>F</th>
+      <th>p-unc</th>
+      <th>np2</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>gender</td>
+      <td>3.628914</td>
+      <td>1.0</td>
+      <td>3.628914</td>
+      <td>12.615338</td>
+      <td>0.000422</td>
+      <td>0.026749</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>tenure</td>
+      <td>2.829395</td>
+      <td>1.0</td>
+      <td>2.829395</td>
+      <td>9.835936</td>
+      <td>0.001821</td>
+      <td>0.020979</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>gender * tenure</td>
+      <td>4.187913</td>
+      <td>1.0</td>
+      <td>4.187913</td>
+      <td>14.558608</td>
+      <td>0.000154</td>
+      <td>0.030743</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Residual</td>
+      <td>132.035435</td>
+      <td>459.0</td>
+      <td>0.287659</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>This suggests there is a main effect of gender, tenure and an interaction. Usually we’d need to do post-hoc tests to explore these. But we can rely on marginal effects for a simpler interpretation. First, fit a linear regression that is the same as the ANOVA, predicting evaluation measures from gender, tenure, and its interaction. Call it an <code class="docutils literal notranslate"><span class="pre">anova_model</span></code>.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Your answer here</span>
+<span class="c1"># A linear model equivalent</span>
+<span class="n">anova_model</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="s1">&#39;eval ~ gender * tenure&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">profs</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="n">anova_model</span><span class="o">.</span><span class="n">summary</span><span class="p">(</span><span class="n">slim</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_html"><table class="simpletable">
+<caption>OLS Regression Results</caption>
+<tr>
+  <th>Dep. Variable:</th>      <td>eval</td>    <th>  R-squared:         </th> <td>   0.072</td>
+</tr>
+<tr>
+  <th>Model:</th>               <td>OLS</td>    <th>  Adj. R-squared:    </th> <td>   0.066</td>
+</tr>
+<tr>
+  <th>No. Observations:</th>  <td>   463</td>   <th>  F-statistic:       </th> <td>   11.82</td>
+</tr>
+<tr>
+  <th>Covariance Type:</th>  <td>nonrobust</td> <th>  Prob (F-statistic):</th> <td>1.80e-07</td>
+</tr>
+</table>
+<table class="simpletable">
+<tr>
+                <td></td>                  <th>coef</th>     <th>std err</th>      <th>t</th>      <th>P>|t|</th>  <th>[0.025</th>    <th>0.975]</th>  
+</tr>
+<tr>
+  <th>Intercept</th>                    <td>    3.8600</td> <td>    0.076</td> <td>   50.890</td> <td> 0.000</td> <td>    3.711</td> <td>    4.009</td>
+</tr>
+<tr>
+  <th>gender[T.male]</th>               <td>    0.5362</td> <td>    0.106</td> <td>    5.047</td> <td> 0.000</td> <td>    0.327</td> <td>    0.745</td>
+</tr>
+<tr>
+  <th>tenure[T.yes]</th>                <td>    0.0552</td> <td>    0.088</td> <td>    0.627</td> <td> 0.531</td> <td>   -0.118</td> <td>    0.228</td>
+</tr>
+<tr>
+  <th>gender[T.male]:tenure[T.yes]</th> <td>   -0.4610</td> <td>    0.121</td> <td>   -3.816</td> <td> 0.000</td> <td>   -0.699</td> <td>   -0.224</td>
+</tr>
+</table><br/><br/>Notes:<br/>[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.</div></div>
+</div>
+<p>With a fitted model, we can easily explore the implications via the predictions.</p>
+<p>First, make a datagrid that gives predictions for tenure and gender. Call it <code class="docutils literal notranslate"><span class="pre">anova_predmat</span></code>, and then use the model to predict those scores, storing them in a dataframe called <code class="docutils literal notranslate"><span class="pre">anova_predictions</span></code>.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Your answer here</span>
+<span class="c1"># Prediction grid</span>
+<span class="n">anova_predmat</span> <span class="o">=</span> <span class="n">me</span><span class="o">.</span><span class="n">datagrid</span><span class="p">(</span><span class="n">anova_model</span><span class="p">,</span>
+                            <span class="n">tenure</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;yes&#39;</span><span class="p">,</span> <span class="s1">&#39;no&#39;</span><span class="p">],</span>
+                            <span class="n">gender</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;male&#39;</span><span class="p">,</span> <span class="s1">&#39;female&#39;</span><span class="p">])</span>
+
+<span class="c1"># Output</span>
+<span class="n">anova_predictions</span> <span class="o">=</span> <span class="n">me</span><span class="o">.</span><span class="n">predictions</span><span class="p">(</span><span class="n">anova_model</span><span class="p">,</span> <span class="n">newdata</span><span class="o">=</span><span class="n">anova_predmat</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<p>It is always sensible to plot predictions before we begin interpretin them. Use <code class="docutils literal notranslate"><span class="pre">seaborn</span></code> to create a line plot that illustrates the interaction. Any way you want is fine - as long as the estimate is on the y axis.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Your answer here</span>
+<span class="c1"># plot</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">anova_predictions</span><span class="p">,</span>
+             <span class="n">y</span><span class="o">=</span><span class="s1">&#39;estimate&#39;</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;tenure&#39;</span><span class="p">,</span>
+             <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;gender&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Axes: xlabel=&#39;tenure&#39;, ylabel=&#39;estimate&#39;&gt;
+</pre></div>
+</div>
+<img alt="../_images/cedc96c577171b405f97b1cb8c059a9b2a5dde84d4c3b8e5e6ee7d98ff882e38.png" src="../_images/cedc96c577171b405f97b1cb8c059a9b2a5dde84d4c3b8e5e6ee7d98ff882e38.png" />
+</div>
+</div>
+<p>The ANOVA suggested we had the following results:</p>
+<ol class="arabic simple">
+<li><p>A main effect of gender (differences between men and women, ignoring tenure status)</p></li>
+<li><p>A main effect of tenure (differences between tenured and non-tenured, ignoring gender)</p></li>
+<li><p>An interaction, indicating the difference between one variable (e.g. gender) at one level of the other (say tenured) is different to the other (confusing!)</p></li>
+</ol>
+<p>Have the model make predictions, and to explore the main effects, use the <code class="docutils literal notranslate"><span class="pre">by</span></code> keyword to ignore one variable and the <code class="docutils literal notranslate"><span class="pre">hypothesis</span></code> keyword to check the differences.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Your answer here</span>
+<span class="c1"># Main effects</span>
+<span class="c1"># Gender</span>
+<span class="n">me</span><span class="o">.</span><span class="n">predictions</span><span class="p">(</span><span class="n">anova_model</span><span class="p">,</span> <span class="n">newdata</span><span class="o">=</span><span class="n">anova_predmat</span><span class="p">,</span> <span class="n">by</span><span class="o">=</span><span class="s1">&#39;gender&#39;</span><span class="p">,</span> <span class="n">hypothesis</span><span class="o">=</span><span class="s1">&#39;pairwise&#39;</span><span class="p">)</span>
+
+<span class="c1"># Tenure</span>
+<span class="n">me</span><span class="o">.</span><span class="n">predictions</span><span class="p">(</span><span class="n">anova_model</span><span class="p">,</span> <span class="n">newdata</span><span class="o">=</span><span class="n">anova_predmat</span><span class="p">,</span> <span class="n">by</span><span class="o">=</span><span class="s1">&#39;tenure&#39;</span><span class="p">,</span> <span class="n">hypothesis</span><span class="o">=</span><span class="s1">&#39;pairwise&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_html"><div><style>
+.dataframe > thead > tr,
+.dataframe > tbody > tr {
+  text-align: right;
+  white-space: pre-wrap;
+}
+</style>
+<small>shape: (1, 8)</small><table border="1" class="dataframe"><thead><tr><th>term</th><th>estimate</th><th>std_error</th><th>statistic</th><th>p_value</th><th>s_value</th><th>conf_low</th><th>conf_high</th></tr><tr><td>str</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td></tr></thead><tbody><tr><td>&quot;Row 1 - Row 2&quot;</td><td>0.175352</td><td>0.060417</td><td>2.902376</td><td>0.003703</td><td>8.076918</td><td>0.056937</td><td>0.293766</td></tr></tbody></table></div></div></div>
+</div>
+<p>Now use the predictions to figure out the ‘cause’ of the interaction. There are a few ways to do this. You can compare men and women professors who are tenured, and see if that difference is significant, and then see if the difference between non-tenured professors is also significant. What do you observe?</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Your answer here</span>
+<span class="n">me</span><span class="o">.</span><span class="n">predictions</span><span class="p">(</span><span class="n">anova_model</span><span class="p">,</span> <span class="n">newdata</span><span class="o">=</span><span class="n">anova_predmat</span><span class="p">,</span> <span class="n">hypothesis</span><span class="o">=</span><span class="s1">&#39;b1=b2&#39;</span><span class="p">)</span> <span class="c1"># Tenured, NON significant</span>
+<span class="n">me</span><span class="o">.</span><span class="n">predictions</span><span class="p">(</span><span class="n">anova_model</span><span class="p">,</span> <span class="n">newdata</span><span class="o">=</span><span class="n">anova_predmat</span><span class="p">,</span> <span class="n">hypothesis</span><span class="o">=</span><span class="s1">&#39;b3=b4&#39;</span><span class="p">)</span> <span class="c1"># Non-tenured, significant, males &gt; females</span>
+
+<span class="c1"># Slopes</span>
+<span class="n">me</span><span class="o">.</span><span class="n">slopes</span><span class="p">(</span><span class="n">anova_model</span><span class="p">,</span> <span class="n">newdata</span><span class="o">=</span><span class="n">anova_predmat</span><span class="p">,</span> <span class="n">variables</span><span class="o">=</span><span class="s1">&#39;tenure&#39;</span><span class="p">,</span> <span class="n">by</span><span class="o">=</span><span class="s1">&#39;gender&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_html"><div><style>
+.dataframe > thead > tr,
+.dataframe > tbody > tr {
+  text-align: right;
+  white-space: pre-wrap;
+}
+</style>
+<small>shape: (2, 10)</small><table border="1" class="dataframe"><thead><tr><th>gender</th><th>term</th><th>contrast</th><th>estimate</th><th>std_error</th><th>statistic</th><th>p_value</th><th>s_value</th><th>conf_low</th><th>conf_high</th></tr><tr><td>str</td><td>str</td><td>str</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td></tr></thead><tbody><tr><td>&quot;female&quot;</td><td>&quot;tenure&quot;</td><td>&quot;mean(yes) - mean(no)&quot;</td><td>0.055172</td><td>0.08796</td><td>0.627241</td><td>0.530501</td><td>0.914573</td><td>-0.117227</td><td>0.227572</td></tr><tr><td>&quot;male&quot;</td><td>&quot;tenure&quot;</td><td>&quot;mean(yes) - mean(no)&quot;</td><td>-0.405876</td><td>0.082847</td><td>-4.899093</td><td>9.6280e-7</td><td>19.98626</td><td>-0.568254</td><td>-0.243499</td></tr></tbody></table></div></div></div>
+</div>
+</section>
+<section id="e-ancova-done-with-marginal-effects">
+<h2>e. ANCOVA done with marginal effects<a class="headerlink" href="#e-ancova-done-with-marginal-effects" title="Link to this heading">#</a></h2>
+<p>Let us now add some complexity. ANCOVA is often described as an ANOVA ‘adjusting’ for another variable. We know it simply as a general linear model, with some kind of categorical predictor, and other continuous predictors that are also in the model. There can be as many categorical predictors and interactions between them as needed, as well as the continuous covariates.</p>
+<p>ANCOVA is a confusing and unnecessary term. Linear models are simpler, and here we will see how.</p>
+<p>First, carry out an ANCOVA with <code class="docutils literal notranslate"><span class="pre">pingouin</span></code> that looks at teaching evaluations between men and women (the categorical predictor), but adjusts for their beauty (the continuous covariate). Print the result. What does it tell you?</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Your answer here</span>
+<span class="c1"># ANCOVA in pingouin</span>
+<span class="n">pg</span><span class="o">.</span><span class="n">ancova</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">profs</span><span class="p">,</span> <span class="n">dv</span><span class="o">=</span><span class="s1">&#39;eval&#39;</span><span class="p">,</span> <span class="n">between</span><span class="o">=</span><span class="s1">&#39;gender&#39;</span><span class="p">,</span> <span class="n">covar</span><span class="o">=</span><span class="s1">&#39;beauty&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Source</th>
+      <th>SS</th>
+      <th>DF</th>
+      <th>F</th>
+      <th>p-unc</th>
+      <th>np2</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>gender</td>
+      <td>4.346745</td>
+      <td>1</td>
+      <td>15.055490</td>
+      <td>0.000120</td>
+      <td>0.031692</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>beauty</td>
+      <td>6.243877</td>
+      <td>1</td>
+      <td>21.626444</td>
+      <td>0.000004</td>
+      <td>0.044903</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Residual</td>
+      <td>132.808865</td>
+      <td>460</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>You should see that there are significant effects of both gender and beauty, but there’s little information of use here.</p>
+<p>Fit a linear model that is equivalent to this ANCOVA, called <code class="docutils literal notranslate"><span class="pre">ancova_mod</span></code>. Print the summary.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Your answer here</span>
+<span class="n">ancova_mod</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="s1">&#39;eval ~ gender + beauty&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">profs</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="n">ancova_mod</span><span class="o">.</span><span class="n">summary</span><span class="p">(</span><span class="n">slim</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_html"><table class="simpletable">
+<caption>OLS Regression Results</caption>
+<tr>
+  <th>Dep. Variable:</th>      <td>eval</td>    <th>  R-squared:         </th> <td>   0.066</td>
+</tr>
+<tr>
+  <th>Model:</th>               <td>OLS</td>    <th>  Adj. R-squared:    </th> <td>   0.062</td>
+</tr>
+<tr>
+  <th>No. Observations:</th>  <td>   463</td>   <th>  F-statistic:       </th> <td>   16.33</td>
+</tr>
+<tr>
+  <th>Covariance Type:</th>  <td>nonrobust</td> <th>  Prob (F-statistic):</th> <td>1.41e-07</td>
+</tr>
+</table>
+<table class="simpletable">
+<tr>
+         <td></td>           <th>coef</th>     <th>std err</th>      <th>t</th>      <th>P>|t|</th>  <th>[0.025</th>    <th>0.975]</th>  
+</tr>
+<tr>
+  <th>Intercept</th>      <td>    3.8838</td> <td>    0.039</td> <td>  100.468</td> <td> 0.000</td> <td>    3.808</td> <td>    3.960</td>
+</tr>
+<tr>
+  <th>gender[T.male]</th> <td>    0.1978</td> <td>    0.051</td> <td>    3.880</td> <td> 0.000</td> <td>    0.098</td> <td>    0.298</td>
+</tr>
+<tr>
+  <th>beauty</th>         <td>    0.1486</td> <td>    0.032</td> <td>    4.650</td> <td> 0.000</td> <td>    0.086</td> <td>    0.211</td>
+</tr>
+</table><br/><br/>Notes:<br/>[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.</div></div>
+</div>
+<p>Now make a prediction about teaching evaluations for females and males. As the variable we want to control for is in the model (beauty), we don’t need to make any predictions for it.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Your answer</span>
+<span class="c1"># Predictions and contrast</span>
+<span class="n">me</span><span class="o">.</span><span class="n">predictions</span><span class="p">(</span><span class="n">ancova_mod</span><span class="p">,</span> 
+               <span class="n">hypothesis</span><span class="o">=</span><span class="s1">&#39;pairwise&#39;</span><span class="p">,</span>
+               <span class="n">newdata</span><span class="o">=</span><span class="n">me</span><span class="o">.</span><span class="n">datagrid</span><span class="p">(</span><span class="n">ancova_mod</span><span class="p">,</span>
+                                   <span class="n">gender</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;male&#39;</span><span class="p">,</span> <span class="s1">&#39;female&#39;</span><span class="p">])</span>
+              <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_html"><div><style>
+.dataframe > thead > tr,
+.dataframe > tbody > tr {
+  text-align: right;
+  white-space: pre-wrap;
+}
+</style>
+<small>shape: (1, 8)</small><table border="1" class="dataframe"><thead><tr><th>term</th><th>estimate</th><th>std_error</th><th>statistic</th><th>p_value</th><th>s_value</th><th>conf_low</th><th>conf_high</th></tr><tr><td>str</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td></tr></thead><tbody><tr><td>&quot;Row 1 - Row 2&quot;</td><td>0.19781</td><td>0.05098</td><td>3.880141</td><td>0.000104</td><td>13.225646</td><td>0.097891</td><td>0.297729</td></tr></tbody></table></div></div></div>
+</div>
+<p>Repeat the analysis without the beauty covariate. Is the difference smaller or larger with the effect of beauty removed?</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Your answer</span>
+<span class="c1"># T-test style model</span>
+<span class="n">ancova_mod</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="s1">&#39;eval ~ gender&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">profs</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+
+<span class="c1"># Predictions and contrast</span>
+<span class="n">me</span><span class="o">.</span><span class="n">predictions</span><span class="p">(</span><span class="n">ancova_mod</span><span class="p">,</span> 
+               <span class="n">hypothesis</span><span class="o">=</span><span class="s1">&#39;pairwise&#39;</span><span class="p">,</span>
+               <span class="n">newdata</span><span class="o">=</span><span class="n">me</span><span class="o">.</span><span class="n">datagrid</span><span class="p">(</span><span class="n">ancova_mod</span><span class="p">,</span>
+                                   <span class="n">gender</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;male&#39;</span><span class="p">,</span> <span class="s1">&#39;female&#39;</span><span class="p">])</span>
+              <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_html"><div><style>
+.dataframe > thead > tr,
+.dataframe > tbody > tr {
+  text-align: right;
+  white-space: pre-wrap;
+}
+</style>
+<small>shape: (1, 8)</small><table border="1" class="dataframe"><thead><tr><th>term</th><th>estimate</th><th>std_error</th><th>statistic</th><th>p_value</th><th>s_value</th><th>conf_low</th><th>conf_high</th></tr><tr><td>str</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td></tr></thead><tbody><tr><td>&quot;Row 1 - Row 2&quot;</td><td>0.168004</td><td>0.051695</td><td>3.249939</td><td>0.001154</td><td>9.758768</td><td>0.066685</td><td>0.269324</td></tr></tbody></table></div></div></div>
+</div>
+</section>
+<section id="f-knowledge-of-linear-models-gets-you-out-of-trouble">
+<h2>f. Knowledge of linear models gets you out of trouble<a class="headerlink" href="#f-knowledge-of-linear-models-gets-you-out-of-trouble" title="Link to this heading">#</a></h2>
+<p>Following on from the last example, lets say we want to examine the interaction between gender and tenure status and control for beauty. Perhaps we wish to see whether our earlier ANOVA model stands up if we incorporate and control for beauty.</p>
+<p>First, try to fit one of these models in <code class="docutils literal notranslate"><span class="pre">pingouin</span></code>. Its another ANCOVA, but this time has two between factors.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Your answer here</span>
+<span class="c1">#pg.ancova(data=profs, dv=&#39;eval&#39;, between=[&#39;tenure&#39;, &#39;gender&#39;], covar=&#39;beauty&#39;)</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<p>If you did this correctly, you should see an error - the software doesn’t support it!</p>
+<p>But we can easily fit a linear model to do this. Fit a model that has an interaction between gender and tenure, and has beauty as a predictor.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Your answer here</span>
+<span class="c1"># More complex ANCOVA</span>
+<span class="n">ancova2</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="s1">&#39;eval ~ beauty + gender * tenure&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">profs</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="n">ancova2</span><span class="o">.</span><span class="n">summary</span><span class="p">(</span><span class="n">slim</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_html"><table class="simpletable">
+<caption>OLS Regression Results</caption>
+<tr>
+  <th>Dep. Variable:</th>      <td>eval</td>    <th>  R-squared:         </th> <td>   0.104</td>
+</tr>
+<tr>
+  <th>Model:</th>               <td>OLS</td>    <th>  Adj. R-squared:    </th> <td>   0.096</td>
+</tr>
+<tr>
+  <th>No. Observations:</th>  <td>   463</td>   <th>  F-statistic:       </th> <td>   13.23</td>
+</tr>
+<tr>
+  <th>Covariance Type:</th>  <td>nonrobust</td> <th>  Prob (F-statistic):</th> <td>3.32e-10</td>
+</tr>
+</table>
+<table class="simpletable">
+<tr>
+                <td></td>                  <th>coef</th>     <th>std err</th>      <th>t</th>      <th>P>|t|</th>  <th>[0.025</th>    <th>0.975]</th>  
+</tr>
+<tr>
+  <th>Intercept</th>                    <td>    3.8804</td> <td>    0.075</td> <td>   51.883</td> <td> 0.000</td> <td>    3.733</td> <td>    4.027</td>
+</tr>
+<tr>
+  <th>gender[T.male]</th>               <td>    0.4890</td> <td>    0.105</td> <td>    4.650</td> <td> 0.000</td> <td>    0.282</td> <td>    0.696</td>
+</tr>
+<tr>
+  <th>tenure[T.yes]</th>                <td>    0.0076</td> <td>    0.087</td> <td>    0.087</td> <td> 0.930</td> <td>   -0.164</td> <td>    0.179</td>
+</tr>
+<tr>
+  <th>gender[T.male]:tenure[T.yes]</th> <td>   -0.3668</td> <td>    0.121</td> <td>   -3.027</td> <td> 0.003</td> <td>   -0.605</td> <td>   -0.129</td>
+</tr>
+<tr>
+  <th>beauty</th>                       <td>    0.1289</td> <td>    0.032</td> <td>    4.032</td> <td> 0.000</td> <td>    0.066</td> <td>    0.192</td>
+</tr>
+</table><br/><br/>Notes:<br/>[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.</div></div>
+</div>
+<p>Once you have this model, use it to make predictions about gender and tenure as before, and work out the interaction effects. Are they the same as before?</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Your answer here</span>
+<span class="c1"># I will use slopes</span>
+<span class="n">me</span><span class="o">.</span><span class="n">slopes</span><span class="p">(</span><span class="n">ancova2</span><span class="p">,</span> <span class="n">newdata</span><span class="o">=</span><span class="n">anova_predmat</span><span class="p">,</span> <span class="n">variables</span><span class="o">=</span><span class="s1">&#39;tenure&#39;</span><span class="p">,</span> <span class="n">by</span><span class="o">=</span><span class="s1">&#39;gender&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_html"><div><style>
+.dataframe > thead > tr,
+.dataframe > tbody > tr {
+  text-align: right;
+  white-space: pre-wrap;
+}
+</style>
+<small>shape: (2, 10)</small><table border="1" class="dataframe"><thead><tr><th>gender</th><th>term</th><th>contrast</th><th>estimate</th><th>std_error</th><th>statistic</th><th>p_value</th><th>s_value</th><th>conf_low</th><th>conf_high</th></tr><tr><td>str</td><td>str</td><td>str</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td></tr></thead><tbody><tr><td>&quot;female&quot;</td><td>&quot;tenure&quot;</td><td>&quot;mean(yes) - mean(no)&quot;</td><td>0.007626</td><td>0.087334</td><td>0.087315</td><td>0.930421</td><td>0.104044</td><td>-0.163546</td><td>0.178798</td></tr><tr><td>&quot;male&quot;</td><td>&quot;tenure&quot;</td><td>&quot;mean(yes) - mean(no)&quot;</td><td>-0.359143</td><td>0.082324</td><td>-4.362546</td><td>0.000013</td><td>16.247228</td><td>-0.520495</td><td>-0.197791</td></tr></tbody></table></div></div></div>
+</div>
+<p>Plot it the predictions and check them against the ANOVA predictions.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Your answer here</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">me</span><span class="o">.</span><span class="n">predictions</span><span class="p">(</span><span class="n">ancova2</span><span class="p">,</span> <span class="n">newdata</span><span class="o">=</span><span class="n">anova_predmat</span><span class="p">),</span>
+             <span class="n">y</span><span class="o">=</span><span class="s1">&#39;estimate&#39;</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;tenure&#39;</span><span class="p">,</span>
+             <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;gender&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Axes: xlabel=&#39;tenure&#39;, ylabel=&#39;estimate&#39;&gt;
+</pre></div>
+</div>
+<img alt="../_images/d693348beea1659e38d9524fbcba551eea665e1dda028e4bebe6e51672130672.png" src="../_images/d693348beea1659e38d9524fbcba551eea665e1dda028e4bebe6e51672130672.png" />
+</div>
+</div>
+</section>
+<section id="g-interpreting-complex-interactions-with-marginal-effects">
+<h2>g. Interpreting complex interactions with marginal effects<a class="headerlink" href="#g-interpreting-complex-interactions-with-marginal-effects" title="Link to this heading">#</a></h2>
+<p>If you’ve completed the above exercises, you’ve mastered 99% of the statistics used in basic psychology, and learned how to do it from a much clearer perspective. Lets now build knowledge of how to interpret an even more complex model.</p>
+<p>Lets suppose that, rather than controlling for beauty’s influence on teaching evaluations for tenured and non-tenured males and females, you want to know whether it influences evaluations at these combinations. That is, you might wish to see how less attractive males are evaluated before and after tenure, and whether this change is different for females, who are typically judged more harshly on their looks.</p>
+<p>To do this, you will need an interaction between gender, beauty, and tenure. Fit a model that does this, and call it <code class="docutils literal notranslate"><span class="pre">three_interact</span></code>. Print the summary.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Your answer here</span>
+<span class="c1"># three variable interaction</span>
+<span class="n">three_interact</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="s1">&#39;eval ~ gender * beauty * tenure&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">profs</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="n">three_interact</span><span class="o">.</span><span class="n">summary</span><span class="p">(</span><span class="n">slim</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_html"><table class="simpletable">
+<caption>OLS Regression Results</caption>
+<tr>
+  <th>Dep. Variable:</th>      <td>eval</td>    <th>  R-squared:         </th> <td>   0.110</td>
+</tr>
+<tr>
+  <th>Model:</th>               <td>OLS</td>    <th>  Adj. R-squared:    </th> <td>   0.097</td>
+</tr>
+<tr>
+  <th>No. Observations:</th>  <td>   463</td>   <th>  F-statistic:       </th> <td>   8.055</td>
+</tr>
+<tr>
+  <th>Covariance Type:</th>  <td>nonrobust</td> <th>  Prob (F-statistic):</th> <td>3.03e-09</td>
+</tr>
+</table>
+<table class="simpletable">
+<tr>
+                   <td></td>                      <th>coef</th>     <th>std err</th>      <th>t</th>      <th>P>|t|</th>  <th>[0.025</th>    <th>0.975]</th>  
+</tr>
+<tr>
+  <th>Intercept</th>                           <td>    3.8601</td> <td>    0.076</td> <td>   51.031</td> <td> 0.000</td> <td>    3.711</td> <td>    4.009</td>
+</tr>
+<tr>
+  <th>gender[T.male]</th>                      <td>    0.5076</td> <td>    0.107</td> <td>    4.741</td> <td> 0.000</td> <td>    0.297</td> <td>    0.718</td>
+</tr>
+<tr>
+  <th>tenure[T.yes]</th>                       <td>    0.0275</td> <td>    0.088</td> <td>    0.312</td> <td> 0.755</td> <td>   -0.146</td> <td>    0.201</td>
+</tr>
+<tr>
+  <th>gender[T.male]:tenure[T.yes]</th>        <td>   -0.3781</td> <td>    0.122</td> <td>   -3.100</td> <td> 0.002</td> <td>   -0.618</td> <td>   -0.138</td>
+</tr>
+<tr>
+  <th>beauty</th>                              <td>    0.0006</td> <td>    0.080</td> <td>    0.008</td> <td> 0.994</td> <td>   -0.156</td> <td>    0.157</td>
+</tr>
+<tr>
+  <th>gender[T.male]:beauty</th>               <td>    0.1362</td> <td>    0.124</td> <td>    1.094</td> <td> 0.274</td> <td>   -0.108</td> <td>    0.381</td>
+</tr>
+<tr>
+  <th>beauty:tenure[T.yes]</th>                <td>    0.1301</td> <td>    0.099</td> <td>    1.315</td> <td> 0.189</td> <td>   -0.064</td> <td>    0.325</td>
+</tr>
+<tr>
+  <th>gender[T.male]:beauty:tenure[T.yes]</th> <td>   -0.0934</td> <td>    0.146</td> <td>   -0.640</td> <td> 0.522</td> <td>   -0.380</td> <td>    0.193</td>
+</tr>
+</table><br/><br/>Notes:<br/>[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.</div></div>
+</div>
+<p>Confusion abounds looking at the coefficients. Lets make sense of this by asking for predictions from the model. Generate a data grid that asks for beauty to be evaluated at [-2, 0, 2] (that’s -2 standard devs below average, average, and 2 above, as the variable is scaled so by the authors), for tenured and non-tenured males and females.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Your answer here</span>
+<span class="c1"># Get predictions</span>
+<span class="n">predmat</span> <span class="o">=</span> <span class="n">me</span><span class="o">.</span><span class="n">datagrid</span><span class="p">(</span><span class="n">three_interact</span><span class="p">,</span> 
+                      <span class="n">gender</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;male&#39;</span><span class="p">,</span> <span class="s1">&#39;female&#39;</span><span class="p">],</span>
+                      <span class="n">tenure</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;yes&#39;</span><span class="p">,</span> <span class="s1">&#39;no&#39;</span><span class="p">],</span>
+                      <span class="n">beauty</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+
+<span class="c1"># Show</span>
+<span class="n">predmat</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_html"><div><style>
+.dataframe > thead > tr,
+.dataframe > tbody > tr {
+  text-align: right;
+  white-space: pre-wrap;
+}
+</style>
+<small>shape: (12, 13)</small><table border="1" class="dataframe"><thead><tr><th>gender</th><th>tenure</th><th>beauty</th><th>rownames</th><th>minority</th><th>age</th><th>credits</th><th>eval</th><th>division</th><th>native</th><th>students</th><th>allstudents</th><th>prof</th></tr><tr><td>str</td><td>str</td><td>i64</td><td>i64</td><td>str</td><td>i64</td><td>str</td><td>f64</td><td>str</td><td>str</td><td>i64</td><td>i64</td><td>i64</td></tr></thead><tbody><tr><td>&quot;male&quot;</td><td>&quot;yes&quot;</td><td>-2</td><td>195</td><td>&quot;no&quot;</td><td>52</td><td>&quot;more&quot;</td><td>3.998272</td><td>&quot;upper&quot;</td><td>&quot;yes&quot;</td><td>12</td><td>15</td><td>34</td></tr><tr><td>&quot;male&quot;</td><td>&quot;yes&quot;</td><td>0</td><td>195</td><td>&quot;no&quot;</td><td>52</td><td>&quot;more&quot;</td><td>3.998272</td><td>&quot;upper&quot;</td><td>&quot;yes&quot;</td><td>12</td><td>15</td><td>34</td></tr><tr><td>&quot;male&quot;</td><td>&quot;yes&quot;</td><td>2</td><td>195</td><td>&quot;no&quot;</td><td>52</td><td>&quot;more&quot;</td><td>3.998272</td><td>&quot;upper&quot;</td><td>&quot;yes&quot;</td><td>12</td><td>15</td><td>34</td></tr><tr><td>&quot;male&quot;</td><td>&quot;no&quot;</td><td>-2</td><td>195</td><td>&quot;no&quot;</td><td>52</td><td>&quot;more&quot;</td><td>3.998272</td><td>&quot;upper&quot;</td><td>&quot;yes&quot;</td><td>12</td><td>15</td><td>34</td></tr><tr><td>&quot;male&quot;</td><td>&quot;no&quot;</td><td>0</td><td>195</td><td>&quot;no&quot;</td><td>52</td><td>&quot;more&quot;</td><td>3.998272</td><td>&quot;upper&quot;</td><td>&quot;yes&quot;</td><td>12</td><td>15</td><td>34</td></tr><tr><td>&hellip;</td><td>&hellip;</td><td>&hellip;</td><td>&hellip;</td><td>&hellip;</td><td>&hellip;</td><td>&hellip;</td><td>&hellip;</td><td>&hellip;</td><td>&hellip;</td><td>&hellip;</td><td>&hellip;</td><td>&hellip;</td></tr><tr><td>&quot;female&quot;</td><td>&quot;yes&quot;</td><td>0</td><td>195</td><td>&quot;no&quot;</td><td>52</td><td>&quot;more&quot;</td><td>3.998272</td><td>&quot;upper&quot;</td><td>&quot;yes&quot;</td><td>12</td><td>15</td><td>34</td></tr><tr><td>&quot;female&quot;</td><td>&quot;yes&quot;</td><td>2</td><td>195</td><td>&quot;no&quot;</td><td>52</td><td>&quot;more&quot;</td><td>3.998272</td><td>&quot;upper&quot;</td><td>&quot;yes&quot;</td><td>12</td><td>15</td><td>34</td></tr><tr><td>&quot;female&quot;</td><td>&quot;no&quot;</td><td>-2</td><td>195</td><td>&quot;no&quot;</td><td>52</td><td>&quot;more&quot;</td><td>3.998272</td><td>&quot;upper&quot;</td><td>&quot;yes&quot;</td><td>12</td><td>15</td><td>34</td></tr><tr><td>&quot;female&quot;</td><td>&quot;no&quot;</td><td>0</td><td>195</td><td>&quot;no&quot;</td><td>52</td><td>&quot;more&quot;</td><td>3.998272</td><td>&quot;upper&quot;</td><td>&quot;yes&quot;</td><td>12</td><td>15</td><td>34</td></tr><tr><td>&quot;female&quot;</td><td>&quot;no&quot;</td><td>2</td><td>195</td><td>&quot;no&quot;</td><td>52</td><td>&quot;more&quot;</td><td>3.998272</td><td>&quot;upper&quot;</td><td>&quot;yes&quot;</td><td>12</td><td>15</td><td>34</td></tr></tbody></table></div></div></div>
+</div>
+<p>Once done, ask the model to predict the outcomes, and plot them. There are now three variables to deal with - so think carefully how you plot them!</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Your answer here</span>
+<span class="c1"># Predictions</span>
+<span class="n">three_preds</span> <span class="o">=</span> <span class="n">me</span><span class="o">.</span><span class="n">predictions</span><span class="p">(</span><span class="n">three_interact</span><span class="p">,</span> <span class="n">newdata</span><span class="o">=</span><span class="n">predmat</span><span class="p">)</span>
+
+<span class="c1"># Plot to show interaction pattern overall - lots of ways to do this, e.g.</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">three_preds</span><span class="p">,</span>
+             <span class="n">x</span><span class="o">=</span><span class="s1">&#39;beauty&#39;</span><span class="p">,</span> 
+             <span class="n">y</span><span class="o">=</span><span class="s1">&#39;estimate&#39;</span><span class="p">,</span>
+             <span class="n">style</span><span class="o">=</span><span class="s1">&#39;gender&#39;</span><span class="p">,</span>
+             <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;tenure&#39;</span><span class="p">)</span>
+
+<span class="c1"># Or</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">relplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">three_preds</span><span class="p">,</span>
+            <span class="n">x</span><span class="o">=</span><span class="s1">&#39;beauty&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;estimate&#39;</span><span class="p">,</span>
+            <span class="n">style</span><span class="o">=</span><span class="s1">&#39;tenure&#39;</span><span class="p">,</span> <span class="n">col</span><span class="o">=</span><span class="s1">&#39;gender&#39;</span><span class="p">,</span>
+            <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;line&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.FacetGrid at 0x14e5ed5d0&gt;
+</pre></div>
+</div>
+<img alt="../_images/2737f6a1327204f4e026ff0b0279985a5d9d1fc0aa198924188159cdd69fefd0.png" src="../_images/2737f6a1327204f4e026ff0b0279985a5d9d1fc0aa198924188159cdd69fefd0.png" />
+<img alt="../_images/e2f742d9ba3e60ba5907fe5957af35723ad2df62bd8407e9ab9f8df946a7c815.png" src="../_images/e2f742d9ba3e60ba5907fe5957af35723ad2df62bd8407e9ab9f8df946a7c815.png" />
+</div>
+</div>
+<p>If you have visualised it correctly, you should see the general pattern that male evaluations increase with beauty, but they are lower with tenure. Females on the other only show a positive beauty association <em>with</em> tenure, and no association without it.</p>
+<p>Now, are those differences meaningful? To test that we need to make a decision about how we want to evaluate our interaction. That depends on the question, since there are many ways to interpret interactions of this complexity.</p>
+<p>Do this in steps. First, is the association between beauty and evaluations different for females and males?</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Your answer here</span>
+<span class="c1"># Slopes are required</span>
+<span class="n">me</span><span class="o">.</span><span class="n">slopes</span><span class="p">(</span><span class="n">three_interact</span><span class="p">,</span> <span class="n">newdata</span><span class="o">=</span><span class="n">predmat</span><span class="p">,</span> <span class="n">variables</span><span class="o">=</span><span class="s1">&#39;beauty&#39;</span><span class="p">,</span> <span class="n">by</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;gender&#39;</span><span class="p">],</span> <span class="n">hypothesis</span><span class="o">=</span><span class="s1">&#39;pairwise&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_html"><div><style>
+.dataframe > thead > tr,
+.dataframe > tbody > tr {
+  text-align: right;
+  white-space: pre-wrap;
+}
+</style>
+<small>shape: (1, 8)</small><table border="1" class="dataframe"><thead><tr><th>term</th><th>estimate</th><th>std_error</th><th>statistic</th><th>p_value</th><th>s_value</th><th>conf_low</th><th>conf_high</th></tr><tr><td>str</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td></tr></thead><tbody><tr><td>&quot;Row 1 - Row 2&quot;</td><td>-0.08949</td><td>0.072316</td><td>-1.237495</td><td>0.215903</td><td>2.211543</td><td>-0.231226</td><td>0.052246</td></tr></tbody></table></div></div></div>
+</div>
+<p>Is the association between beauty and evaluations different between tenure status?</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Your answer here</span>
+<span class="n">me</span><span class="o">.</span><span class="n">slopes</span><span class="p">(</span><span class="n">three_interact</span><span class="p">,</span> <span class="n">newdata</span><span class="o">=</span><span class="n">predmat</span><span class="p">,</span> <span class="n">variables</span><span class="o">=</span><span class="s1">&#39;beauty&#39;</span><span class="p">,</span> <span class="n">by</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;tenure&#39;</span><span class="p">],</span> <span class="n">hypothesis</span><span class="o">=</span><span class="s1">&#39;pairwise&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_html"><div><style>
+.dataframe > thead > tr,
+.dataframe > tbody > tr {
+  text-align: right;
+  white-space: pre-wrap;
+}
+</style>
+<small>shape: (1, 8)</small><table border="1" class="dataframe"><thead><tr><th>term</th><th>estimate</th><th>std_error</th><th>statistic</th><th>p_value</th><th>s_value</th><th>conf_low</th><th>conf_high</th></tr><tr><td>str</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td></tr></thead><tbody><tr><td>&quot;Row 1 - Row 2&quot;</td><td>-0.083401</td><td>0.073588</td><td>-1.133351</td><td>0.257067</td><td>1.959784</td><td>-0.227632</td><td>0.060829</td></tr></tbody></table></div></div></div>
+</div>
+<p>Finally, generate the slopes for all four conditions (male, female, tenured, non-tenured).</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Your answer here</span>
+<span class="n">me</span><span class="o">.</span><span class="n">slopes</span><span class="p">(</span><span class="n">three_interact</span><span class="p">,</span> <span class="n">newdata</span><span class="o">=</span><span class="n">predmat</span><span class="p">,</span> <span class="n">variables</span><span class="o">=</span><span class="s1">&#39;beauty&#39;</span><span class="p">,</span> <span class="n">by</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;tenure&#39;</span><span class="p">,</span> <span class="s1">&#39;gender&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_html"><div><style>
+.dataframe > thead > tr,
+.dataframe > tbody > tr {
+  text-align: right;
+  white-space: pre-wrap;
+}
+</style>
+<small>shape: (4, 11)</small><table border="1" class="dataframe"><thead><tr><th>gender</th><th>tenure</th><th>term</th><th>contrast</th><th>estimate</th><th>std_error</th><th>statistic</th><th>p_value</th><th>s_value</th><th>conf_low</th><th>conf_high</th></tr><tr><td>str</td><td>str</td><td>str</td><td>str</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td></tr></thead><tbody><tr><td>&quot;female&quot;</td><td>&quot;no&quot;</td><td>&quot;beauty&quot;</td><td>&quot;mean(dY/dX)&quot;</td><td>0.000639</td><td>0.077896</td><td>0.008202</td><td>0.993456</td><td>0.009472</td><td>-0.152034</td><td>0.153312</td></tr><tr><td>&quot;male&quot;</td><td>&quot;no&quot;</td><td>&quot;beauty&quot;</td><td>&quot;mean(dY/dX)&quot;</td><td>0.136852</td><td>0.095617</td><td>1.431256</td><td>0.152357</td><td>2.714474</td><td>-0.050553</td><td>0.324257</td></tr><tr><td>&quot;female&quot;</td><td>&quot;yes&quot;</td><td>&quot;beauty&quot;</td><td>&quot;mean(dY/dX)&quot;</td><td>0.130763</td><td>0.058609</td><td>2.231099</td><td>0.025675</td><td>5.283515</td><td>0.015891</td><td>0.245636</td></tr><tr><td>&quot;male&quot;</td><td>&quot;yes&quot;</td><td>&quot;beauty&quot;</td><td>&quot;mean(dY/dX)&quot;</td><td>0.17353</td><td>0.04884</td><td>3.553072</td><td>0.000381</td><td>11.358831</td><td>0.077807</td><td>0.269254</td></tr></tbody></table></div></div></div>
+</div>
+<p>Finally, lets ask a sex-specific question of the model. Compare the slopes of females who are tenured and non-tenured here - are they different?</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Your answer here</span>
+<span class="n">me</span><span class="o">.</span><span class="n">slopes</span><span class="p">(</span><span class="n">three_interact</span><span class="p">,</span> <span class="n">newdata</span><span class="o">=</span><span class="n">predmat</span><span class="p">,</span> 
+          <span class="n">variables</span><span class="o">=</span><span class="s1">&#39;beauty&#39;</span><span class="p">,</span> <span class="n">by</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;tenure&#39;</span><span class="p">,</span> <span class="s1">&#39;gender&#39;</span><span class="p">],</span>
+          <span class="n">hypothesis</span><span class="o">=</span><span class="s1">&#39;b1=b3&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_html"><div><style>
+.dataframe > thead > tr,
+.dataframe > tbody > tr {
+  text-align: right;
+  white-space: pre-wrap;
+}
+</style>
+<small>shape: (1, 8)</small><table border="1" class="dataframe"><thead><tr><th>term</th><th>estimate</th><th>std_error</th><th>statistic</th><th>p_value</th><th>s_value</th><th>conf_low</th><th>conf_high</th></tr><tr><td>str</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td></tr></thead><tbody><tr><td>&quot;b1=b3&quot;</td><td>-0.130124</td><td>0.098895</td><td>-1.315782</td><td>0.188247</td><td>2.409299</td><td>-0.323955</td><td>0.063707</td></tr></tbody></table></div></div></div>
+</div>
+<p>Then compare this for males.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Your answer here</span>
+<span class="n">me</span><span class="o">.</span><span class="n">slopes</span><span class="p">(</span><span class="n">three_interact</span><span class="p">,</span> <span class="n">newdata</span><span class="o">=</span><span class="n">predmat</span><span class="p">,</span> 
+          <span class="n">variables</span><span class="o">=</span><span class="s1">&#39;beauty&#39;</span><span class="p">,</span> <span class="n">by</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;tenure&#39;</span><span class="p">,</span> <span class="s1">&#39;gender&#39;</span><span class="p">],</span>
+          <span class="n">hypothesis</span><span class="o">=</span><span class="s1">&#39;b2=b4&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_html"><div><style>
+.dataframe > thead > tr,
+.dataframe > tbody > tr {
+  text-align: right;
+  white-space: pre-wrap;
+}
+</style>
+<small>shape: (1, 8)</small><table border="1" class="dataframe"><thead><tr><th>term</th><th>estimate</th><th>std_error</th><th>statistic</th><th>p_value</th><th>s_value</th><th>conf_low</th><th>conf_high</th></tr><tr><td>str</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td></tr></thead><tbody><tr><td>&quot;b2=b4&quot;</td><td>-0.036678</td><td>0.107497</td><td>-0.341202</td><td>0.732951</td><td>0.44821</td><td>-0.247369</td><td>0.174013</td></tr></tbody></table></div></div></div>
+</div>
+<p>What effect does beauty have on teaching evaluations?</p>
+</section>
+<section id="h-personalised-predictions">
+<h2>h. Personalised predictions<a class="headerlink" href="#h-personalised-predictions" title="Link to this heading">#</a></h2>
+<p>For the final exercise, we will work to understand how to use models to make individual predictions.</p>
+<p>We’ll use a new dataset, recorded by Daniel Hamermesh, an economist interested in the effects of physical attractiveness in the labour market (e.g. the halo effect). You can find this dataset (called <code class="docutils literal notranslate"><span class="pre">beauty</span></code> by the authors), here: <a class="reference external" href="https://vincentarelbundock.github.io/Rdatasets/csv/wooldridge/beauty.csv">https://vincentarelbundock.github.io/Rdatasets/csv/wooldridge/beauty.csv</a></p>
+<p>Also, you can see a description of these predictors here: <a class="reference external" href="https://vincentarelbundock.github.io/Rdatasets/doc/wooldridge/beauty.html">https://vincentarelbundock.github.io/Rdatasets/doc/wooldridge/beauty.html</a>
+Take a look!</p>
+<p>Read it into a dataframe called <code class="docutils literal notranslate"><span class="pre">beauty</span></code>, and print the first 5 rows.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Your answer here</span>
+<span class="n">beauty</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;https://vincentarelbundock.github.io/Rdatasets/csv/wooldridge/beauty.csv&#39;</span><span class="p">)</span>
+<span class="n">beauty</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>rownames</th>
+      <th>wage</th>
+      <th>lwage</th>
+      <th>belavg</th>
+      <th>abvavg</th>
+      <th>exper</th>
+      <th>looks</th>
+      <th>union</th>
+      <th>goodhlth</th>
+      <th>black</th>
+      <th>female</th>
+      <th>married</th>
+      <th>south</th>
+      <th>bigcity</th>
+      <th>smllcity</th>
+      <th>service</th>
+      <th>expersq</th>
+      <th>educ</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>5.73</td>
+      <td>1.745715</td>
+      <td>0</td>
+      <td>1</td>
+      <td>30</td>
+      <td>4</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>900</td>
+      <td>14</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>4.28</td>
+      <td>1.453953</td>
+      <td>0</td>
+      <td>0</td>
+      <td>28</td>
+      <td>3</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>784</td>
+      <td>12</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3</td>
+      <td>7.96</td>
+      <td>2.074429</td>
+      <td>0</td>
+      <td>1</td>
+      <td>35</td>
+      <td>4</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1225</td>
+      <td>10</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4</td>
+      <td>11.57</td>
+      <td>2.448416</td>
+      <td>0</td>
+      <td>0</td>
+      <td>38</td>
+      <td>3</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1444</td>
+      <td>16</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5</td>
+      <td>11.42</td>
+      <td>2.435366</td>
+      <td>0</td>
+      <td>0</td>
+      <td>27</td>
+      <td>3</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>729</td>
+      <td>16</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>We will aim to build a model that predicts wages/income from a series of predictors, one of which includes <code class="docutils literal notranslate"><span class="pre">looks</span></code>, which runs from 1 - 5 (5 being very attractive). Specifically, we’ll use:</p>
+<ul class="simple">
+<li><p>Looks</p></li>
+<li><p>years of workforce experience</p></li>
+<li><p>union member status</p></li>
+<li><p>health status</p></li>
+<li><p>ethnicity (here only black vs other)</p></li>
+<li><p>sex</p></li>
+<li><p>years of education</p></li>
+</ul>
+<p>Using the description in the above link, build a linear regression model that predicts wages from those variables.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Your answer here</span>
+<span class="n">beauty_mod</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="s1">&#39;wage ~ looks + female + exper + union + goodhlth + black + educ&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">beauty</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="n">beauty_mod</span><span class="o">.</span><span class="n">summary</span><span class="p">(</span><span class="n">slim</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_html"><table class="simpletable">
+<caption>OLS Regression Results</caption>
+<tr>
+  <th>Dep. Variable:</th>      <td>wage</td>    <th>  R-squared:         </th> <td>   0.196</td>
+</tr>
+<tr>
+  <th>Model:</th>               <td>OLS</td>    <th>  Adj. R-squared:    </th> <td>   0.192</td>
+</tr>
+<tr>
+  <th>No. Observations:</th>  <td>  1260</td>   <th>  F-statistic:       </th> <td>   43.61</td>
+</tr>
+<tr>
+  <th>Covariance Type:</th>  <td>nonrobust</td> <th>  Prob (F-statistic):</th> <td>2.48e-55</td>
+</tr>
+</table>
+<table class="simpletable">
+<tr>
+      <td></td>         <th>coef</th>     <th>std err</th>      <th>t</th>      <th>P>|t|</th>  <th>[0.025</th>    <th>0.975]</th>  
+</tr>
+<tr>
+  <th>Intercept</th> <td>   -1.4917</td> <td>    0.952</td> <td>   -1.567</td> <td> 0.117</td> <td>   -3.359</td> <td>    0.376</td>
+</tr>
+<tr>
+  <th>looks</th>     <td>    0.3944</td> <td>    0.176</td> <td>    2.237</td> <td> 0.025</td> <td>    0.049</td> <td>    0.740</td>
+</tr>
+<tr>
+  <th>female</th>    <td>   -2.4942</td> <td>    0.260</td> <td>   -9.603</td> <td> 0.000</td> <td>   -3.004</td> <td>   -1.985</td>
+</tr>
+<tr>
+  <th>exper</th>     <td>    0.0860</td> <td>    0.011</td> <td>    8.145</td> <td> 0.000</td> <td>    0.065</td> <td>    0.107</td>
+</tr>
+<tr>
+  <th>union</th>     <td>    0.7966</td> <td>    0.268</td> <td>    2.969</td> <td> 0.003</td> <td>    0.270</td> <td>    1.323</td>
+</tr>
+<tr>
+  <th>goodhlth</th>  <td>   -0.0606</td> <td>    0.481</td> <td>   -0.126</td> <td> 0.900</td> <td>   -1.004</td> <td>    0.882</td>
+</tr>
+<tr>
+  <th>black</th>     <td>    0.0028</td> <td>    0.460</td> <td>    0.006</td> <td> 0.995</td> <td>   -0.899</td> <td>    0.904</td>
+</tr>
+<tr>
+  <th>educ</th>      <td>    0.4520</td> <td>    0.047</td> <td>    9.630</td> <td> 0.000</td> <td>    0.360</td> <td>    0.544</td>
+</tr>
+</table><br/><br/>Notes:<br/>[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.</div></div>
+</div>
+<p>Despite the number of variables, with some effort we could interpret these coefficients. For example, we might say that as your looks are rated one point higher on the scale, your hourly wage increases by .39 cents, all else being equal. But it becomes more difficult when trying to interpret the implications across multiple predictors.</p>
+<p>Use the model to generate predictions for two individuals, one male and one female. The female should have 17 years of education and the male 12 (about average).</p>
+<p>What’s the difference in their wages? Is it statistically significant?</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Your answer here</span>
+<span class="n">me</span><span class="o">.</span><span class="n">predictions</span><span class="p">(</span><span class="n">beauty_mod</span><span class="p">,</span>
+               <span class="n">newdata</span><span class="o">=</span><span class="n">me</span><span class="o">.</span><span class="n">datagrid</span><span class="p">(</span><span class="n">beauty_mod</span><span class="p">,</span> 
+                                   <span class="n">female</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+                                   <span class="n">educ</span><span class="o">=</span><span class="p">[</span><span class="mi">17</span><span class="p">,</span> <span class="mi">12</span><span class="p">]),</span>
+               <span class="n">hypothesis</span><span class="o">=</span><span class="s1">&#39;b1=b4&#39;</span>
+              <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_html"><div><style>
+.dataframe > thead > tr,
+.dataframe > tbody > tr {
+  text-align: right;
+  white-space: pre-wrap;
+}
+</style>
+<small>shape: (1, 8)</small><table border="1" class="dataframe"><thead><tr><th>term</th><th>estimate</th><th>std_error</th><th>statistic</th><th>p_value</th><th>s_value</th><th>conf_low</th><th>conf_high</th></tr><tr><td>str</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td></tr></thead><tbody><tr><td>&quot;b1=b4&quot;</td><td>-0.234265</td><td>0.353636</td><td>-0.662446</td><td>0.507685</td><td>0.977993</td><td>-0.927378</td><td>0.458849</td></tr></tbody></table></div></div></div>
+</div>
+<p>Consider next the implications of looks on earnings.</p>
+<p>What’s the difference in earnings for a male with 5 years work experience, 15 years of education, who has a 5 in terms of looks, and a counterpart who has the same values but has a 3 on looks?</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Your answer here</span>
+<span class="n">me</span><span class="o">.</span><span class="n">predictions</span><span class="p">(</span><span class="n">beauty_mod</span><span class="p">,</span>
+               <span class="n">newdata</span><span class="o">=</span><span class="n">me</span><span class="o">.</span><span class="n">datagrid</span><span class="p">(</span><span class="n">beauty_mod</span><span class="p">,</span> 
+                                   <span class="n">female</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                                   <span class="n">exper</span><span class="o">=</span><span class="p">[</span><span class="mi">5</span><span class="p">],</span>
+                                   <span class="n">educ</span><span class="o">=</span><span class="p">[</span><span class="mi">15</span><span class="p">],</span>
+                                   <span class="n">looks</span><span class="o">=</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>
+              <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_html"><div><style>
+.dataframe > thead > tr,
+.dataframe > tbody > tr {
+  text-align: right;
+  white-space: pre-wrap;
+}
+</style>
+<small>shape: (2, 26)</small><table border="1" class="dataframe"><thead><tr><th>female</th><th>exper</th><th>educ</th><th>looks</th><th>rowid</th><th>estimate</th><th>std_error</th><th>statistic</th><th>p_value</th><th>s_value</th><th>conf_low</th><th>conf_high</th><th>rownames</th><th>wage</th><th>lwage</th><th>belavg</th><th>abvavg</th><th>union</th><th>goodhlth</th><th>black</th><th>married</th><th>south</th><th>bigcity</th><th>smllcity</th><th>service</th><th>expersq</th></tr><tr><td>i64</td><td>i64</td><td>i64</td><td>i64</td><td>i32</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>i64</td><td>f64</td><td>f64</td><td>i64</td><td>i64</td><td>i64</td><td>i64</td><td>i64</td><td>i64</td><td>i64</td><td>i64</td><td>i64</td><td>i64</td><td>i64</td></tr></thead><tbody><tr><td>0</td><td>5</td><td>15</td><td>3</td><td>0</td><td>6.840791</td><td>0.247582</td><td>27.63043</td><td>0.0</td><td>inf</td><td>6.35554</td><td>7.326042</td><td>1164</td><td>6.30669</td><td>1.6588</td><td>0</td><td>0</td><td>0</td><td>1</td><td>0</td><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td><td>100</td></tr><tr><td>0</td><td>5</td><td>15</td><td>5</td><td>1</td><td>7.629543</td><td>0.371084</td><td>20.560132</td><td>0.0</td><td>inf</td><td>6.902231</td><td>8.356855</td><td>1164</td><td>6.30669</td><td>1.6588</td><td>0</td><td>0</td><td>0</td><td>1</td><td>0</td><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td><td>100</td></tr></tbody></table></div></div></div>
+</div>
+<p>If you have mastered the above exercise, then you have a solid understanding of how most of the modern world works - for example, insurance companies use this exact approach to determine your premiums! As ever, these inferences are only as good as the model and the data.</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./4_Prediction"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="QPoP%20-%20Week%204%20Workshop.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">4 - The art of prediction</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../5_Binary/QPoP%20-%20Week%205%20Workshop.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">5 - Binary outcome models</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Asking scientific questions of models - Exercises &amp; Answers</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#traditional-approaches-from-a-model-based-perspective">Traditional approaches from a model-based perspective</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-imports">a. Imports</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#b-loading-up-data">b. Loading up data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#c-the-t-test-as-a-marginal-effect">c. The t-test as a marginal effect</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#d-carrying-out-an-anova-with-linear-models-and-marginal-effects">d. Carrying out an ANOVA with linear models and marginal effects</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#e-ancova-done-with-marginal-effects">e. ANCOVA done with marginal effects</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#f-knowledge-of-linear-models-gets-you-out-of-trouble">f. Knowledge of linear models gets you out of trouble</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#g-interpreting-complex-interactions-with-marginal-effects">g. Interpreting complex interactions with marginal effects</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#h-personalised-predictions">h. Personalised predictions</a></li>
+</ul>
+</li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Alex Jones, Ph.D
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

@@ -1,0 +1,1067 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>6 - Precision in Predictions &#8212; Statistical Modelling with Python</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '6_Applications/QPoP - Week 6 Workshop';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Quantitative Perspectives on Psychology" href="QPoP%20-%20Week%206%20Exercises%20-%20Answers.html" />
+    <link rel="prev" title="Using and understanding probit models - Exercises &amp; Answers" href="../5_Binary/QPoP%20-%20Week%205%20Exercises%20-%20Answers.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt="Statistical Modelling with Python - Home"/>
+    <script>document.write(`<img src="../_static/logo.png" class="logo__image only-dark" alt="Statistical Modelling with Python - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    Statistical Modelling with Python
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Python Basics</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../1_Introduction/QPoP%20-%20Week%201%20Workshop.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../1_Introduction/QPoP%20-%20Week%201%20Exercises%20-%20Answers.html">Using Python for Data Analysis - Exercises &amp; Answers</a></li>
+
+
+
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">The GLM</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../2_The_GLM/QPoP%20-%20Week%202%20Workshop.html">2 - The General Linear Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../2_The_GLM/QPoP%20-%20Week%202%20Exercises%20-%20Answers.html">Getting to grips with linear models in Python - Exercises &amp; Answers</a></li>
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Advancing the GLM</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../3_Advancing_GLM/QPoP%20-%20Week%203%20Workshop.html">3 - Advancing the general linear model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../3_Advancing_GLM/QPoP%20-%20Week%203%20Exercises%20-%20Answers.html">Checking assumptions and including interactions - Exercises &amp; Answers</a></li>
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">The art of prediction</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../4_Prediction/QPoP%20-%20Week%204%20Workshop.html">4 - The art of prediction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../4_Prediction/QPoP%20-%20Week%204%20Exercises%20-%20Answers.html">Asking scientific questions of models - Exercises &amp; Answers</a></li>
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Binary outcome models</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../5_Binary/QPoP%20-%20Week%205%20Workshop.html">5 - Binary outcome models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../5_Binary/QPoP%20-%20Week%205%20Exercises%20-%20Answers.html">Using and understanding probit models - Exercises &amp; Answers</a></li>
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Applications and other kinds of hypotheses</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">6 - Precision in Predictions</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="QPoP%20-%20Week%206%20Exercises%20-%20Answers.html">Quantitative Perspectives on Psychology</a></li>
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Linear Mixed Effects Models</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../7_MixedModel/QPoP%20-%20Week%207%20Workshop.html">7 - Linear mixed effects models</a></li>
+
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2F6_Applications/QPoP - Week 6 Workshop.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/6_Applications/QPoP - Week 6 Workshop.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>6 - Precision in Predictions</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">6 - Precision in Predictions</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#figuring-out-precision-and-other-types-of-tests">Figuring out precision and other types of tests</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#finding-precision">Finding precision</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#intervention-data">Intervention data</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#testing-hypotheses">Testing hypotheses</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#testing-an-interval-hypothesis">Testing an interval hypothesis</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#one-more-example">One more example</a></li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="precision-in-predictions">
+<h1>6 - Precision in Predictions<a class="headerlink" href="#precision-in-predictions" title="Link to this heading">#</a></h1>
+<section id="figuring-out-precision-and-other-types-of-tests">
+<h2>Figuring out precision and other types of tests<a class="headerlink" href="#figuring-out-precision-and-other-types-of-tests" title="Link to this heading">#</a></h2>
+<p>There are only a few examples this week to drive home the idea of precision in predictions, or equivalently, how <em>un</em>certain we are of our predictions.</p>
+<p>The main take home message is that our predictions will vary in precision, but that the impact of this precision varies with the magnitude of the effect. A large prediction that is imprecise may be of more use than a tiny, precise prediction - as ever, it all depends on the use of the model. Traditionally, p-values will be significant when precision is high, with comes with larger sample sizes. We must not be misled by significance, and should think carefully about what kind of hypotheses are important about our predictions.</p>
+</section>
+<section id="finding-precision">
+<h2>Finding precision<a class="headerlink" href="#finding-precision" title="Link to this heading">#</a></h2>
+<p>We will see some examples of precision in prediction. First, lets import all the usual packages we need:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import what we need</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span> <span class="c1"># dataframes</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span> <span class="c1"># plots</span>
+<span class="kn">import</span> <span class="nn">statsmodels.formula.api</span> <span class="k">as</span> <span class="nn">smf</span> <span class="c1"># Models</span>
+<span class="kn">import</span> <span class="nn">marginaleffects</span> <span class="k">as</span> <span class="nn">me</span> <span class="c1"># marginal effects</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span> <span class="c1"># numpy for some functions</span>
+
+<span class="c1"># Set the style for plots</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">set_style</span><span class="p">(</span><span class="s1">&#39;whitegrid&#39;</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">set_context</span><span class="p">(</span><span class="s1">&#39;talk&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="intervention-data">
+<h1>Intervention data<a class="headerlink" href="#intervention-data" title="Link to this heading">#</a></h1>
+<p>We will load the data for the childhood intervention study to examine prediction and precision in some detail, and explore how to set specific hypotheses to test.</p>
+<p>We download it from here: <a class="reference external" href="https://vincentarelbundock.github.io/Rdatasets/csv/mlmRev/Early.csv">https://vincentarelbundock.github.io/Rdatasets/csv/mlmRev/Early.csv</a></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Read in </span>
+<span class="n">cog</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;https://vincentarelbundock.github.io/Rdatasets/csv/mlmRev/Early.csv&#39;</span><span class="p">)</span>
+<span class="n">cog</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>rownames</th>
+      <th>id</th>
+      <th>cog</th>
+      <th>age</th>
+      <th>trt</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>68</td>
+      <td>103</td>
+      <td>1.0</td>
+      <td>Y</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>68</td>
+      <td>119</td>
+      <td>1.5</td>
+      <td>Y</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3</td>
+      <td>68</td>
+      <td>96</td>
+      <td>2.0</td>
+      <td>Y</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4</td>
+      <td>70</td>
+      <td>106</td>
+      <td>1.0</td>
+      <td>Y</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5</td>
+      <td>70</td>
+      <td>107</td>
+      <td>1.5</td>
+      <td>Y</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>And fit a simple model to the data:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Model</span>
+<span class="n">cog_mod</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="s1">&#39;cog ~ age + trt&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">cog</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="n">cog_mod</span><span class="o">.</span><span class="n">summary</span><span class="p">(</span><span class="n">slim</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table class="simpletable">
+<caption>OLS Regression Results</caption>
+<tr>
+  <th>Dep. Variable:</th>       <td>cog</td>    <th>  R-squared:         </th> <td>   0.314</td>
+</tr>
+<tr>
+  <th>Model:</th>               <td>OLS</td>    <th>  Adj. R-squared:    </th> <td>   0.309</td>
+</tr>
+<tr>
+  <th>No. Observations:</th>  <td>   309</td>   <th>  F-statistic:       </th> <td>   69.97</td>
+</tr>
+<tr>
+  <th>Covariance Type:</th>  <td>nonrobust</td> <th>  Prob (F-statistic):</th> <td>9.45e-26</td>
+</tr>
+</table>
+<table class="simpletable">
+<tr>
+      <td></td>         <th>coef</th>     <th>std err</th>      <th>t</th>      <th>P>|t|</th>  <th>[0.025</th>    <th>0.975]</th>  
+</tr>
+<tr>
+  <th>Intercept</th> <td>  124.5216</td> <td>    2.950</td> <td>   42.206</td> <td> 0.000</td> <td>  118.716</td> <td>  130.327</td>
+</tr>
+<tr>
+  <th>trt[T.Y]</th>  <td>    9.4903</td> <td>    1.497</td> <td>    6.340</td> <td> 0.000</td> <td>    6.545</td> <td>   12.436</td>
+</tr>
+<tr>
+  <th>age</th>       <td>  -18.1650</td> <td>    1.819</td> <td>   -9.988</td> <td> 0.000</td> <td>  -21.744</td> <td>  -14.586</td>
+</tr>
+</table><br/><br/>Notes:<br/>[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.</div></div>
+</div>
+<p>We can then predict the effect of the intervention for 2 year olds easily:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Predict for 2 year olds</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">me</span><span class="o">.</span><span class="n">predictions</span><span class="p">(</span><span class="n">cog_mod</span><span class="p">,</span>
+                   <span class="n">newdata</span><span class="o">=</span><span class="n">me</span><span class="o">.</span><span class="n">datagrid</span><span class="p">(</span><span class="n">cog_mod</span><span class="p">,</span>
+                                       <span class="n">trt</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Y&#39;</span><span class="p">,</span> <span class="s1">&#39;N&#39;</span><span class="p">],</span>
+                                       <span class="n">age</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+                  <span class="p">)</span>
+
+<span class="n">p</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div><style>
+.dataframe > thead > tr,
+.dataframe > tbody > tr {
+  text-align: right;
+  white-space: pre-wrap;
+}
+</style>
+<small>shape: (2, 13)</small><table border="1" class="dataframe"><thead><tr><th>trt</th><th>age</th><th>rowid</th><th>estimate</th><th>std_error</th><th>statistic</th><th>p_value</th><th>s_value</th><th>conf_low</th><th>conf_high</th><th>rownames</th><th>id</th><th>cog</th></tr><tr><td>str</td><td>i64</td><td>i32</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>i64</td><td>i64</td><td>i64</td></tr></thead><tbody><tr><td>&quot;Y&quot;</td><td>2</td><td>0</td><td>97.681844</td><td>1.343884</td><td>72.68623</td><td>0.0</td><td>inf</td><td>95.04788</td><td>100.315807</td><td>82</td><td>973</td><td>96</td></tr><tr><td>&quot;N&quot;</td><td>2</td><td>1</td><td>88.19155</td><td>1.445289</td><td>61.019992</td><td>0.0</td><td>inf</td><td>85.358835</td><td>91.024265</td><td>82</td><td>973</td><td>96</td></tr></tbody></table></div></div></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">conf_low</span></code> and <code class="docutils literal notranslate"><span class="pre">conf_high</span></code> represent the 95% confidence interval bounds.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Plot</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">pointplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">p</span><span class="p">,</span>
+                   <span class="n">x</span><span class="o">=</span><span class="s1">&#39;trt&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;estimate&#39;</span><span class="p">,</span>
+                   <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">)</span>
+<span class="c1"># Add errors</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">vlines</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="s1">&#39;trt&#39;</span><span class="p">],</span> <span class="n">p</span><span class="p">[</span><span class="s1">&#39;conf_low&#39;</span><span class="p">],</span> <span class="n">p</span><span class="p">[</span><span class="s1">&#39;conf_high&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.collections.LineCollection at 0x14d097310&gt;
+</pre></div>
+</div>
+<img alt="../_images/89eb791ac7f874ae2562ec860de0db125c8fcb749f41e256ffed08d047f32298.png" src="../_images/89eb791ac7f874ae2562ec860de0db125c8fcb749f41e256ffed08d047f32298.png" />
+</div>
+</div>
+</section>
+<section id="testing-hypotheses">
+<h1>Testing hypotheses<a class="headerlink" href="#testing-hypotheses" title="Link to this heading">#</a></h1>
+<p>We can compute the difference between these two as usual with the <code class="docutils literal notranslate"><span class="pre">hypothesis</span></code> argument, and obtain the interval around the difference:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Difference</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">me</span><span class="o">.</span><span class="n">predictions</span><span class="p">(</span><span class="n">cog_mod</span><span class="p">,</span>
+                   <span class="n">newdata</span><span class="o">=</span><span class="n">me</span><span class="o">.</span><span class="n">datagrid</span><span class="p">(</span><span class="n">cog_mod</span><span class="p">,</span>
+                                       <span class="n">trt</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Y&#39;</span><span class="p">,</span> <span class="s1">&#39;N&#39;</span><span class="p">],</span>
+                                       <span class="n">age</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span>
+                   <span class="n">hypothesis</span><span class="o">=</span><span class="s1">&#39;b1=b2&#39;</span><span class="p">)</span>
+<span class="n">p</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div><style>
+.dataframe > thead > tr,
+.dataframe > tbody > tr {
+  text-align: right;
+  white-space: pre-wrap;
+}
+</style>
+<small>shape: (1, 8)</small><table border="1" class="dataframe"><thead><tr><th>term</th><th>estimate</th><th>std_error</th><th>statistic</th><th>p_value</th><th>s_value</th><th>conf_low</th><th>conf_high</th></tr><tr><td>str</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td></tr></thead><tbody><tr><td>&quot;b1=b2&quot;</td><td>9.490294</td><td>1.49698</td><td>6.339628</td><td>2.3032e-10</td><td>32.015641</td><td>6.556268</td><td>12.42432</td></tr></tbody></table></div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Plot</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">pointplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">p</span><span class="p">,</span>
+                   <span class="n">x</span><span class="o">=</span><span class="s1">&#39;term&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;estimate&#39;</span><span class="p">,</span>
+                   <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">)</span>
+<span class="c1"># Add errors</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">vlines</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="s1">&#39;term&#39;</span><span class="p">],</span> <span class="n">p</span><span class="p">[</span><span class="s1">&#39;conf_low&#39;</span><span class="p">],</span> <span class="n">p</span><span class="p">[</span><span class="s1">&#39;conf_high&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.collections.LineCollection at 0x14d1a5850&gt;
+</pre></div>
+</div>
+<img alt="../_images/e660923137ea6116cd3728ba3cecc7ae6179b1dd3825532601f8d7a45701e68f.png" src="../_images/e660923137ea6116cd3728ba3cecc7ae6179b1dd3825532601f8d7a45701e68f.png" />
+</div>
+</div>
+<p>The <em>p</em>-value of this difference is significant, as it shows that we’d not expect to see a difference as large as this if the difference between the interventions was zero.</p>
+<p>But that’s often a bit of a silly hypothesis to begin with. We’d not run the intervention (or study, or wherever we get our data!) if we thought the difference was really <em>nothing</em> to start with.</p>
+<p>Instead, imagine the scenario that your new intervention is out to beat an existing one. That one showed a difference of 7 units by age 2. Is this intervention better than that? Testing this is simple:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Difference</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">me</span><span class="o">.</span><span class="n">predictions</span><span class="p">(</span><span class="n">cog_mod</span><span class="p">,</span>
+                   <span class="n">newdata</span><span class="o">=</span><span class="n">me</span><span class="o">.</span><span class="n">datagrid</span><span class="p">(</span><span class="n">cog_mod</span><span class="p">,</span>
+                                       <span class="n">trt</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Y&#39;</span><span class="p">,</span> <span class="s1">&#39;N&#39;</span><span class="p">],</span>
+                                       <span class="n">age</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span>
+                   <span class="n">hypothesis</span><span class="o">=</span><span class="s1">&#39;b1-b2 = 6&#39;</span><span class="p">)</span> 
+<span class="c1"># Subtract one from the other, is it equal to 7?</span>
+<span class="n">p</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div><style>
+.dataframe > thead > tr,
+.dataframe > tbody > tr {
+  text-align: right;
+  white-space: pre-wrap;
+}
+</style>
+<small>shape: (1, 8)</small><table border="1" class="dataframe"><thead><tr><th>term</th><th>estimate</th><th>std_error</th><th>statistic</th><th>p_value</th><th>s_value</th><th>conf_low</th><th>conf_high</th></tr><tr><td>str</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td></tr></thead><tbody><tr><td>&quot;b1-b2=6&quot;</td><td>3.490294</td><td>1.49698</td><td>2.331557</td><td>0.019724</td><td>5.663905</td><td>0.556268</td><td>6.42432</td></tr></tbody></table></div></div></div>
+</div>
+<p>The predicted difference from seven - <em>not</em> zero - is about 2.5, and it is not significant. But note the confidence interval - it might be just less than 7, or quite a bit above it. So while it is not statistically significant, this might well be worth pursuing! This is an example of a large prediction with a wide interval. If the null value is zero this is comfortably significant, but if its 7, it is not - but the interval indicates the effect could be rather a bit larger than 7. Circumstance dictates what the appropriate outcome is.</p>
+<p>You can test almost any hypothesis with <code class="docutils literal notranslate"><span class="pre">marginaleffects</span></code> with a careful application, and often, the hypothesis of zero is not that interesting!</p>
+</section>
+<section id="testing-an-interval-hypothesis">
+<h1>Testing an interval hypothesis<a class="headerlink" href="#testing-an-interval-hypothesis" title="Link to this heading">#</a></h1>
+<p>We can also express a hypothesis as an interval.</p>
+<p>Imagine this somewhat complex scenario:</p>
+<ul class="simple">
+<li><p>A previous, more expensive intervention produces a change of 7 points.</p></li>
+<li><p>We are tasked with seeing if our intervention is <em>at least as good as</em> - i.e., <em>is equivalent</em> to the existing one, for children aged 2.</p></li>
+<li><p>The current intervention will replace the existing one, if it can be shown to be equivalent to give an increase of at least 6.5 - 12.5.</p></li>
+<li><p>The developers would like it to be better than 7, but they’ll accept anywhere between 6.5 and 12.5 as equivalent.</p></li>
+</ul>
+<p>Testing this kind of ‘interval’ hypothesis is easy, but a bit confusing philosophically. A significant result means our estimate is <em>within</em> the bounds specified, a non-significant one indicating one or both of the bounds are within the confidence interval and cannot be excluded - i.e., the effect could be lower than 6.5 or bigger than 12.5. We do this using the <code class="docutils literal notranslate"><span class="pre">equivalence</span></code> keyword and a list of the lower and upper bounds, in addition to the standard hypothesis:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Equivalence</span>
+<span class="n">eq</span> <span class="o">=</span> <span class="n">me</span><span class="o">.</span><span class="n">predictions</span><span class="p">(</span><span class="n">cog_mod</span><span class="p">,</span>
+                    <span class="n">newdata</span><span class="o">=</span><span class="n">me</span><span class="o">.</span><span class="n">datagrid</span><span class="p">(</span><span class="n">cog_mod</span><span class="p">,</span>
+                                        <span class="n">trt</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Y&#39;</span><span class="p">,</span> <span class="s1">&#39;N&#39;</span><span class="p">],</span>
+                                        <span class="n">age</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span>
+                    <span class="n">hypothesis</span><span class="o">=</span><span class="s1">&#39;b1=b2&#39;</span><span class="p">,</span>
+                    <span class="n">equivalence</span><span class="o">=</span><span class="p">[</span><span class="mf">6.5</span><span class="p">,</span> <span class="mf">12.5</span><span class="p">])</span>
+<span class="n">eq</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div><style>
+.dataframe > thead > tr,
+.dataframe > tbody > tr {
+  text-align: right;
+  white-space: pre-wrap;
+}
+</style>
+<small>shape: (1, 13)</small><table border="1" class="dataframe"><thead><tr><th>term</th><th>estimate</th><th>std_error</th><th>statistic</th><th>p_value</th><th>s_value</th><th>conf_low</th><th>conf_high</th><th>statistic_noninf</th><th>statistic_nonsup</th><th>p_value_noninf</th><th>p_value_nonsup</th><th>p_value_equiv</th></tr><tr><td>str</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td></tr></thead><tbody><tr><td>&quot;b1=b2&quot;</td><td>9.490294</td><td>1.49698</td><td>6.339628</td><td>2.3032e-10</td><td>32.015641</td><td>6.556268</td><td>12.42432</td><td>1.997552</td><td>-2.010519</td><td>0.022883</td><td>0.022188</td><td>0.022883</td></tr></tbody></table></div></div></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">p_value_equiv</span></code> contains the information we need. Illustrating this graphically:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Plot</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">pointplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">eq</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;term&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;estimate&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">vlines</span><span class="p">(</span><span class="n">eq</span><span class="p">[</span><span class="s1">&#39;term&#39;</span><span class="p">],</span> <span class="n">eq</span><span class="p">[</span><span class="s1">&#39;conf_low&#39;</span><span class="p">],</span> <span class="n">eq</span><span class="p">[</span><span class="s1">&#39;conf_high&#39;</span><span class="p">])</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="mf">6.5</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="mf">12.5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.lines.Line2D at 0x14d1f78d0&gt;
+</pre></div>
+</div>
+<img alt="../_images/525a0a42e1fb031b88527e870023a9e17a6320b77d6288413709d80e8e1ef6d0.png" src="../_images/525a0a42e1fb031b88527e870023a9e17a6320b77d6288413709d80e8e1ef6d0.png" />
+</div>
+</div>
+<p>This technique can be very useful. Sometimes you may see a small, precise, and significant result. Rather than taking this as evidence, we may test whether the result is within an interval of effects we could consider either important or unimportant (the definition is up to you!), and test <em>that</em>.</p>
+<p>The downside is that defining these intervals is difficult, requires justification, and can be frowned on by less statistically literate folk.</p>
+</section>
+<section id="one-more-example">
+<h1>One more example<a class="headerlink" href="#one-more-example" title="Link to this heading">#</a></h1>
+<p>Lets consider another example, revisiting the beauty and wages dataset. First, we read it in and fit a simple model where we predict hourly wages from a <code class="docutils literal notranslate"><span class="pre">looks</span></code> variable that goes from 1 to 5, and an <code class="docutils literal notranslate"><span class="pre">exper</span></code> variable that counts the persons years of experience in the workforce. This shows a statistically significant effect of looks and experience:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Read in looks</span>
+<span class="n">looks</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;https://vincentarelbundock.github.io/Rdatasets/csv/wooldridge/beauty.csv&#39;</span><span class="p">)</span>
+
+<span class="c1"># Fit a simple model and examine output</span>
+<span class="n">looks_mod</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="s1">&#39;wage ~ exper + looks&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">looks</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="n">looks_mod</span><span class="o">.</span><span class="n">summary</span><span class="p">(</span><span class="n">slim</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table class="simpletable">
+<caption>OLS Regression Results</caption>
+<tr>
+  <th>Dep. Variable:</th>      <td>wage</td>    <th>  R-squared:         </th> <td>   0.064</td>
+</tr>
+<tr>
+  <th>Model:</th>               <td>OLS</td>    <th>  Adj. R-squared:    </th> <td>   0.062</td>
+</tr>
+<tr>
+  <th>No. Observations:</th>  <td>  1260</td>   <th>  F-statistic:       </th> <td>   42.70</td>
+</tr>
+<tr>
+  <th>Covariance Type:</th>  <td>nonrobust</td> <th>  Prob (F-statistic):</th> <td>1.15e-18</td>
+</tr>
+</table>
+<table class="simpletable">
+<tr>
+      <td></td>         <th>coef</th>     <th>std err</th>      <th>t</th>      <th>P>|t|</th>  <th>[0.025</th>    <th>0.975]</th>  
+</tr>
+<tr>
+  <th>Intercept</th> <td>    2.5094</td> <td>    0.671</td> <td>    3.742</td> <td> 0.000</td> <td>    1.194</td> <td>    3.825</td>
+</tr>
+<tr>
+  <th>exper</th>     <td>    0.0971</td> <td>    0.011</td> <td>    9.018</td> <td> 0.000</td> <td>    0.076</td> <td>    0.118</td>
+</tr>
+<tr>
+  <th>looks</th>     <td>    0.6373</td> <td>    0.188</td> <td>    3.390</td> <td> 0.001</td> <td>    0.268</td> <td>    1.006</td>
+</tr>
+</table><br/><br/>Notes:<br/>[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.</div></div>
+</div>
+<p>As a silly example, lets assume taking up regular exercise, clean eating, and expensive beauty products will shift your looks from a 3 to a 4. Averaging over your years of experience, how much does going from a 3 to a 4 increase your hourly wage?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Make a datagrid</span>
+<span class="n">dg</span> <span class="o">=</span> <span class="n">me</span><span class="o">.</span><span class="n">datagrid</span><span class="p">(</span><span class="n">looks_mod</span><span class="p">,</span>
+                 <span class="n">looks</span><span class="o">=</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span>
+                 <span class="n">exper</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">40</span><span class="p">)</span>
+                <span class="p">)</span>
+
+<span class="c1"># Make the predictions</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">me</span><span class="o">.</span><span class="n">predictions</span><span class="p">(</span><span class="n">looks_mod</span><span class="p">,</span>
+                   <span class="n">newdata</span><span class="o">=</span><span class="n">dg</span><span class="p">,</span>
+                   <span class="n">by</span><span class="o">=</span><span class="s1">&#39;looks&#39;</span><span class="p">)</span> <span class="c1"># average over experience</span>
+
+<span class="n">p</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div><style>
+.dataframe > thead > tr,
+.dataframe > tbody > tr {
+  text-align: right;
+  white-space: pre-wrap;
+}
+</style>
+<small>shape: (2, 8)</small><table border="1" class="dataframe"><thead><tr><th>looks</th><th>estimate</th><th>std_error</th><th>statistic</th><th>p_value</th><th>s_value</th><th>conf_low</th><th>conf_high</th></tr><tr><td>i64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td></tr></thead><tbody><tr><td>3</td><td>6.362436</td><td>0.132481</td><td>48.025307</td><td>0.0</td><td>inf</td><td>6.102778</td><td>6.622094</td></tr><tr><td>4</td><td>6.999705</td><td>0.202224</td><td>34.61356</td><td>0.0</td><td>inf</td><td>6.603352</td><td>7.396057</td></tr></tbody></table></div></div></div>
+</div>
+<p>With looks of about 3, you earn 6.36 an hour. With a four, you earn basically 7. Is this difference statistically significant?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Include hypothesis of zero difference, test to reject</span>
+<span class="n">me</span><span class="o">.</span><span class="n">predictions</span><span class="p">(</span><span class="n">looks_mod</span><span class="p">,</span>
+               <span class="n">newdata</span><span class="o">=</span><span class="n">dg</span><span class="p">,</span>
+               <span class="n">by</span><span class="o">=</span><span class="s1">&#39;looks&#39;</span><span class="p">,</span>
+               <span class="n">hypothesis</span><span class="o">=</span><span class="s1">&#39;b2 - b1 = 0&#39;</span><span class="p">)</span> <span class="c1"># Same as b2=b1 or 4 - 3</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div><style>
+.dataframe > thead > tr,
+.dataframe > tbody > tr {
+  text-align: right;
+  white-space: pre-wrap;
+}
+</style>
+<small>shape: (1, 8)</small><table border="1" class="dataframe"><thead><tr><th>term</th><th>estimate</th><th>std_error</th><th>statistic</th><th>p_value</th><th>s_value</th><th>conf_low</th><th>conf_high</th></tr><tr><td>str</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td></tr></thead><tbody><tr><td>&quot;b2-b1=0&quot;</td><td>0.637269</td><td>0.188008</td><td>3.389585</td><td>0.0007</td><td>10.480386</td><td>0.26878</td><td>1.005757</td></tr></tbody></table></div></div></div>
+</div>
+<p>The difference of about 0.64 is significant. Hold on though, all that exercise, expensive products and good food is a LOT of effort. Will it earn you at least an extra 0.50 an hour?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Include hypothesis of a 50-cent difference, test to reject</span>
+<span class="n">me</span><span class="o">.</span><span class="n">predictions</span><span class="p">(</span><span class="n">looks_mod</span><span class="p">,</span>
+               <span class="n">newdata</span><span class="o">=</span><span class="n">dg</span><span class="p">,</span>
+               <span class="n">by</span><span class="o">=</span><span class="s1">&#39;looks&#39;</span><span class="p">,</span>
+               <span class="n">hypothesis</span><span class="o">=</span><span class="s1">&#39;b2 - b1 = 0.50&#39;</span><span class="p">)</span> 
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div><style>
+.dataframe > thead > tr,
+.dataframe > tbody > tr {
+  text-align: right;
+  white-space: pre-wrap;
+}
+</style>
+<small>shape: (1, 8)</small><table border="1" class="dataframe"><thead><tr><th>term</th><th>estimate</th><th>std_error</th><th>statistic</th><th>p_value</th><th>s_value</th><th>conf_low</th><th>conf_high</th></tr><tr><td>str</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td></tr></thead><tbody><tr><td>&quot;b2-b1=0.50&quot;</td><td>0.137269</td><td>0.188008</td><td>0.730122</td><td>0.465316</td><td>1.103719</td><td>-0.23122</td><td>0.505757</td></tr></tbody></table></div></div></div>
+</div>
+<p>This difference is not statistically significant, so you conclude the conclude there’s no evidence it will improve your wages above 50 cents an hour.</p>
+<p>Imagine now you say - this increase of a 3 to a 4 is going to be a lot of work.</p>
+<p>Anything from an increase of 0.01 to 1 dollar is absolutely not worth it, and so I’ll consider that increase equivalent to what I currently earn - all the gym memberships and beauty products will cost me more than that. An increase of 0.01 to 1 dollar is my interval hypothesis.</p>
+<p>You can test that hypothesis like so:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Equivalence hypothesis</span>
+<span class="n">eq</span> <span class="o">=</span> <span class="n">me</span><span class="o">.</span><span class="n">predictions</span><span class="p">(</span><span class="n">looks_mod</span><span class="p">,</span>
+                    <span class="n">newdata</span><span class="o">=</span><span class="n">dg</span><span class="p">,</span>
+                    <span class="n">by</span><span class="o">=</span><span class="s1">&#39;looks&#39;</span><span class="p">,</span>
+                    <span class="n">hypothesis</span><span class="o">=</span><span class="s1">&#39;b2 - b1 = 0&#39;</span><span class="p">,</span>
+                    <span class="n">equivalence</span><span class="o">=</span><span class="p">[</span><span class="mf">0.01</span><span class="p">,</span> <span class="mf">1.</span><span class="p">])</span>
+<span class="n">eq</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div><style>
+.dataframe > thead > tr,
+.dataframe > tbody > tr {
+  text-align: right;
+  white-space: pre-wrap;
+}
+</style>
+<small>shape: (1, 13)</small><table border="1" class="dataframe"><thead><tr><th>term</th><th>estimate</th><th>std_error</th><th>statistic</th><th>p_value</th><th>s_value</th><th>conf_low</th><th>conf_high</th><th>statistic_noninf</th><th>statistic_nonsup</th><th>p_value_noninf</th><th>p_value_nonsup</th><th>p_value_equiv</th></tr><tr><td>str</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td></tr></thead><tbody><tr><td>&quot;b2-b1=0&quot;</td><td>0.637269</td><td>0.188008</td><td>3.389585</td><td>0.0007</td><td>10.480386</td><td>0.26878</td><td>1.005757</td><td>3.336395</td><td>-1.929341</td><td>0.000424</td><td>0.026844</td><td>0.026844</td></tr></tbody></table></div></div></div>
+</div>
+<p>This <em>is</em> significant, which indicates the effect <em>is within the interval</em>, and thus you can conclude the end result is the same as what you presently earn:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Plot</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">pointplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">eq</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;term&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;estimate&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">vlines</span><span class="p">(</span><span class="n">eq</span><span class="p">[</span><span class="s1">&#39;term&#39;</span><span class="p">],</span> <span class="n">eq</span><span class="p">[</span><span class="s1">&#39;conf_low&#39;</span><span class="p">],</span> <span class="n">eq</span><span class="p">[</span><span class="s1">&#39;conf_high&#39;</span><span class="p">])</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="mf">0.01</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.lines.Line2D at 0x14e25f390&gt;
+</pre></div>
+</div>
+<img alt="../_images/d4fd6a789bdb9868ae8e9c21bff622c44f9ef18453554c77dbce619b5e6b9a8e.png" src="../_images/d4fd6a789bdb9868ae8e9c21bff622c44f9ef18453554c77dbce619b5e6b9a8e.png" />
+</div>
+</div>
+<p>To reiterate, this test is significant, which means you can say the effect is <em>unintersting, null, or too small to be of interest</em>. If the test was <em>not</em> significant, you would conclude that the intervention on your looks could possibly yield effects outside of this interval and thus <em>could be of interest</em>.</p>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./6_Applications"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../5_Binary/QPoP%20-%20Week%205%20Exercises%20-%20Answers.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Using and understanding probit models - Exercises &amp; Answers</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="QPoP%20-%20Week%206%20Exercises%20-%20Answers.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Quantitative Perspectives on Psychology</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">6 - Precision in Predictions</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#figuring-out-precision-and-other-types-of-tests">Figuring out precision and other types of tests</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#finding-precision">Finding precision</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#intervention-data">Intervention data</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#testing-hypotheses">Testing hypotheses</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#testing-an-interval-hypothesis">Testing an interval hypothesis</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#one-more-example">One more example</a></li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Alex Jones, Ph.D
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

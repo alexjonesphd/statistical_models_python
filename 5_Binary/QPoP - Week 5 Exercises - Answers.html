@@ -1,0 +1,2061 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Using and understanding probit models - Exercises &amp; Answers &#8212; Statistical Modelling with Python</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '5_Binary/QPoP - Week 5 Exercises - Answers';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="6 - Precision in Predictions" href="../6_Applications/QPoP%20-%20Week%206%20Workshop.html" />
+    <link rel="prev" title="5 - Binary outcome models" href="QPoP%20-%20Week%205%20Workshop.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt="Statistical Modelling with Python - Home"/>
+    <script>document.write(`<img src="../_static/logo.png" class="logo__image only-dark" alt="Statistical Modelling with Python - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    Statistical Modelling with Python
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Python Basics</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../1_Introduction/QPoP%20-%20Week%201%20Workshop.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../1_Introduction/QPoP%20-%20Week%201%20Exercises%20-%20Answers.html">Using Python for Data Analysis - Exercises &amp; Answers</a></li>
+
+
+
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">The GLM</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../2_The_GLM/QPoP%20-%20Week%202%20Workshop.html">2 - The General Linear Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../2_The_GLM/QPoP%20-%20Week%202%20Exercises%20-%20Answers.html">Getting to grips with linear models in Python - Exercises &amp; Answers</a></li>
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Advancing the GLM</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../3_Advancing_GLM/QPoP%20-%20Week%203%20Workshop.html">3 - Advancing the general linear model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../3_Advancing_GLM/QPoP%20-%20Week%203%20Exercises%20-%20Answers.html">Checking assumptions and including interactions - Exercises &amp; Answers</a></li>
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">The art of prediction</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../4_Prediction/QPoP%20-%20Week%204%20Workshop.html">4 - The art of prediction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../4_Prediction/QPoP%20-%20Week%204%20Exercises%20-%20Answers.html">Asking scientific questions of models - Exercises &amp; Answers</a></li>
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Binary outcome models</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="QPoP%20-%20Week%205%20Workshop.html">5 - Binary outcome models</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Using and understanding probit models - Exercises &amp; Answers</a></li>
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Applications and other kinds of hypotheses</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../6_Applications/QPoP%20-%20Week%206%20Workshop.html">6 - Precision in Predictions</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../6_Applications/QPoP%20-%20Week%206%20Exercises%20-%20Answers.html">Quantitative Perspectives on Psychology</a></li>
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Linear Mixed Effects Models</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../7_MixedModel/QPoP%20-%20Week%207%20Workshop.html">7 - Linear mixed effects models</a></li>
+
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2F5_Binary/QPoP - Week 5 Exercises - Answers.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/5_Binary/QPoP - Week 5 Exercises - Answers.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Using and understanding probit models - Exercises & Answers</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Using and understanding probit models - Exercises &amp; Answers</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#iceberg-right-ahead">1. <strong>Iceberg</strong>, right ahead!</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-imports">a. Imports</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#b-loading-up-data">b. Loading up data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#c-a-tiny-bit-of-cleaning">c. A tiny bit of cleaning</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#d-estimating-survival-probabilities">d. Estimating survival probabilities</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#e-individualised-survival-estimates">e. Individualised survival estimates</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#f-evaluating-the-model">f. Evaluating the model</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#the-challenger-disaster">2. The Challenger Disaster</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#marginally-significant-meta-scientific-statistics">3. Marginally significant meta-scientific statistics</a></li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="using-and-understanding-probit-models-exercises-answers">
+<h1>Using and understanding probit models - Exercises &amp; Answers<a class="headerlink" href="#using-and-understanding-probit-models-exercises-answers" title="Link to this heading">#</a></h1>
+<p>The exercises for this week will ease you into the slightly odd world of probit models. In many ways the logic is the same - we fit the models and interpret the predictions - but since the predictions are probabilities, and a threshold has to be imposed to actually recover a binary outcome, things can be a little trickier. On the whole, these models are a little trickier to understand than a standard GLM, so take care.</p>
+</section>
+<section id="iceberg-right-ahead">
+<h1>1. <strong>Iceberg</strong>, right ahead!<a class="headerlink" href="#iceberg-right-ahead" title="Link to this heading">#</a></h1>
+<p>Our probit regression practice begins by examining the <code class="docutils literal notranslate"><span class="pre">titanic</span></code> dataset. This is a genuine dataset that records the full passenger log of the Titanic, with many interesting variables, including whether a passenger survived the disaster or not.</p>
+<section id="a-imports">
+<h2>a. Imports<a class="headerlink" href="#a-imports" title="Link to this heading">#</a></h2>
+<p>To get started, import the following packages with their usual aliases: <code class="docutils literal notranslate"><span class="pre">pandas</span></code>, <code class="docutils literal notranslate"><span class="pre">pingouin</span></code>, <code class="docutils literal notranslate"><span class="pre">statsmodels.formula.api</span></code>, <code class="docutils literal notranslate"><span class="pre">seaborn</span></code>, <code class="docutils literal notranslate"><span class="pre">marginaleffects</span></code>, and <code class="docutils literal notranslate"><span class="pre">numpy</span></code>.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Your answer here</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">pingouin</span> <span class="k">as</span> <span class="nn">pg</span>
+<span class="kn">import</span> <span class="nn">statsmodels.formula.api</span> <span class="k">as</span> <span class="nn">smf</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">import</span> <span class="nn">marginaleffects</span> <span class="k">as</span> <span class="nn">me</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="n">sns</span><span class="o">.</span><span class="n">set_style</span><span class="p">(</span><span class="s1">&#39;whitegrid&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+</section>
+<section id="b-loading-up-data">
+<h2>b. Loading up data<a class="headerlink" href="#b-loading-up-data" title="Link to this heading">#</a></h2>
+<p>Load the Titanic dataset from the following link using <code class="docutils literal notranslate"><span class="pre">pandas</span></code> into a variable called <code class="docutils literal notranslate"><span class="pre">titanic</span></code>, then show the top 10 rows.</p>
+<p>Data: <a class="reference external" href="https://vincentarelbundock.github.io/Rdatasets/csv/Stat2Data/Titanic.csv">https://vincentarelbundock.github.io/Rdatasets/csv/Stat2Data/Titanic.csv</a></p>
+<p>The dataset is fairly self explanatory, but you can find a more detailed description here:
+<a class="reference external" href="https://vincentarelbundock.github.io/Rdatasets/doc/Stat2Data/Titanic.html">https://vincentarelbundock.github.io/Rdatasets/doc/Stat2Data/Titanic.html</a></p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Your answer here</span>
+<span class="n">titanic</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;https://vincentarelbundock.github.io/Rdatasets/csv/Stat2Data/Titanic.csv&#39;</span><span class="p">)</span>
+<span class="n">titanic</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>rownames</th>
+      <th>Name</th>
+      <th>PClass</th>
+      <th>Age</th>
+      <th>Sex</th>
+      <th>Survived</th>
+      <th>SexCode</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>Allen, Miss Elisabeth Walton</td>
+      <td>1st</td>
+      <td>29.00</td>
+      <td>female</td>
+      <td>1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>Allison, Miss Helen Loraine</td>
+      <td>1st</td>
+      <td>2.00</td>
+      <td>female</td>
+      <td>0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3</td>
+      <td>Allison, Mr Hudson Joshua Creighton</td>
+      <td>1st</td>
+      <td>30.00</td>
+      <td>male</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4</td>
+      <td>Allison, Mrs Hudson JC (Bessie Waldo Daniels)</td>
+      <td>1st</td>
+      <td>25.00</td>
+      <td>female</td>
+      <td>0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5</td>
+      <td>Allison, Master Hudson Trevor</td>
+      <td>1st</td>
+      <td>0.92</td>
+      <td>male</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>6</td>
+      <td>Anderson, Mr Harry</td>
+      <td>1st</td>
+      <td>47.00</td>
+      <td>male</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>7</td>
+      <td>Andrews, Miss Kornelia Theodosia</td>
+      <td>1st</td>
+      <td>63.00</td>
+      <td>female</td>
+      <td>1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>8</td>
+      <td>Andrews, Mr Thomas, jr</td>
+      <td>1st</td>
+      <td>39.00</td>
+      <td>male</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>9</td>
+      <td>Appleton, Mrs Edward Dale (Charlotte Lamson)</td>
+      <td>1st</td>
+      <td>58.00</td>
+      <td>female</td>
+      <td>1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>10</td>
+      <td>Artagaveytia, Mr Ramon</td>
+      <td>1st</td>
+      <td>71.00</td>
+      <td>male</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="c-a-tiny-bit-of-cleaning">
+<h2>c. A tiny bit of cleaning<a class="headerlink" href="#c-a-tiny-bit-of-cleaning" title="Link to this heading">#</a></h2>
+<p>The dataset has a missing data value for one of the <code class="docutils literal notranslate"><span class="pre">PClass</span></code> entries, where it is recorded as a * symbol.</p>
+<p>Remove this by querying the data so that <code class="docutils literal notranslate"><span class="pre">PClass</span></code> is not equal to ‘*’, and reassign this back to the variable <code class="docutils literal notranslate"><span class="pre">titanic</span></code>.</p>
+<p>Then, drop the missing values in the <code class="docutils literal notranslate"><span class="pre">Age</span></code> column, and reassign this back to the variable <code class="docutils literal notranslate"><span class="pre">titanic</span></code>.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Your answer here</span>
+<span class="n">titanic</span> <span class="o">=</span> <span class="n">titanic</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;PClass != &quot;*&quot;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">how</span><span class="o">=</span><span class="s1">&#39;any&#39;</span><span class="p">,</span> <span class="n">subset</span><span class="o">=</span><span class="s1">&#39;Age&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+</section>
+<section id="d-estimating-survival-probabilities">
+<h2>d. Estimating survival probabilities<a class="headerlink" href="#d-estimating-survival-probabilities" title="Link to this heading">#</a></h2>
+<p>The sinking of the Titanic is one of the worst maritime disasters in recorded history, with over 1500 deaths. The dataset contains only the passenger manifesto (i.e., crew are not included). Surviving the disaster was not equally likely for all passengers, however - the phrase ‘women and children first’ may come to mind.</p>
+<p>Probit regression can help us estimate survival probabilities for the different passenger classes, ages, and sex.</p>
+<p>Fit a probit model predicted whether a passenger survived from their sex, age, and class, and print the summary:</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Your answer here</span>
+<span class="n">titanic_model</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">probit</span><span class="p">(</span><span class="s1">&#39;Survived ~ PClass + Age + Sex&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">titanic</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="n">titanic_model</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Optimization terminated successfully.
+         Current function value: 0.461503
+         Iterations 6
+</pre></div>
+</div>
+<div class="output text_html"><table class="simpletable">
+<caption>Probit Regression Results</caption>
+<tr>
+  <th>Dep. Variable:</th>       <td>Survived</td>     <th>  No. Observations:  </th>  <td>   756</td>  
+</tr>
+<tr>
+  <th>Model:</th>                <td>Probit</td>      <th>  Df Residuals:      </th>  <td>   751</td>  
+</tr>
+<tr>
+  <th>Method:</th>                 <td>MLE</td>       <th>  Df Model:          </th>  <td>     4</td>  
+</tr>
+<tr>
+  <th>Date:</th>            <td>Wed, 02 Oct 2024</td> <th>  Pseudo R-squ.:     </th>  <td>0.3196</td>  
+</tr>
+<tr>
+  <th>Time:</th>                <td>14:57:16</td>     <th>  Log-Likelihood:    </th> <td> -348.90</td> 
+</tr>
+<tr>
+  <th>converged:</th>             <td>True</td>       <th>  LL-Null:           </th> <td> -512.79</td> 
+</tr>
+<tr>
+  <th>Covariance Type:</th>     <td>nonrobust</td>    <th>  LLR p-value:       </th> <td>1.098e-69</td>
+</tr>
+</table>
+<table class="simpletable">
+<tr>
+        <td></td>           <th>coef</th>     <th>std err</th>      <th>z</th>      <th>P>|z|</th>  <th>[0.025</th>    <th>0.975]</th>  
+</tr>
+<tr>
+  <th>Intercept</th>     <td>    2.1643</td> <td>    0.217</td> <td>    9.967</td> <td> 0.000</td> <td>    1.739</td> <td>    2.590</td>
+</tr>
+<tr>
+  <th>PClass[T.2nd]</th> <td>   -0.7540</td> <td>    0.152</td> <td>   -4.966</td> <td> 0.000</td> <td>   -1.052</td> <td>   -0.456</td>
+</tr>
+<tr>
+  <th>PClass[T.3rd]</th> <td>   -1.4076</td> <td>    0.150</td> <td>   -9.356</td> <td> 0.000</td> <td>   -1.702</td> <td>   -1.113</td>
+</tr>
+<tr>
+  <th>Sex[T.male]</th>   <td>   -1.5460</td> <td>    0.112</td> <td>  -13.821</td> <td> 0.000</td> <td>   -1.765</td> <td>   -1.327</td>
+</tr>
+<tr>
+  <th>Age</th>           <td>   -0.0221</td> <td>    0.004</td> <td>   -5.130</td> <td> 0.000</td> <td>   -0.031</td> <td>   -0.014</td>
+</tr>
+</table></div></div>
+</div>
+<p>All of the coefficients are significant, but again, we do not want to dwell on interpreting these. Instead, we should focus on the predictions. Generate a set of predictions for each predictor, to see how survival probability is affected. Bonus points if you can plot them as well.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Your answer here</span>
+<span class="n">dg</span> <span class="o">=</span> <span class="n">me</span><span class="o">.</span><span class="n">datagrid</span><span class="p">(</span><span class="n">titanic_model</span><span class="p">,</span>
+                 <span class="n">PClass</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;1st&#39;</span><span class="p">,</span> <span class="s1">&#39;2nd&#39;</span><span class="p">,</span> <span class="s1">&#39;3rd&#39;</span><span class="p">],</span>
+                 <span class="n">Sex</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;male&#39;</span><span class="p">,</span> <span class="s1">&#39;female&#39;</span><span class="p">],</span>
+                 <span class="n">Age</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">90</span><span class="p">))</span>
+
+<span class="c1"># Predict</span>
+<span class="n">preds</span> <span class="o">=</span> <span class="n">me</span><span class="o">.</span><span class="n">predictions</span><span class="p">(</span><span class="n">titanic_model</span><span class="p">,</span> <span class="n">newdata</span><span class="o">=</span><span class="n">dg</span><span class="p">)</span>
+
+<span class="c1"># Plot</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">relplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">preds</span><span class="p">,</span>
+            <span class="n">x</span><span class="o">=</span><span class="s1">&#39;Age&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;estimate&#39;</span><span class="p">,</span>
+            <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;PClass&#39;</span><span class="p">,</span> <span class="n">col</span><span class="o">=</span><span class="s1">&#39;Sex&#39;</span><span class="p">,</span>
+            <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;line&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.FacetGrid at 0x141dd1750&gt;
+</pre></div>
+</div>
+<img alt="../_images/bad468a0f10199df36a014726d3100d32376e28632f9a888951594e688de4921.png" src="../_images/bad468a0f10199df36a014726d3100d32376e28632f9a888951594e688de4921.png" />
+</div>
+</div>
+<p>This story is not apparent at all from the coefficients. Younger individuals had a higher chance of survival, as did women, which is particularly pronounced for higher-class passengers.</p>
+<p>Let’s check the importance of these differences.</p>
+<p>Use <code class="docutils literal notranslate"><span class="pre">marginaleffects</span></code> to contrast the differences in survival probability for females and males, regardless of class and age (i.e., the marginal effect of sex).</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Your code here</span>
+<span class="c1"># marginal effects here</span>
+<span class="n">display</span><span class="p">(</span>
+    <span class="n">me</span><span class="o">.</span><span class="n">predictions</span><span class="p">(</span><span class="n">titanic_model</span><span class="p">,</span>
+               <span class="n">newdata</span><span class="o">=</span><span class="n">dg</span><span class="p">,</span>
+               <span class="n">by</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Sex&#39;</span><span class="p">])</span>
+<span class="p">)</span>
+
+<span class="c1"># Contrast here</span>
+<span class="n">me</span><span class="o">.</span><span class="n">predictions</span><span class="p">(</span><span class="n">titanic_model</span><span class="p">,</span>
+               <span class="n">newdata</span><span class="o">=</span><span class="n">dg</span><span class="p">,</span>
+               <span class="n">by</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Sex&#39;</span><span class="p">],</span>
+               <span class="n">hypothesis</span><span class="o">=</span><span class="s1">&#39;pairwise&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_html"><div><style>
+.dataframe > thead > tr,
+.dataframe > tbody > tr {
+  text-align: right;
+  white-space: pre-wrap;
+}
+</style>
+<small>shape: (2, 8)</small><table border="1" class="dataframe"><thead><tr><th>Sex</th><th>estimate</th><th>std_error</th><th>statistic</th><th>p_value</th><th>s_value</th><th>conf_low</th><th>conf_high</th></tr><tr><td>str</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td></tr></thead><tbody><tr><td>&quot;female&quot;</td><td>0.637297</td><td>0.034537</td><td>18.452395</td><td>0.0</td><td>inf</td><td>0.569605</td><td>0.704989</td></tr><tr><td>&quot;male&quot;</td><td>0.202482</td><td>0.015936</td><td>12.706124</td><td>0.0</td><td>inf</td><td>0.171248</td><td>0.233715</td></tr></tbody></table></div></div><div class="output text_html"><div><style>
+.dataframe > thead > tr,
+.dataframe > tbody > tr {
+  text-align: right;
+  white-space: pre-wrap;
+}
+</style>
+<small>shape: (1, 8)</small><table border="1" class="dataframe"><thead><tr><th>term</th><th>estimate</th><th>std_error</th><th>statistic</th><th>p_value</th><th>s_value</th><th>conf_low</th><th>conf_high</th></tr><tr><td>str</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td></tr></thead><tbody><tr><td>&quot;Row 1 - Row 2&quot;</td><td>0.434815</td><td>0.037036</td><td>11.740354</td><td>0.0</td><td>inf</td><td>0.362226</td><td>0.507404</td></tr></tbody></table></div></div></div>
+</div>
+<p>What about the marginal effects of passenger class? What are the probabilities of survival for those in each of the three classes, and do they differ significantly from one another?</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Your code here</span>
+<span class="n">display</span><span class="p">(</span>
+    <span class="n">me</span><span class="o">.</span><span class="n">predictions</span><span class="p">(</span><span class="n">titanic_model</span><span class="p">,</span>
+                   <span class="n">newdata</span><span class="o">=</span><span class="n">dg</span><span class="p">,</span>
+                   <span class="n">by</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;PClass&#39;</span><span class="p">])</span>
+<span class="p">)</span>
+
+<span class="c1"># Contrast here</span>
+<span class="n">me</span><span class="o">.</span><span class="n">predictions</span><span class="p">(</span><span class="n">titanic_model</span><span class="p">,</span>
+               <span class="n">newdata</span><span class="o">=</span><span class="n">dg</span><span class="p">,</span>
+               <span class="n">by</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;PClass&#39;</span><span class="p">],</span>
+               <span class="n">hypothesis</span><span class="o">=</span><span class="s1">&#39;pairwise&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_html"><div><style>
+.dataframe > thead > tr,
+.dataframe > tbody > tr {
+  text-align: right;
+  white-space: pre-wrap;
+}
+</style>
+<small>shape: (3, 8)</small><table border="1" class="dataframe"><thead><tr><th>PClass</th><th>estimate</th><th>std_error</th><th>statistic</th><th>p_value</th><th>s_value</th><th>conf_low</th><th>conf_high</th></tr><tr><td>str</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td></tr></thead><tbody><tr><td>&quot;1st&quot;</td><td>0.61146</td><td>0.02734</td><td>22.364725</td><td>0.0</td><td>inf</td><td>0.557874</td><td>0.665046</td></tr><tr><td>&quot;2nd&quot;</td><td>0.405421</td><td>0.032443</td><td>12.496293</td><td>0.0</td><td>inf</td><td>0.341833</td><td>0.469009</td></tr><tr><td>&quot;3rd&quot;</td><td>0.242787</td><td>0.024009</td><td>10.11215</td><td>0.0</td><td>inf</td><td>0.195729</td><td>0.289845</td></tr></tbody></table></div></div><div class="output text_html"><div><style>
+.dataframe > thead > tr,
+.dataframe > tbody > tr {
+  text-align: right;
+  white-space: pre-wrap;
+}
+</style>
+<small>shape: (3, 8)</small><table border="1" class="dataframe"><thead><tr><th>term</th><th>estimate</th><th>std_error</th><th>statistic</th><th>p_value</th><th>s_value</th><th>conf_low</th><th>conf_high</th></tr><tr><td>str</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td></tr></thead><tbody><tr><td>&quot;Row 1 - Row 2&quot;</td><td>0.206039</td><td>0.0389</td><td>5.296636</td><td>1.1796e-7</td><td>23.015252</td><td>0.129797</td><td>0.282282</td></tr><tr><td>&quot;Row 1 - Row 3&quot;</td><td>0.368673</td><td>0.032987</td><td>11.176456</td><td>0.0</td><td>inf</td><td>0.304021</td><td>0.433326</td></tr><tr><td>&quot;Row 2 - Row 3&quot;</td><td>0.162634</td><td>0.033226</td><td>4.894787</td><td>9.8412e-7</td><td>19.954661</td><td>0.097512</td><td>0.227756</td></tr></tbody></table></div></div></div>
+</div>
+<p>What about the marginal slope of age? How did probability of survival change with a 1-year increase in age, regardless of passenger sex and class? Hint - since you have just one variable of interest here, you should use <code class="docutils literal notranslate"><span class="pre">avg_slopes</span></code> rather than <code class="docutils literal notranslate"><span class="pre">slopes</span></code>, which will helpfully average across the results for you.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Your answer here</span>
+<span class="n">me</span><span class="o">.</span><span class="n">avg_slopes</span><span class="p">(</span><span class="n">titanic_model</span><span class="p">,</span> <span class="n">newdata</span><span class="o">=</span><span class="n">dg</span><span class="p">,</span> <span class="n">variables</span><span class="o">=</span><span class="s1">&#39;Age&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_html"><div><style>
+.dataframe > thead > tr,
+.dataframe > tbody > tr {
+  text-align: right;
+  white-space: pre-wrap;
+}
+</style>
+<small>shape: (1, 9)</small><table border="1" class="dataframe"><thead><tr><th>term</th><th>contrast</th><th>estimate</th><th>std_error</th><th>statistic</th><th>p_value</th><th>s_value</th><th>conf_low</th><th>conf_high</th></tr><tr><td>str</td><td>str</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td></tr></thead><tbody><tr><td>&quot;Age&quot;</td><td>&quot;mean(dY/dX)&quot;</td><td>-0.005577</td><td>0.00087</td><td>-6.40739</td><td>1.4803e-10</td><td>32.653374</td><td>-0.007283</td><td>-0.003871</td></tr></tbody></table></div></div></div>
+</div>
+</section>
+<section id="e-individualised-survival-estimates">
+<h2>e. Individualised survival estimates<a class="headerlink" href="#e-individualised-survival-estimates" title="Link to this heading">#</a></h2>
+<p>Based on your model, who was more likely to survive the Titanic disaster out of the following three people:</p>
+<ol class="arabic simple">
+<li><p>A 10 year old female from the second class</p></li>
+<li><p>A 30 year old male from first class</p></li>
+<li><p>A 60 year old female from first class</p></li>
+<li><p>A 1 year old male from third class</p></li>
+</ol>
+<p>Hint - you may find using <code class="docutils literal notranslate"><span class="pre">datagrid</span></code> gives you more than what you need here, so you could specify your <code class="docutils literal notranslate"><span class="pre">newdata</span></code> through a simple DataFrame. Try it and see. Once you obtain the four predictions, you can use a different argument to <code class="docutils literal notranslate"><span class="pre">hypothesis</span></code> - try using ‘reference’ to see if you can compare all predictions to that of a 10 year old second class female.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Your answer here</span>
+<span class="c1"># Option 1 - create a dataframe</span>
+<span class="n">dg</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;Age&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+                   <span class="s1">&#39;Sex&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;female&#39;</span><span class="p">,</span> <span class="s1">&#39;male&#39;</span><span class="p">,</span> <span class="s1">&#39;female&#39;</span><span class="p">,</span> <span class="s1">&#39;male&#39;</span><span class="p">],</span>
+                   <span class="s1">&#39;PClass&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;2nd&#39;</span><span class="p">,</span> <span class="s1">&#39;1st&#39;</span><span class="p">,</span> <span class="s1">&#39;1st&#39;</span><span class="p">,</span> <span class="s1">&#39;3rd&#39;</span><span class="p">]})</span>
+
+<span class="c1"># Predict</span>
+<span class="n">opt1</span> <span class="o">=</span> <span class="n">me</span><span class="o">.</span><span class="n">predictions</span><span class="p">(</span><span class="n">titanic_model</span><span class="p">,</span> <span class="n">newdata</span><span class="o">=</span><span class="n">dg</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">opt1</span><span class="p">)</span>
+
+<span class="c1"># Opt1 contrast</span>
+<span class="n">display</span><span class="p">(</span><span class="n">me</span><span class="o">.</span><span class="n">predictions</span><span class="p">(</span><span class="n">titanic_model</span><span class="p">,</span> <span class="n">newdata</span><span class="o">=</span><span class="n">dg</span><span class="p">,</span> <span class="n">hypothesis</span><span class="o">=</span><span class="s1">&#39;reference&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_html"><div><style>
+.dataframe > thead > tr,
+.dataframe > tbody > tr {
+  text-align: right;
+  white-space: pre-wrap;
+}
+</style>
+<small>shape: (4, 11)</small><table border="1" class="dataframe"><thead><tr><th>rowid</th><th>estimate</th><th>std_error</th><th>statistic</th><th>p_value</th><th>s_value</th><th>conf_low</th><th>conf_high</th><th>Age</th><th>Sex</th><th>PClass</th></tr><tr><td>i32</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>i64</td><td>str</td><td>str</td></tr></thead><tbody><tr><td>0</td><td>0.882865</td><td>0.028276</td><td>31.222681</td><td>0.0</td><td>inf</td><td>0.827444</td><td>0.938286</td><td>10</td><td>&quot;female&quot;</td><td>&quot;2nd&quot;</td></tr><tr><td>1</td><td>0.482342</td><td>0.044893</td><td>10.74414</td><td>0.0</td><td>inf</td><td>0.394352</td><td>0.570331</td><td>30</td><td>&quot;male&quot;</td><td>&quot;1st&quot;</td></tr><tr><td>2</td><td>0.799332</td><td>0.041966</td><td>19.046915</td><td>0.0</td><td>inf</td><td>0.717079</td><td>0.881585</td><td>60</td><td>&quot;female&quot;</td><td>&quot;1st&quot;</td></tr><tr><td>3</td><td>0.208569</td><td>0.039494</td><td>5.280984</td><td>1.2849e-7</td><td>22.891818</td><td>0.131161</td><td>0.285976</td><td>1</td><td>&quot;male&quot;</td><td>&quot;3rd&quot;</td></tr></tbody></table></div></div><div class="output text_html"><div><style>
+.dataframe > thead > tr,
+.dataframe > tbody > tr {
+  text-align: right;
+  white-space: pre-wrap;
+}
+</style>
+<small>shape: (3, 8)</small><table border="1" class="dataframe"><thead><tr><th>term</th><th>estimate</th><th>std_error</th><th>statistic</th><th>p_value</th><th>s_value</th><th>conf_low</th><th>conf_high</th></tr><tr><td>str</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td></tr></thead><tbody><tr><td>&quot;Row 2 - Row 1&quot;</td><td>-0.400524</td><td>0.051269</td><td>-7.812249</td><td>5.5511e-15</td><td>47.356144</td><td>-0.501008</td><td>-0.300039</td></tr><tr><td>&quot;Row 3 - Row 1&quot;</td><td>-0.083533</td><td>0.051703</td><td>-1.615623</td><td>0.106176</td><td>3.235471</td><td>-0.18487</td><td>0.017804</td></tr><tr><td>&quot;Row 4 - Row 1&quot;</td><td>-0.674296</td><td>0.043832</td><td>-15.383747</td><td>0.0</td><td>inf</td><td>-0.760205</td><td>-0.588388</td></tr></tbody></table></div></div></div>
+</div>
+</section>
+<section id="f-evaluating-the-model">
+<h2>f. Evaluating the model<a class="headerlink" href="#f-evaluating-the-model" title="Link to this heading">#</a></h2>
+<p>Compute the phi coefficient for the model examine its magnitude. How good is this (higher is better)?</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Your answer here</span>
+<span class="c1"># Get predictions for all datapoints</span>
+<span class="n">preds</span> <span class="o">=</span> <span class="n">me</span><span class="o">.</span><span class="n">predictions</span><span class="p">(</span><span class="n">titanic_model</span><span class="p">)</span>
+
+<span class="c1"># Binarise</span>
+<span class="n">binary</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">digitize</span><span class="p">(</span><span class="n">preds</span><span class="p">[</span><span class="s1">&#39;estimate&#39;</span><span class="p">],</span> <span class="p">[</span><span class="mf">.5</span><span class="p">])</span>
+
+<span class="c1"># Correlate</span>
+<span class="n">pg</span><span class="o">.</span><span class="n">corr</span><span class="p">(</span><span class="n">binary</span><span class="p">,</span> <span class="n">titanic</span><span class="p">[</span><span class="s1">&#39;Survived&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>n</th>
+      <th>r</th>
+      <th>CI95%</th>
+      <th>p-val</th>
+      <th>BF10</th>
+      <th>power</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>pearson</th>
+      <td>756</td>
+      <td>0.557665</td>
+      <td>[0.51, 0.6]</td>
+      <td>5.325949e-63</td>
+      <td>3.067e+59</td>
+      <td>1.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+</section>
+<section id="the-challenger-disaster">
+<h1>2. The Challenger Disaster<a class="headerlink" href="#the-challenger-disaster" title="Link to this heading">#</a></h1>
+<p>Probit regression is really morbid, isn’t it? Lets continue with another example.</p>
+<p>The Challenger was a space shuttle that exploded shortly after launch in 1986, killing all seven astronauts on board. The cause of the explosion was traced back to a simple mechanical fault in the form of a rubber O-ring in the fuselage. In normal temperatures, these O-rings kept extremely powerful and flammable rocket fuel from the booster, allowing the fuel to enter when needed. In low temperatures, they became brittle, allowing fuel to leak into the booster in greater quantities.</p>
+<p>What is very tragic about this example is that the data was there to suggest it all along - engineers had stated that the O-rings failed in low temperatures, but those in charge of the operation pressed forward with the launch date.</p>
+<p>The recorded engineer data can be downloaded here: <a class="reference external" href="https://vincentarelbundock.github.io/Rdatasets/csv/openintro/orings.csv">https://vincentarelbundock.github.io/Rdatasets/csv/openintro/orings.csv</a></p>
+<p>And a short description is here:
+<a class="reference external" href="https://vincentarelbundock.github.io/Rdatasets/doc/openintro/orings.html">https://vincentarelbundock.github.io/Rdatasets/doc/openintro/orings.html</a></p>
+<p>Read in the dataset into a dataframe called <code class="docutils literal notranslate"><span class="pre">oring</span></code> and display it.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Your answer here</span>
+<span class="n">oring</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;https://vincentarelbundock.github.io/Rdatasets/csv/openintro/orings.csv&#39;</span><span class="p">)</span>
+<span class="n">oring</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>rownames</th>
+      <th>mission</th>
+      <th>temperature</th>
+      <th>damaged</th>
+      <th>undamaged</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>1</td>
+      <td>53</td>
+      <td>5</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>2</td>
+      <td>57</td>
+      <td>1</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3</td>
+      <td>3</td>
+      <td>58</td>
+      <td>1</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4</td>
+      <td>4</td>
+      <td>63</td>
+      <td>1</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5</td>
+      <td>5</td>
+      <td>66</td>
+      <td>0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>6</td>
+      <td>6</td>
+      <td>67</td>
+      <td>0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>7</td>
+      <td>7</td>
+      <td>67</td>
+      <td>0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>8</td>
+      <td>8</td>
+      <td>67</td>
+      <td>0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>9</td>
+      <td>9</td>
+      <td>68</td>
+      <td>0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>10</td>
+      <td>10</td>
+      <td>69</td>
+      <td>0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>11</td>
+      <td>11</td>
+      <td>70</td>
+      <td>1</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>12</td>
+      <td>12</td>
+      <td>70</td>
+      <td>0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>13</td>
+      <td>13</td>
+      <td>70</td>
+      <td>1</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>14</td>
+      <td>14</td>
+      <td>70</td>
+      <td>0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>15</td>
+      <td>15</td>
+      <td>72</td>
+      <td>0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>16</td>
+      <td>16</td>
+      <td>73</td>
+      <td>0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>17</td>
+      <td>17</td>
+      <td>75</td>
+      <td>0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>18</td>
+      <td>18</td>
+      <td>75</td>
+      <td>1</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>19</td>
+      <td>19</td>
+      <td>76</td>
+      <td>0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>20</td>
+      <td>20</td>
+      <td>76</td>
+      <td>0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>21</td>
+      <td>21</td>
+      <td>78</td>
+      <td>0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>22</td>
+      <td>22</td>
+      <td>79</td>
+      <td>0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>23</td>
+      <td>23</td>
+      <td>81</td>
+      <td>0</td>
+      <td>6</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>There are two columns of interest here. The first is <code class="docutils literal notranslate"><span class="pre">temperature</span></code>, displaying the temperature on the day of the test flight, and <code class="docutils literal notranslate"><span class="pre">damaged</span></code>, which records the number (out of six) of the damaged O-rings. Before we fit a model, create a new column in the dataframe called <code class="docutils literal notranslate"><span class="pre">any_damage</span></code> which should have a 1 where there is 1 or more in the <code class="docutils literal notranslate"><span class="pre">damaged</span></code> column, and a zero elsewhere. You already know the function that will do this.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Your answer here</span>
+<span class="n">oring</span><span class="p">[</span><span class="s1">&#39;any_damage&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">digitize</span><span class="p">(</span><span class="n">oring</span><span class="p">[</span><span class="s1">&#39;damaged&#39;</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<p>Once you have done that, fit a simple probit model that predicts <code class="docutils literal notranslate"><span class="pre">any_damage</span></code> from <code class="docutils literal notranslate"><span class="pre">temperature</span></code>. Show the summary.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Your answer here</span>
+<span class="n">oring_model</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">probit</span><span class="p">(</span><span class="s1">&#39;any_damage ~ temperature&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">oring</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="n">oring_model</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Optimization terminated successfully.
+         Current function value: 0.442994
+         Iterations 6
+</pre></div>
+</div>
+<div class="output text_html"><table class="simpletable">
+<caption>Probit Regression Results</caption>
+<tr>
+  <th>Dep. Variable:</th>      <td>any_damage</td>    <th>  No. Observations:  </th>  <td>    23</td> 
+</tr>
+<tr>
+  <th>Model:</th>                <td>Probit</td>      <th>  Df Residuals:      </th>  <td>    21</td> 
+</tr>
+<tr>
+  <th>Method:</th>                 <td>MLE</td>       <th>  Df Model:          </th>  <td>     1</td> 
+</tr>
+<tr>
+  <th>Date:</th>            <td>Wed, 02 Oct 2024</td> <th>  Pseudo R-squ.:     </th>  <td>0.2791</td> 
+</tr>
+<tr>
+  <th>Time:</th>                <td>14:57:17</td>     <th>  Log-Likelihood:    </th> <td> -10.189</td>
+</tr>
+<tr>
+  <th>converged:</th>             <td>True</td>       <th>  LL-Null:           </th> <td> -14.134</td>
+</tr>
+<tr>
+  <th>Covariance Type:</th>     <td>nonrobust</td>    <th>  LLR p-value:       </th> <td>0.004972</td>
+</tr>
+</table>
+<table class="simpletable">
+<tr>
+       <td></td>          <th>coef</th>     <th>std err</th>      <th>z</th>      <th>P>|z|</th>  <th>[0.025</th>    <th>0.975]</th>  
+</tr>
+<tr>
+  <th>Intercept</th>   <td>    8.7750</td> <td>    4.029</td> <td>    2.178</td> <td> 0.029</td> <td>    0.879</td> <td>   16.671</td>
+</tr>
+<tr>
+  <th>temperature</th> <td>   -0.1351</td> <td>    0.058</td> <td>   -2.314</td> <td> 0.021</td> <td>   -0.250</td> <td>   -0.021</td>
+</tr>
+</table></div></div>
+</div>
+<p>Notice that this is a very small dataset, and the coefficient for temperature is not particularly fairly weak. Compute the phi coefficient for this model.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Your answer here</span>
+<span class="c1"># Get predictions for all datapoints</span>
+<span class="n">preds</span> <span class="o">=</span> <span class="n">me</span><span class="o">.</span><span class="n">predictions</span><span class="p">(</span><span class="n">oring_model</span><span class="p">)</span>
+
+<span class="c1"># Binarise</span>
+<span class="n">binary</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">digitize</span><span class="p">(</span><span class="n">preds</span><span class="p">[</span><span class="s1">&#39;estimate&#39;</span><span class="p">],</span> <span class="p">[</span><span class="mf">.5</span><span class="p">])</span>
+
+<span class="c1"># Correlate</span>
+<span class="n">pg</span><span class="o">.</span><span class="n">corr</span><span class="p">(</span><span class="n">binary</span><span class="p">,</span> <span class="n">oring</span><span class="p">[</span><span class="s1">&#39;any_damage&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>n</th>
+      <th>r</th>
+      <th>CI95%</th>
+      <th>p-val</th>
+      <th>BF10</th>
+      <th>power</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>pearson</th>
+      <td>23</td>
+      <td>0.693688</td>
+      <td>[0.39, 0.86]</td>
+      <td>0.000242</td>
+      <td>144.722</td>
+      <td>0.973117</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Plot the predictions of the model, showing how probability of damage changes with temperature.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Your answer here</span>
+<span class="c1"># Get predictions</span>
+<span class="n">preds</span> <span class="o">=</span> <span class="n">me</span><span class="o">.</span><span class="n">predictions</span><span class="p">(</span><span class="n">oring_model</span><span class="p">)</span>
+
+<span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">preds</span><span class="p">,</span>
+             <span class="n">x</span><span class="o">=</span><span class="s1">&#39;temperature&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;estimate&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Axes: xlabel=&#39;temperature&#39;, ylabel=&#39;estimate&#39;&gt;
+</pre></div>
+</div>
+<img alt="../_images/812a117d7ff9cc9f5089a89f38bab8602ffe0be4f9171a57ee3879a02c55c158.png" src="../_images/812a117d7ff9cc9f5089a89f38bab8602ffe0be4f9171a57ee3879a02c55c158.png" />
+</div>
+</div>
+<p>On the morning of the disaster, when the shuttle launched, the temperature was 36 degrees Fahrenheit.</p>
+<p>What probability does the model give for any kind of O-ring damage for this event?</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Your answer here</span>
+<span class="n">me</span><span class="o">.</span><span class="n">predictions</span><span class="p">(</span><span class="n">oring_model</span><span class="p">,</span> <span class="n">newdata</span><span class="o">=</span><span class="n">me</span><span class="o">.</span><span class="n">datagrid</span><span class="p">(</span><span class="n">oring_model</span><span class="p">,</span> <span class="n">temperature</span><span class="o">=</span><span class="mi">36</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_html"><div><style>
+.dataframe > thead > tr,
+.dataframe > tbody > tr {
+  text-align: right;
+  white-space: pre-wrap;
+}
+</style>
+<small>shape: (1, 14)</small><table border="1" class="dataframe"><thead><tr><th>temperature</th><th>rowid</th><th>estimate</th><th>std_error</th><th>statistic</th><th>p_value</th><th>s_value</th><th>conf_low</th><th>conf_high</th><th>rownames</th><th>mission</th><th>damaged</th><th>undamaged</th><th>any_damage</th></tr><tr><td>i64</td><td>i32</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>i64</td><td>i64</td><td>i64</td><td>i64</td><td>i64</td></tr></thead><tbody><tr><td>36</td><td>0</td><td>0.999954</td><td>0.000368</td><td>2713.616681</td><td>0.0</td><td>inf</td><td>0.999232</td><td>1.000676</td><td>10</td><td>9</td><td>0</td><td>6</td><td>0</td></tr></tbody></table></div></div></div>
+</div>
+</section>
+<section id="marginally-significant-meta-scientific-statistics">
+<h1>3. Marginally significant meta-scientific statistics<a class="headerlink" href="#marginally-significant-meta-scientific-statistics" title="Link to this heading">#</a></h1>
+<p>Effects are either statistically significant, or they are not. Historically, researchers in psychology would refer to hypothesis tests that are just above the .05 threshold as ‘marginally significant’, a practice that is heavily frowned upon these days in light of the replication crisis.</p>
+<p>In 2016, <a class="reference external" href="https://journals.sagepub.com/doi/10.1177/0956797616645672">Pritschet, Powell, &amp; Horne, 2016</a> carried out an analysis of just over 1,500 articles in three different areas of psychology (social, cognitive, and developmental), over the past four decades, and examined whether articles used the term ‘marginally significant’. This interesting dataset allows us to essentially examine a cultural trend in psychological science in terms of the language used.</p>
+<p>For this exercise, we will fit a probit regression to this data and examine the probability of this phrase appearing over time and in different fields. First, you will need to do some data detective work - follow the link above to the paper, and then head to the OSF page linked in the paper. There, you’ll find an Excel file titled <code class="docutils literal notranslate"><span class="pre">marginals</span> <span class="pre">psych</span> <span class="pre">science</span> <span class="pre">revision_corrections.xlsx</span></code>. Download this and then place it in the same folder as this notebook. Read it in using <code class="docutils literal notranslate"><span class="pre">pandas</span></code>, which has a <code class="docutils literal notranslate"><span class="pre">.read_excel</span></code> function, and show the top 10 rows.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Your answer here</span>
+<span class="n">marginals</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_excel</span><span class="p">(</span><span class="s1">&#39;marginals psych science revision_corrections.xlsx&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<p>The first thing we need to do is rename some columns, as we can’t work <em>easily</em> with these column names.</p>
+<p>Create a dictionary that has the keys ‘Number of Experiments’ and ‘Marginals Yes/No’ (the existing column names) and the values ‘n_exps’ and ‘marginal_yes’ (the new names). Call it <code class="docutils literal notranslate"><span class="pre">newcols</span></code>, then use the <code class="docutils literal notranslate"><span class="pre">.rename</span></code> method on your dataframe to alter the column names. Make sure to overwrite the dataframe so the names actually stick! You may need to refer to Week 1’s content to figure this out.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Your answer here</span>
+<span class="n">newcols</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Number of Experiments&#39;</span><span class="p">:</span> <span class="s1">&#39;n_exps&#39;</span><span class="p">,</span> <span class="s1">&#39;Marginals Yes/No&#39;</span><span class="p">:</span> <span class="s1">&#39;marginal_yes&#39;</span><span class="p">}</span>
+<span class="n">marginals</span> <span class="o">=</span> <span class="n">marginals</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="n">newcols</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<p>Next, we need to replace the values in the <code class="docutils literal notranslate"><span class="pre">Field</span></code> column so they are no longer numbers but represent the actual fields (this makes it easier for us to interpret the outcome, but it is not fully required). You can again make a dictionary that has the numbers 1, 2, and 3 to the values ‘Cognitive’, ‘Developmental’, and ‘Social’. Then you can use the <code class="docutils literal notranslate"><span class="pre">.replace</span></code> method to recode the values in the <code class="docutils literal notranslate"><span class="pre">Field</span></code> column. Again, reassign the dataframe so the changes stick!</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Your answer here</span>
+<span class="n">newfields</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">:</span> <span class="s1">&#39;Cognitive&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span> <span class="s1">&#39;Developmental&#39;</span><span class="p">,</span> <span class="mi">3</span><span class="p">:</span> <span class="s1">&#39;Social&#39;</span><span class="p">}</span>
+<span class="n">marginals</span> <span class="o">=</span> <span class="n">marginals</span><span class="o">.</span><span class="n">replace</span><span class="p">({</span><span class="s1">&#39;Field&#39;</span><span class="p">:</span> <span class="n">newfields</span><span class="p">})</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<p>Now filter the data so that the number of experiments is 1 or more (there are some papers that don’t have any statistics, e.g. commentaries). Again, reassign the dataframe. As a final step, just take the columns <code class="docutils literal notranslate"><span class="pre">marginal_yes</span></code>, <code class="docutils literal notranslate"><span class="pre">Year</span></code>, <code class="docutils literal notranslate"><span class="pre">Field</span></code>, and <code class="docutils literal notranslate"><span class="pre">n_exps</span></code> out to use.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Your answer here</span>
+<span class="n">marginals</span> <span class="o">=</span> <span class="n">marginals</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;n_exps &gt; 0&#39;</span><span class="p">)</span>
+<span class="n">marginals</span> <span class="o">=</span> <span class="n">marginals</span><span class="p">[[</span><span class="s1">&#39;marginal_yes&#39;</span><span class="p">,</span> <span class="s1">&#39;Year&#39;</span><span class="p">,</span> <span class="s1">&#39;Field&#39;</span><span class="p">,</span> <span class="s1">&#39;n_exps&#39;</span><span class="p">]]</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<p>Now fit a probit regression to this data that predicts whether a paper contains the phrase ‘marginally significant’ from Year, Field, and number of experiments. This examines whether different fields use the phrase at different rates, whether it has changed over time, and whether papers with more studies are more likely to use it. Call it <code class="docutils literal notranslate"><span class="pre">marginal_mod</span></code>, and print the summary.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Your answer here</span>
+<span class="n">marginal_mod</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">probit</span><span class="p">(</span><span class="s1">&#39;marginal_yes ~ Year + Field + n_exps&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">marginals</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="n">marginal_mod</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Optimization terminated successfully.
+         Current function value: 0.597290
+         Iterations 5
+</pre></div>
+</div>
+<div class="output text_html"><table class="simpletable">
+<caption>Probit Regression Results</caption>
+<tr>
+  <th>Dep. Variable:</th>     <td>marginal_yes</td>   <th>  No. Observations:  </th>  <td>  1469</td>  
+</tr>
+<tr>
+  <th>Model:</th>                <td>Probit</td>      <th>  Df Residuals:      </th>  <td>  1464</td>  
+</tr>
+<tr>
+  <th>Method:</th>                 <td>MLE</td>       <th>  Df Model:          </th>  <td>     4</td>  
+</tr>
+<tr>
+  <th>Date:</th>            <td>Wed, 02 Oct 2024</td> <th>  Pseudo R-squ.:     </th>  <td>0.07556</td> 
+</tr>
+<tr>
+  <th>Time:</th>                <td>14:57:17</td>     <th>  Log-Likelihood:    </th> <td> -877.42</td> 
+</tr>
+<tr>
+  <th>converged:</th>             <td>True</td>       <th>  LL-Null:           </th> <td> -949.13</td> 
+</tr>
+<tr>
+  <th>Covariance Type:</th>     <td>nonrobust</td>    <th>  LLR p-value:       </th> <td>5.202e-30</td>
+</tr>
+</table>
+<table class="simpletable">
+<tr>
+             <td></td>               <th>coef</th>     <th>std err</th>      <th>z</th>      <th>P>|z|</th>  <th>[0.025</th>    <th>0.975]</th>  
+</tr>
+<tr>
+  <th>Intercept</th>              <td>  -40.1238</td> <td>    5.205</td> <td>   -7.709</td> <td> 0.000</td> <td>  -50.325</td> <td>  -29.923</td>
+</tr>
+<tr>
+  <th>Field[T.Developmental]</th> <td>   -0.0067</td> <td>    0.162</td> <td>   -0.041</td> <td> 0.967</td> <td>   -0.323</td> <td>    0.310</td>
+</tr>
+<tr>
+  <th>Field[T.Social]</th>        <td>    0.3672</td> <td>    0.151</td> <td>    2.426</td> <td> 0.015</td> <td>    0.071</td> <td>    0.664</td>
+</tr>
+<tr>
+  <th>Year</th>                   <td>    0.0197</td> <td>    0.003</td> <td>    7.525</td> <td> 0.000</td> <td>    0.015</td> <td>    0.025</td>
+</tr>
+<tr>
+  <th>n_exps</th>                 <td>    0.1164</td> <td>    0.027</td> <td>    4.303</td> <td> 0.000</td> <td>    0.063</td> <td>    0.169</td>
+</tr>
+</table></div></div>
+</div>
+<p>Generate a set of predictions for this data. This is a little tricky but <code class="docutils literal notranslate"><span class="pre">numpy</span></code> can help. You will need:</p>
+<ul class="simple">
+<li><p>Each of the fields</p></li>
+<li><p>Years from 1970 to 2010 (DO NOT TYPE EACH NUMBER OUT INDIVIDUALLY!)</p></li>
+<li><p>The number of experiments, from 1 to 10 (these are what are observed in the data).</p></li>
+</ul>
+<p>Create a datagrid and generate these predictions.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Your answer here</span>
+<span class="n">dg</span> <span class="o">=</span> <span class="n">me</span><span class="o">.</span><span class="n">datagrid</span><span class="p">(</span><span class="n">marginal_mod</span><span class="p">,</span>
+                 <span class="n">Year</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1970</span><span class="p">,</span> <span class="mi">2011</span><span class="p">),</span>
+                 <span class="n">n_exps</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">11</span><span class="p">),</span>
+                 <span class="n">Field</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Cognitive&#39;</span><span class="p">,</span> <span class="s1">&#39;Developmental&#39;</span><span class="p">,</span> <span class="s1">&#39;Social&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<p>Plot these predictions. It should have year on the X axis, the probability of the phrase on the Y, separate lines for the number of experiments, and separate plots for each field (use <code class="docutils literal notranslate"><span class="pre">relplot</span></code>). Can you add a reference line to the plot at .5?</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Your answer here</span>
+<span class="n">preds</span> <span class="o">=</span> <span class="n">me</span><span class="o">.</span><span class="n">predictions</span><span class="p">(</span><span class="n">marginal_mod</span><span class="p">,</span> <span class="n">newdata</span><span class="o">=</span><span class="n">dg</span><span class="p">)</span>
+
+<span class="c1"># Plot</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">relplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">preds</span><span class="p">,</span>
+            <span class="n">x</span><span class="o">=</span><span class="s1">&#39;Year&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;estimate&#39;</span><span class="p">,</span>
+            <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;n_exps&#39;</span><span class="p">,</span> <span class="n">col</span><span class="o">=</span><span class="s1">&#39;Field&#39;</span><span class="p">,</span>
+            <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;line&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">refline</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="mf">.5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.FacetGrid at 0x141d220d0&gt;
+</pre></div>
+</div>
+<img alt="../_images/3912501f8e3c73c68d810678cb43be9d2d2d0c670a26d44e057cf3f20444a065.png" src="../_images/3912501f8e3c73c68d810678cb43be9d2d2d0c670a26d44e057cf3f20444a065.png" />
+</div>
+</div>
+<p>Using your datagrid, or by developing one you might need, test the following hypotheses:</p>
+<ol class="arabic simple">
+<li><p>Regardless of time or number of experiments, which field is most guilty of using the phrase?</p></li>
+</ol>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Your answer here</span>
+<span class="n">me</span><span class="o">.</span><span class="n">predictions</span><span class="p">(</span><span class="n">marginal_mod</span><span class="p">,</span> 
+               <span class="n">newdata</span><span class="o">=</span><span class="n">dg</span><span class="p">,</span>
+               <span class="n">by</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Field&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_html"><div><style>
+.dataframe > thead > tr,
+.dataframe > tbody > tr {
+  text-align: right;
+  white-space: pre-wrap;
+}
+</style>
+<small>shape: (3, 8)</small><table border="1" class="dataframe"><thead><tr><th>Field</th><th>estimate</th><th>std_error</th><th>statistic</th><th>p_value</th><th>s_value</th><th>conf_low</th><th>conf_high</th></tr><tr><td>str</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td></tr></thead><tbody><tr><td>&quot;Cognitive&quot;</td><td>0.42801</td><td>0.05757</td><td>7.434588</td><td>1.0481e-13</td><td>43.117357</td><td>0.315174</td><td>0.540845</td></tr><tr><td>&quot;Developmental&quot;</td><td>0.425579</td><td>0.047817</td><td>8.900135</td><td>0.0</td><td>inf</td><td>0.331859</td><td>0.519299</td></tr><tr><td>&quot;Social&quot;</td><td>0.562763</td><td>0.035215</td><td>15.980838</td><td>0.0</td><td>inf</td><td>0.493743</td><td>0.631782</td></tr></tbody></table></div></div></div>
+</div>
+<ol class="arabic simple" start="2">
+<li><p>In 2010, what number of experiments in social psychology led to the highest probability of using the phrase? At which point was the highest value statistically significant from others (you can use the ‘sequential’ argument to <code class="docutils literal notranslate"><span class="pre">hypothesis</span></code> for this!)</p></li>
+</ol>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Your answer here</span>
+<span class="n">me</span><span class="o">.</span><span class="n">predictions</span><span class="p">(</span><span class="n">marginal_mod</span><span class="p">,</span>
+               <span class="n">newdata</span><span class="o">=</span><span class="n">me</span><span class="o">.</span><span class="n">datagrid</span><span class="p">(</span><span class="n">marginal_mod</span><span class="p">,</span> 
+                                   <span class="n">Year</span><span class="o">=</span><span class="mi">2010</span><span class="p">,</span> 
+                                   <span class="n">Field</span><span class="o">=</span><span class="s1">&#39;Social&#39;</span><span class="p">,</span> 
+                                   <span class="n">n_exps</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">11</span><span class="p">)),</span>
+               <span class="n">hypothesis</span><span class="o">=</span><span class="s1">&#39;sequential&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_html"><div><style>
+.dataframe > thead > tr,
+.dataframe > tbody > tr {
+  text-align: right;
+  white-space: pre-wrap;
+}
+</style>
+<small>shape: (9, 8)</small><table border="1" class="dataframe"><thead><tr><th>term</th><th>estimate</th><th>std_error</th><th>statistic</th><th>p_value</th><th>s_value</th><th>conf_low</th><th>conf_high</th></tr><tr><td>str</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td></tr></thead><tbody><tr><td>&quot;Row 2 - Row 1&quot;</td><td>0.046179</td><td>0.010886</td><td>4.242234</td><td>0.000022</td><td>15.463599</td><td>0.024844</td><td>0.067515</td></tr><tr><td>&quot;Row 3 - Row 2&quot;</td><td>0.045337</td><td>0.010624</td><td>4.267511</td><td>0.00002</td><td>15.626575</td><td>0.024515</td><td>0.066159</td></tr><tr><td>&quot;Row 4 - Row 3&quot;</td><td>0.043911</td><td>0.009966</td><td>4.406169</td><td>0.000011</td><td>16.536303</td><td>0.024379</td><td>0.063444</td></tr><tr><td>&quot;Row 5 - Row 4&quot;</td><td>0.041959</td><td>0.008966</td><td>4.679607</td><td>0.000003</td><td>18.40838</td><td>0.024385</td><td>0.059533</td></tr><tr><td>&quot;Row 6 - Row 5&quot;</td><td>0.039554</td><td>0.007702</td><td>5.135353</td><td>2.8161e-7</td><td>21.759773</td><td>0.024458</td><td>0.054651</td></tr><tr><td>&quot;Row 7 - Row 6&quot;</td><td>0.036786</td><td>0.00627</td><td>5.867274</td><td>4.4302e-9</td><td>27.749991</td><td>0.024498</td><td>0.049075</td></tr><tr><td>&quot;Row 8 - Row 7&quot;</td><td>0.033752</td><td>0.004781</td><td>7.059261</td><td>1.6740e-12</td><td>39.119843</td><td>0.024381</td><td>0.043123</td></tr><tr><td>&quot;Row 9 - Row 8&quot;</td><td>0.030552</td><td>0.003378</td><td>9.044419</td><td>0.0</td><td>inf</td><td>0.023931</td><td>0.037172</td></tr><tr><td>&quot;Row 10 - Row 9&quot;</td><td>0.027283</td><td>0.002284</td><td>11.944306</td><td>0.0</td><td>inf</td><td>0.022806</td><td>0.03176</td></tr></tbody></table></div></div></div>
+</div>
+<ol class="arabic simple" start="3">
+<li><p>For each field, what is the difference between the probability of use in 2010 and 2000, averaging over the number of experiments? You may need to run it a few times to compare each field.</p></li>
+</ol>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Your answer here</span>
+<span class="n">me</span><span class="o">.</span><span class="n">predictions</span><span class="p">(</span><span class="n">marginal_mod</span><span class="p">,</span>
+               <span class="n">newdata</span><span class="o">=</span><span class="n">me</span><span class="o">.</span><span class="n">datagrid</span><span class="p">(</span><span class="n">marginal_mod</span><span class="p">,</span>
+                                   <span class="n">Year</span><span class="o">=</span><span class="p">[</span><span class="mi">2000</span><span class="p">,</span> <span class="mi">2010</span><span class="p">],</span>
+                                   <span class="n">Field</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Cognitive&#39;</span><span class="p">,</span> <span class="s1">&#39;Developmental&#39;</span><span class="p">,</span> <span class="s1">&#39;Social&#39;</span><span class="p">],</span>
+                                   <span class="n">n_exps</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">11</span><span class="p">)),</span>
+               <span class="n">by</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Year&#39;</span><span class="p">,</span> <span class="s1">&#39;Field&#39;</span><span class="p">],</span> <span class="c1"># averages over experiments</span>
+               <span class="n">hypothesis</span><span class="o">=</span><span class="s1">&#39;b1=b4&#39;</span> <span class="c1"># e.g., for Cognitive, this is the comparison</span>
+              <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_html"><div><style>
+.dataframe > thead > tr,
+.dataframe > tbody > tr {
+  text-align: right;
+  white-space: pre-wrap;
+}
+</style>
+<small>shape: (1, 8)</small><table border="1" class="dataframe"><thead><tr><th>term</th><th>estimate</th><th>std_error</th><th>statistic</th><th>p_value</th><th>s_value</th><th>conf_low</th><th>conf_high</th></tr><tr><td>str</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td></tr></thead><tbody><tr><td>&quot;b1=b4&quot;</td><td>-0.074131</td><td>0.01057</td><td>-7.013193</td><td>2.3295e-12</td><td>38.643135</td><td>-0.094849</td><td>-0.053414</td></tr></tbody></table></div></div></div>
+</div>
+<ol class="arabic simple" start="4">
+<li><p>In developmental psychology, what combination of year and number of experiments has a probability <em>significantly</em> grater than .6 of using the phrase?</p></li>
+</ol>
+<p>This is a very tricky one. You will need to specify the right data grid, and rather than specifying a string to <code class="docutils literal notranslate"><span class="pre">hypothesis</span></code>, you can pass
+a float value. Then you will need to convert your output to pandas and filter it appropriately - this is difficult, but this is an extremely specific hypothesis.</p>
+<p>Nevertheless, this is the kind of science you can do by leveraging linear models.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Your answer here</span>
+<span class="c1"># Get predictions</span>
+<span class="n">ps</span> <span class="o">=</span> <span class="n">me</span><span class="o">.</span><span class="n">predictions</span><span class="p">(</span><span class="n">marginal_mod</span><span class="p">,</span>
+                    <span class="n">newdata</span><span class="o">=</span><span class="n">me</span><span class="o">.</span><span class="n">datagrid</span><span class="p">(</span><span class="n">marginal_mod</span><span class="p">,</span>
+                                        <span class="n">Field</span><span class="o">=</span><span class="s1">&#39;Developmental&#39;</span><span class="p">,</span>
+                                        <span class="n">Year</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1970</span><span class="p">,</span> <span class="mi">2011</span><span class="p">),</span>
+                                        <span class="n">n_exps</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">11</span><span class="p">)),</span>
+                    <span class="n">hypothesis</span><span class="o">=</span><span class="mf">.6</span><span class="p">)</span>
+
+<span class="c1"># Now filter</span>
+<span class="n">ps</span><span class="o">.</span><span class="n">to_pandas</span><span class="p">()</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;statistic &gt; 0 and p_value &lt; .05&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Field</th>
+      <th>Year</th>
+      <th>n_exps</th>
+      <th>rowid</th>
+      <th>estimate</th>
+      <th>std_error</th>
+      <th>statistic</th>
+      <th>p_value</th>
+      <th>s_value</th>
+      <th>conf_low</th>
+      <th>conf_high</th>
+      <th>marginal_yes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>389</th>
+      <td>Developmental</td>
+      <td>2008</td>
+      <td>10</td>
+      <td>389</td>
+      <td>0.750526</td>
+      <td>0.073478</td>
+      <td>2.048579</td>
+      <td>0.040503</td>
+      <td>4.625816</td>
+      <td>0.606511</td>
+      <td>0.894540</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>399</th>
+      <td>Developmental</td>
+      <td>2009</td>
+      <td>10</td>
+      <td>399</td>
+      <td>0.756750</td>
+      <td>0.072383</td>
+      <td>2.165564</td>
+      <td>0.030345</td>
+      <td>5.042420</td>
+      <td>0.614882</td>
+      <td>0.898619</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>409</th>
+      <td>Developmental</td>
+      <td>2010</td>
+      <td>10</td>
+      <td>409</td>
+      <td>0.762890</td>
+      <td>0.071286</td>
+      <td>2.285035</td>
+      <td>0.022311</td>
+      <td>5.486114</td>
+      <td>0.623173</td>
+      <td>0.902607</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<ol class="arabic simple" start="5">
+<li><p>Averaging across all years, for which combination of number of experiments and fields show a significantly-greater-than-.50 chance of using the phrase?</p></li>
+</ol>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Your answer here</span>
+<span class="c1"># Get predictions</span>
+<span class="n">ps</span> <span class="o">=</span> <span class="n">me</span><span class="o">.</span><span class="n">predictions</span><span class="p">(</span><span class="n">marginal_mod</span><span class="p">,</span>
+                    <span class="n">newdata</span><span class="o">=</span><span class="n">me</span><span class="o">.</span><span class="n">datagrid</span><span class="p">(</span><span class="n">marginal_mod</span><span class="p">,</span>
+                                        <span class="n">Field</span><span class="o">=</span><span class="s1">&#39;Social&#39;</span><span class="p">,</span>
+                                        <span class="n">Year</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1970</span><span class="p">,</span> <span class="mi">2011</span><span class="p">),</span>
+                                        <span class="n">n_exps</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">11</span><span class="p">)),</span>
+                    <span class="n">by</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Field&#39;</span><span class="p">,</span> <span class="s1">&#39;n_exps&#39;</span><span class="p">],</span>
+                    <span class="n">hypothesis</span><span class="o">=</span><span class="mf">.5</span><span class="p">)</span>
+
+<span class="c1"># Now filter</span>
+<span class="n">ps</span><span class="o">.</span><span class="n">to_pandas</span><span class="p">()</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;statistic &gt; 0 and p_value &lt; .05&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Field</th>
+      <th>n_exps</th>
+      <th>estimate</th>
+      <th>std_error</th>
+      <th>statistic</th>
+      <th>p_value</th>
+      <th>s_value</th>
+      <th>conf_low</th>
+      <th>conf_high</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>5</th>
+      <td>Social</td>
+      <td>6</td>
+      <td>0.588244</td>
+      <td>0.042696</td>
+      <td>2.066821</td>
+      <td>0.038751</td>
+      <td>4.689621</td>
+      <td>0.504562</td>
+      <td>0.671927</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>Social</td>
+      <td>7</td>
+      <td>0.631692</td>
+      <td>0.050721</td>
+      <td>2.596420</td>
+      <td>0.009420</td>
+      <td>6.730044</td>
+      <td>0.532281</td>
+      <td>0.731102</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>Social</td>
+      <td>8</td>
+      <td>0.673518</td>
+      <td>0.057668</td>
+      <td>3.008925</td>
+      <td>0.002622</td>
+      <td>8.575258</td>
+      <td>0.560491</td>
+      <td>0.786545</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>Social</td>
+      <td>9</td>
+      <td>0.713270</td>
+      <td>0.063214</td>
+      <td>3.373783</td>
+      <td>0.000741</td>
+      <td>10.397408</td>
+      <td>0.589373</td>
+      <td>0.837167</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>Social</td>
+      <td>10</td>
+      <td>0.750570</td>
+      <td>0.067164</td>
+      <td>3.730709</td>
+      <td>0.000191</td>
+      <td>12.354578</td>
+      <td>0.618931</td>
+      <td>0.882210</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Social psychology papers with 6 or more studies are, across time, most likely to use the phrase!</p>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./5_Binary"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="QPoP%20-%20Week%205%20Workshop.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">5 - Binary outcome models</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../6_Applications/QPoP%20-%20Week%206%20Workshop.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">6 - Precision in Predictions</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Using and understanding probit models - Exercises &amp; Answers</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#iceberg-right-ahead">1. <strong>Iceberg</strong>, right ahead!</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-imports">a. Imports</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#b-loading-up-data">b. Loading up data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#c-a-tiny-bit-of-cleaning">c. A tiny bit of cleaning</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#d-estimating-survival-probabilities">d. Estimating survival probabilities</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#e-individualised-survival-estimates">e. Individualised survival estimates</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#f-evaluating-the-model">f. Evaluating the model</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#the-challenger-disaster">2. The Challenger Disaster</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#marginally-significant-meta-scientific-statistics">3. Marginally significant meta-scientific statistics</a></li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Alex Jones, Ph.D
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

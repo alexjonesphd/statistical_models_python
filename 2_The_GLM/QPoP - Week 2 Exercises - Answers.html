@@ -1,0 +1,1618 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Getting to grips with linear models in Python - Exercises &amp; Answers &#8212; Statistical Modelling with Python</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '2_The_GLM/QPoP - Week 2 Exercises - Answers';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="3 - Advancing the general linear model" href="../3_Advancing_GLM/QPoP%20-%20Week%203%20Workshop.html" />
+    <link rel="prev" title="2 - The General Linear Model" href="QPoP%20-%20Week%202%20Workshop.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt="Statistical Modelling with Python - Home"/>
+    <script>document.write(`<img src="../_static/logo.png" class="logo__image only-dark" alt="Statistical Modelling with Python - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    Statistical Modelling with Python
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Python Basics</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../1_Introduction/QPoP%20-%20Week%201%20Workshop.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../1_Introduction/QPoP%20-%20Week%201%20Exercises%20-%20Answers.html">Using Python for Data Analysis - Exercises &amp; Answers</a></li>
+
+
+
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">The GLM</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="QPoP%20-%20Week%202%20Workshop.html">2 - The General Linear Model</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Getting to grips with linear models in Python - Exercises &amp; Answers</a></li>
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Advancing the GLM</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../3_Advancing_GLM/QPoP%20-%20Week%203%20Workshop.html">3 - Advancing the general linear model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../3_Advancing_GLM/QPoP%20-%20Week%203%20Exercises%20-%20Answers.html">Checking assumptions and including interactions - Exercises &amp; Answers</a></li>
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">The art of prediction</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../4_Prediction/QPoP%20-%20Week%204%20Workshop.html">4 - The art of prediction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../4_Prediction/QPoP%20-%20Week%204%20Exercises%20-%20Answers.html">Asking scientific questions of models - Exercises &amp; Answers</a></li>
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Binary outcome models</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../5_Binary/QPoP%20-%20Week%205%20Workshop.html">5 - Binary outcome models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../5_Binary/QPoP%20-%20Week%205%20Exercises%20-%20Answers.html">Using and understanding probit models - Exercises &amp; Answers</a></li>
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Applications and other kinds of hypotheses</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../6_Applications/QPoP%20-%20Week%206%20Workshop.html">6 - Precision in Predictions</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../6_Applications/QPoP%20-%20Week%206%20Exercises%20-%20Answers.html">Quantitative Perspectives on Psychology</a></li>
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Linear Mixed Effects Models</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../7_MixedModel/QPoP%20-%20Week%207%20Workshop.html">7 - Linear mixed effects models</a></li>
+
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2F2_The_GLM/QPoP - Week 2 Exercises - Answers.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/2_The_GLM/QPoP - Week 2 Exercises - Answers.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Getting to grips with linear models in Python - Exercises & Answers</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Getting to grips with linear models in Python - Exercises &amp; Answers</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#basic-statistics-with-pingouin">1. Basic statistics with <code class="docutils literal notranslate"><span class="pre">pingouin</span></code></a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-importing-everything-we-need">a. Importing everything we need</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#b-loading-some-data">b. Loading some data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#c-using-correlation-to-test-relationships">c. Using correlation to test relationships</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#d-using-t-tests-to-examine-differences">d. Using t-tests to examine differences</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#e-using-anova-to-test-slightly-more-complicated-relationships">e. Using ANOVA to test slightly more complicated relationships</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#e-carrying-out-an-analysis-of-covariance-ancova">e. Carrying out an analysis of covariance (ANCOVA).</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#the-general-linear-model-with-statsmodels">2. The general linear model with <code class="docutils literal notranslate"><span class="pre">statsmodels</span></code></a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-fitting-an-actual-linear-model">a. Fitting an actual linear model</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#b-interpreting-the-coefficients">b. Interpreting the coefficients</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#c-altering-the-model-for-interpretability">c. Altering the model for interpretability</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#d-evaluating-the-model">d. Evaluating the model</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#comparing-and-contrasting-analyses-through-the-glm">3. Comparing and contrasting analyses through the GLM</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-correlation">a. Correlation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#b-t-test">b. T-test</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#c-ancova">c. ANCOVA</a></li>
+</ul>
+</li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="getting-to-grips-with-linear-models-in-python-exercises-answers">
+<h1>Getting to grips with linear models in Python - Exercises &amp; Answers<a class="headerlink" href="#getting-to-grips-with-linear-models-in-python-exercises-answers" title="Link to this heading">#</a></h1>
+</section>
+<section id="basic-statistics-with-pingouin">
+<h1>1. Basic statistics with <code class="docutils literal notranslate"><span class="pre">pingouin</span></code><a class="headerlink" href="#basic-statistics-with-pingouin" title="Link to this heading">#</a></h1>
+<p>First, lets get comfortable with some basic statistics in Python using <code class="docutils literal notranslate"><span class="pre">pingouin</span></code>, so we’re on familiar ground before we dive into the GLM.</p>
+<section id="a-importing-everything-we-need">
+<h2>a. Importing everything we need<a class="headerlink" href="#a-importing-everything-we-need" title="Link to this heading">#</a></h2>
+<p>You will need a few things to answer the exercises, so its good practice to import most things you will need here.</p>
+<ul class="simple">
+<li><p>Import <code class="docutils literal notranslate"><span class="pre">pandas</span></code>, <code class="docutils literal notranslate"><span class="pre">pingouin</span></code>, <code class="docutils literal notranslate"><span class="pre">statsmodels.formula.api</span></code> and <code class="docutils literal notranslate"><span class="pre">seaborn</span></code>.</p></li>
+</ul>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Your answer here</span>
+<span class="c1"># Import libraries with their usual imports</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">pingouin</span> <span class="k">as</span> <span class="nn">pg</span>
+<span class="kn">import</span> <span class="nn">statsmodels.formula.api</span> <span class="k">as</span> <span class="nn">smf</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+
+<span class="n">sns</span><span class="o">.</span><span class="n">set_style</span><span class="p">(</span><span class="s1">&#39;whitegrid&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+</section>
+<section id="b-loading-some-data">
+<h2>b. Loading some data<a class="headerlink" href="#b-loading-some-data" title="Link to this heading">#</a></h2>
+<p>We will apply the usual statistical approaches with an interesting dataset called <code class="docutils literal notranslate"><span class="pre">affairs</span></code>. This dataset comprises a survey of married people who report the number of affairs they have had, along with several other attributes.</p>
+<p>The variables are summarised here, and more detail can be found <a class="reference external" href="https://vincentarelbundock.github.io/Rdatasets/doc/AER/Affairs.html">here</a></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">affairs</span></code> - the number of instances of extramarital sex in the last year.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">gender</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">age</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">yearsmarried</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">children</span></code> - yes/no</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">religiousness</span></code> - degree of religiosity, higher numbers being more religious.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">edudcation</span></code> - codes level of education (9 = grade school, 20 = PhD, and more in between).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">occupation</span></code> - occupation coding according to a classification system called the Hollingshead.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">rating</span></code> - self report of marital happiness (1 = very unhappy, 5 = very happy).</p></li>
+</ul>
+<p>We’ll use some basic approaches to test some hypotheses in this dataset. First, read it into a dataframe called <code class="docutils literal notranslate"><span class="pre">affairs</span></code> from the following link, and examine the top 5 rows:</p>
+<p><a class="reference external" href="https://vincentarelbundock.github.io/Rdatasets/csv/AER/Affairs.csv">https://vincentarelbundock.github.io/Rdatasets/csv/AER/Affairs.csv</a></p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Your answer here</span>
+<span class="c1"># Read in data show top 5</span>
+<span class="n">affairs</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;https://vincentarelbundock.github.io/Rdatasets/csv/AER/Affairs.csv&#39;</span><span class="p">)</span>
+<span class="n">affairs</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>rownames</th>
+      <th>affairs</th>
+      <th>gender</th>
+      <th>age</th>
+      <th>yearsmarried</th>
+      <th>children</th>
+      <th>religiousness</th>
+      <th>education</th>
+      <th>occupation</th>
+      <th>rating</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>4</td>
+      <td>0</td>
+      <td>male</td>
+      <td>37.0</td>
+      <td>10.00</td>
+      <td>no</td>
+      <td>3</td>
+      <td>18</td>
+      <td>7</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>5</td>
+      <td>0</td>
+      <td>female</td>
+      <td>27.0</td>
+      <td>4.00</td>
+      <td>no</td>
+      <td>4</td>
+      <td>14</td>
+      <td>6</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>11</td>
+      <td>0</td>
+      <td>female</td>
+      <td>32.0</td>
+      <td>15.00</td>
+      <td>yes</td>
+      <td>1</td>
+      <td>12</td>
+      <td>1</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>16</td>
+      <td>0</td>
+      <td>male</td>
+      <td>57.0</td>
+      <td>15.00</td>
+      <td>yes</td>
+      <td>5</td>
+      <td>18</td>
+      <td>6</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>23</td>
+      <td>0</td>
+      <td>male</td>
+      <td>22.0</td>
+      <td>0.75</td>
+      <td>no</td>
+      <td>2</td>
+      <td>17</td>
+      <td>6</td>
+      <td>3</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="c-using-correlation-to-test-relationships">
+<h2>c. Using correlation to test relationships<a class="headerlink" href="#c-using-correlation-to-test-relationships" title="Link to this heading">#</a></h2>
+<p>Conduct a correlation to test whether there is an association between self-reported marital happiness is associated with number of affairs. What is your prediction on the direction?</p>
+<p>Conduct a correlation with <code class="docutils literal notranslate"><span class="pre">pingouin</span></code>.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Your answer here</span>
+<span class="c1"># Correlation</span>
+<span class="n">cor</span> <span class="o">=</span> <span class="n">pg</span><span class="o">.</span><span class="n">corr</span><span class="p">(</span><span class="n">affairs</span><span class="p">[</span><span class="s1">&#39;affairs&#39;</span><span class="p">],</span> <span class="n">affairs</span><span class="p">[</span><span class="s1">&#39;rating&#39;</span><span class="p">])</span>
+<span class="n">display</span><span class="p">(</span><span class="n">cor</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>n</th>
+      <th>r</th>
+      <th>CI95%</th>
+      <th>p-val</th>
+      <th>BF10</th>
+      <th>power</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>pearson</th>
+      <td>601</td>
+      <td>-0.279512</td>
+      <td>[-0.35, -0.2]</td>
+      <td>3.002385e-12</td>
+      <td>1.796e+09</td>
+      <td>1.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="d-using-t-tests-to-examine-differences">
+<h2>d. Using t-tests to examine differences<a class="headerlink" href="#d-using-t-tests-to-examine-differences" title="Link to this heading">#</a></h2>
+<p>Does the presence of children impact marital satisfaction? Use a t-test in <code class="docutils literal notranslate"><span class="pre">pingouin</span></code> to examine whether satisfaction differs between marriages with and without children.</p>
+<p>If it is significant, calculate the averages between the groups to see what the differences are. Use seaborn to make a plot of the ratings between the two groups.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Your answer here</span>
+<span class="c1"># T-test</span>
+<span class="n">display</span><span class="p">(</span><span class="n">pg</span><span class="o">.</span><span class="n">ttest</span><span class="p">(</span><span class="n">affairs</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;children == &quot;yes&quot;&#39;</span><span class="p">)[</span><span class="s1">&#39;rating&#39;</span><span class="p">],</span> 
+         <span class="n">affairs</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;children == &quot;no&quot;&#39;</span><span class="p">)[</span><span class="s1">&#39;rating&#39;</span><span class="p">]))</span>
+
+<span class="c1"># Means</span>
+<span class="n">means</span> <span class="o">=</span> <span class="n">affairs</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;children&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">agg</span><span class="p">({</span><span class="s1">&#39;rating&#39;</span><span class="p">:</span> <span class="s1">&#39;mean&#39;</span><span class="p">})</span>
+<span class="n">display</span><span class="p">(</span><span class="n">means</span><span class="p">)</span>
+
+<span class="c1"># Plot with a barchart but other options might work</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">barplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">affairs</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;rating&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>T</th>
+      <th>dof</th>
+      <th>alternative</th>
+      <th>p-val</th>
+      <th>CI95%</th>
+      <th>cohen-d</th>
+      <th>BF10</th>
+      <th>power</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>T-test</th>
+      <td>-5.16501</td>
+      <td>350.918173</td>
+      <td>two-sided</td>
+      <td>4.039127e-07</td>
+      <td>[-0.66, -0.3]</td>
+      <td>0.44291</td>
+      <td>3.383e+04</td>
+      <td>0.998312</td>
+    </tr>
+  </tbody>
+</table>
+</div></div><div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>rating</th>
+    </tr>
+    <tr>
+      <th>children</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>no</th>
+      <td>4.274854</td>
+    </tr>
+    <tr>
+      <th>yes</th>
+      <td>3.795349</td>
+    </tr>
+  </tbody>
+</table>
+</div></div><div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Axes: xlabel=&#39;children&#39;, ylabel=&#39;rating&#39;&gt;
+</pre></div>
+</div>
+<img alt="../_images/87b25e70de719cb33b7647c0c65c9a3e2d1bfa3ce47f012b29c291d63f0cfa38.png" src="../_images/87b25e70de719cb33b7647c0c65c9a3e2d1bfa3ce47f012b29c291d63f0cfa38.png" />
+</div>
+</div>
+</section>
+<section id="e-using-anova-to-test-slightly-more-complicated-relationships">
+<h2>e. Using ANOVA to test slightly more complicated relationships<a class="headerlink" href="#e-using-anova-to-test-slightly-more-complicated-relationships" title="Link to this heading">#</a></h2>
+<p>Does having children affect marital satisfaction differently for males and females?</p>
+<p>To answer this, you need an ‘two-way’ ANOVA (eg - its a linear model with TWO predictors, each being categorical). Use ANOVA to test these differences with <code class="docutils literal notranslate"><span class="pre">pingouin</span></code>, and if you observe a difference, work out the means with <code class="docutils literal notranslate"><span class="pre">pandas</span></code> and again make a plot with <code class="docutils literal notranslate"><span class="pre">seaborn</span></code>.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Your answer here</span>
+<span class="c1"># Carry out anova</span>
+<span class="n">aov</span> <span class="o">=</span> <span class="n">pg</span><span class="o">.</span><span class="n">anova</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">affairs</span><span class="p">,</span> <span class="n">dv</span><span class="o">=</span><span class="s1">&#39;rating&#39;</span><span class="p">,</span> <span class="n">between</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;children&#39;</span><span class="p">,</span> <span class="s1">&#39;gender&#39;</span><span class="p">])</span>
+<span class="n">display</span><span class="p">(</span><span class="n">aov</span><span class="p">)</span>
+
+<span class="c1"># Compute means, the interaction is significant</span>
+<span class="n">means</span> <span class="o">=</span> <span class="n">affairs</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;children&#39;</span><span class="p">,</span> <span class="s1">&#39;gender&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">agg</span><span class="p">({</span><span class="s1">&#39;rating&#39;</span><span class="p">:</span> <span class="s1">&#39;mean&#39;</span><span class="p">})</span>
+<span class="n">display</span><span class="p">(</span><span class="n">means</span><span class="p">)</span>
+
+<span class="c1"># Plot</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">barplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">affairs</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;gender&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;rating&#39;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Source</th>
+      <th>SS</th>
+      <th>DF</th>
+      <th>MS</th>
+      <th>F</th>
+      <th>p-unc</th>
+      <th>np2</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>children</td>
+      <td>28.116062</td>
+      <td>1.0</td>
+      <td>28.116062</td>
+      <td>24.112908</td>
+      <td>0.000001</td>
+      <td>0.038822</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>gender</td>
+      <td>0.026971</td>
+      <td>1.0</td>
+      <td>0.026971</td>
+      <td>0.023131</td>
+      <td>0.879169</td>
+      <td>0.000039</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>children * gender</td>
+      <td>5.933417</td>
+      <td>1.0</td>
+      <td>5.933417</td>
+      <td>5.088620</td>
+      <td>0.024444</td>
+      <td>0.008452</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Residual</td>
+      <td>696.112181</td>
+      <td>597.0</td>
+      <td>1.166017</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+</div></div><div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th></th>
+      <th>rating</th>
+    </tr>
+    <tr>
+      <th>children</th>
+      <th>gender</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th rowspan="2" valign="top">no</th>
+      <th>female</th>
+      <td>4.404040</td>
+    </tr>
+    <tr>
+      <th>male</th>
+      <td>4.097222</td>
+    </tr>
+    <tr>
+      <th rowspan="2" valign="top">yes</th>
+      <th>female</th>
+      <td>3.726852</td>
+    </tr>
+    <tr>
+      <th>male</th>
+      <td>3.864486</td>
+    </tr>
+  </tbody>
+</table>
+</div></div><img alt="../_images/696120f471c7214f085ed02f8f1e26307e18f4fe4d3126a99cfe9efdb2c9bdc8.png" src="../_images/696120f471c7214f085ed02f8f1e26307e18f4fe4d3126a99cfe9efdb2c9bdc8.png" />
+</div>
+</div>
+</section>
+<section id="e-carrying-out-an-analysis-of-covariance-ancova">
+<h2>e. Carrying out an analysis of covariance (ANCOVA).<a class="headerlink" href="#e-carrying-out-an-analysis-of-covariance-ancova" title="Link to this heading">#</a></h2>
+<p>A bit of a challenge. A popular statistical approach is the ANCOVA, which carries out an ANOVA while ‘controlling’ for another continuous variable, or a ‘covariate’. This is simply confusing language for a general linear model with categorical predictors and a continuous predictor, which we will examine in more detail soon.</p>
+<p>Here, can you carry out an <code class="docutils literal notranslate"><span class="pre">ancova</span></code> with <code class="docutils literal notranslate"><span class="pre">pingouin</span></code>, assessing whether males and differ in the number of affairs they have, controlling for the years they have been married? Check the <code class="docutils literal notranslate"><span class="pre">pingouin</span></code> website <a class="reference external" href="https://pingouin-stats.org/build/html/api.html">here</a> for help - reading documentation is a key skill in statistics and programming! Set the <code class="docutils literal notranslate"><span class="pre">effsize</span></code> (effect size) to ‘n2’, or standard <span class="math notranslate nohighlight">\(R^2\)</span>.</p>
+<p>As an additional challenge, if there are any significant results, can you plot the relationship between years married and affairs, and colour the points by male vs female respondents?</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Your answer here</span>
+<span class="c1"># ANCOVA like this</span>
+<span class="n">aocv</span> <span class="o">=</span> <span class="n">pg</span><span class="o">.</span><span class="n">ancova</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">affairs</span><span class="p">,</span> <span class="n">dv</span><span class="o">=</span><span class="s1">&#39;affairs&#39;</span><span class="p">,</span> <span class="n">between</span><span class="o">=</span><span class="s1">&#39;gender&#39;</span><span class="p">,</span> <span class="n">covar</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;yearsmarried&#39;</span><span class="p">],</span> <span class="n">effsize</span><span class="o">=</span><span class="s1">&#39;n2&#39;</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">aocv</span><span class="p">)</span>
+
+<span class="c1"># Plot like this</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">affairs</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;yearsmarried&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;affairs&#39;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;gender&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Source</th>
+      <th>SS</th>
+      <th>DF</th>
+      <th>F</th>
+      <th>p-unc</th>
+      <th>n2</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>gender</td>
+      <td>0.241436</td>
+      <td>1</td>
+      <td>0.022914</td>
+      <td>0.879732</td>
+      <td>0.000037</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>yearsmarried</td>
+      <td>227.271157</td>
+      <td>1</td>
+      <td>21.569603</td>
+      <td>0.000004</td>
+      <td>0.034813</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Residual</td>
+      <td>6300.911061</td>
+      <td>598</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+</div></div><img alt="../_images/69f1baed48539c047ce5178371ade3ef54364bcddea9bc341d042e30902a15a6.png" src="../_images/69f1baed48539c047ce5178371ade3ef54364bcddea9bc341d042e30902a15a6.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="the-general-linear-model-with-statsmodels">
+<h1>2. The general linear model with <code class="docutils literal notranslate"><span class="pre">statsmodels</span></code><a class="headerlink" href="#the-general-linear-model-with-statsmodels" title="Link to this heading">#</a></h1>
+<p>Now we will get used to applying the general linear model to fit more complex analyses, repeat some old ones, and get to grips with the attributes of the model and how we can manipulate it.</p>
+<section id="a-fitting-an-actual-linear-model">
+<h2>a. Fitting an actual linear model<a class="headerlink" href="#a-fitting-an-actual-linear-model" title="Link to this heading">#</a></h2>
+<p>We will start by using <code class="docutils literal notranslate"><span class="pre">statsmodels</span></code> to conduct a regression.</p>
+<p>Suppose we have a theory that marital satisfaction is determined by the contribution of several predictors, that each influence how satisfied someone is in their marriage. Using the GLM, we will aim to predict marital satisfaction from the respondents gender, whether they have children (both categorical variables!), degree of religiosity, and the number of years they have been married. Notice we are already including a mix of variables - there is no restriction on variable types.</p>
+<p>Fit this model below, and have Python show the summary.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Your answer here</span>
+<span class="c1"># Fit the model like so</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="s1">&#39;rating ~ gender + children + religiousness + yearsmarried&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">affairs</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="n">display</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">summary</span><span class="p">(</span><span class="n">slim</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_html"><table class="simpletable">
+<caption>OLS Regression Results</caption>
+<tr>
+  <th>Dep. Variable:</th>     <td>rating</td>   <th>  R-squared:         </th> <td>   0.070</td>
+</tr>
+<tr>
+  <th>Model:</th>               <td>OLS</td>    <th>  Adj. R-squared:    </th> <td>   0.064</td>
+</tr>
+<tr>
+  <th>No. Observations:</th>  <td>   601</td>   <th>  F-statistic:       </th> <td>   11.27</td>
+</tr>
+<tr>
+  <th>Covariance Type:</th>  <td>nonrobust</td> <th>  Prob (F-statistic):</th> <td>8.07e-09</td>
+</tr>
+</table>
+<table class="simpletable">
+<tr>
+         <td></td>            <th>coef</th>     <th>std err</th>      <th>t</th>      <th>P>|t|</th>  <th>[0.025</th>    <th>0.975]</th>  
+</tr>
+<tr>
+  <th>Intercept</th>       <td>    4.1801</td> <td>    0.141</td> <td>   29.650</td> <td> 0.000</td> <td>    3.903</td> <td>    4.457</td>
+</tr>
+<tr>
+  <th>gender[T.male]</th>  <td>    0.0093</td> <td>    0.087</td> <td>    0.106</td> <td> 0.916</td> <td>   -0.162</td> <td>    0.181</td>
+</tr>
+<tr>
+  <th>children[T.yes]</th> <td>   -0.2094</td> <td>    0.118</td> <td>   -1.775</td> <td> 0.076</td> <td>   -0.441</td> <td>    0.022</td>
+</tr>
+<tr>
+  <th>religiousness</th>   <td>    0.0771</td> <td>    0.038</td> <td>    2.017</td> <td> 0.044</td> <td>    0.002</td> <td>    0.152</td>
+</tr>
+<tr>
+  <th>yearsmarried</th>    <td>   -0.0420</td> <td>    0.010</td> <td>   -4.329</td> <td> 0.000</td> <td>   -0.061</td> <td>   -0.023</td>
+</tr>
+</table><br/><br/>Notes:<br/>[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.</div></div>
+</div>
+</section>
+<section id="b-interpreting-the-coefficients">
+<h2>b. Interpreting the coefficients<a class="headerlink" href="#b-interpreting-the-coefficients" title="Link to this heading">#</a></h2>
+<p>Now for the tricky part. What does each coefficient mean?</p>
+<ul class="simple">
+<li><p>What is the definition of the intercept?</p></li>
+<li><p>What is the definition of the <code class="docutils literal notranslate"><span class="pre">gender[T.male]</span></code> coefficient?</p></li>
+<li><p>What is the definition of the <code class="docutils literal notranslate"><span class="pre">children[T.yes]</span></code> coefficient?</p></li>
+<li><p>What is the definition of the <code class="docutils literal notranslate"><span class="pre">religiousness</span></code> coefficient?</p></li>
+<li><p>What is the definition of the <code class="docutils literal notranslate"><span class="pre">yearsmarried</span></code> coefficient?</p></li>
+</ul>
+<p>Do any of these make sense in their current definition?</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Your answer here</span>
+<span class="c1"># Intercept - average satisfaction when all other predictors at zero - which means for females with no children!</span>
+<span class="c1"># Gender - change in for males compared to females, holding all constant</span>
+<span class="c1"># Children - change in satisfaction for someone with children compared to without, holding all constant</span>
+<span class="c1"># Religiousness - Increase in satisfaction for a 1 step up the scale on religiosity, holding all constant</span>
+<span class="c1"># Years Married - Increase in satisfaction with every additional unit of years married (one year)</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+</section>
+<section id="c-altering-the-model-for-interpretability">
+<h2>c. Altering the model for interpretability<a class="headerlink" href="#c-altering-the-model-for-interpretability" title="Link to this heading">#</a></h2>
+<p>The previous model suggests some interesting relationships, but it is a little difficult to interpret it. For example, religiousness does not have a clear meaning (it ranges 1, 2, 3… etc), and years married has some slight difficulty in interpretation. It may be better to scale those two variables, so that the intercept makes sense.</p>
+<p>Use the formula syntax to scale the <code class="docutils literal notranslate"><span class="pre">religiousness</span></code> and <code class="docutils literal notranslate"><span class="pre">yearsmarried</span></code> predictors, and re-fit the model. Why would we not scale the <code class="docutils literal notranslate"><span class="pre">gender</span></code> and <code class="docutils literal notranslate"><span class="pre">children</span></code> predictors?</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Your answer here</span>
+<span class="c1"># Scale like so</span>
+<span class="n">model_two</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="s1">&#39;rating ~ gender + children + scale(religiousness) + scale(yearsmarried)&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">affairs</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="n">display</span><span class="p">(</span><span class="n">model_two</span><span class="o">.</span><span class="n">summary</span><span class="p">(</span><span class="n">slim</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_html"><table class="simpletable">
+<caption>OLS Regression Results</caption>
+<tr>
+  <th>Dep. Variable:</th>     <td>rating</td>   <th>  R-squared:         </th> <td>   0.070</td>
+</tr>
+<tr>
+  <th>Model:</th>               <td>OLS</td>    <th>  Adj. R-squared:    </th> <td>   0.064</td>
+</tr>
+<tr>
+  <th>No. Observations:</th>  <td>   601</td>   <th>  F-statistic:       </th> <td>   11.27</td>
+</tr>
+<tr>
+  <th>Covariance Type:</th>  <td>nonrobust</td> <th>  Prob (F-statistic):</th> <td>8.07e-09</td>
+</tr>
+</table>
+<table class="simpletable">
+<tr>
+            <td></td>              <th>coef</th>     <th>std err</th>      <th>t</th>      <th>P>|t|</th>  <th>[0.025</th>    <th>0.975]</th>  
+</tr>
+<tr>
+  <th>Intercept</th>            <td>    4.0772</td> <td>    0.102</td> <td>   40.168</td> <td> 0.000</td> <td>    3.878</td> <td>    4.277</td>
+</tr>
+<tr>
+  <th>gender[T.male]</th>       <td>    0.0093</td> <td>    0.087</td> <td>    0.106</td> <td> 0.916</td> <td>   -0.162</td> <td>    0.181</td>
+</tr>
+<tr>
+  <th>children[T.yes]</th>      <td>   -0.2094</td> <td>    0.118</td> <td>   -1.775</td> <td> 0.076</td> <td>   -0.441</td> <td>    0.022</td>
+</tr>
+<tr>
+  <th>scale(religiousness)</th> <td>    0.0900</td> <td>    0.045</td> <td>    2.017</td> <td> 0.044</td> <td>    0.002</td> <td>    0.178</td>
+</tr>
+<tr>
+  <th>scale(yearsmarried)</th>  <td>   -0.2336</td> <td>    0.054</td> <td>   -4.329</td> <td> 0.000</td> <td>   -0.340</td> <td>   -0.128</td>
+</tr>
+</table><br/><br/>Notes:<br/>[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.</div></div>
+</div>
+<p>Now what do the coefficients mean? How have they changed compared to the last one?</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Your answer here</span>
+<span class="c1"># Intercept - average satisfaction when all other predictors at zero - which means for females with no children still</span>
+<span class="c1"># Gender - change in for males compared to females, holding all constant</span>
+<span class="c1"># Children - change in satisfaction for someone with children compared to without, holding all constant</span>
+<span class="c1"># Religiousness - Increase in satisfaction for a 1SD increase on religiosity, holding all constant</span>
+<span class="c1"># Years Married - Increase in satisfaction a 1SD increase in years married (one year)</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+</section>
+<section id="d-evaluating-the-model">
+<h2>d. Evaluating the model<a class="headerlink" href="#d-evaluating-the-model" title="Link to this heading">#</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">.summary()</span></code> output suggests that while our model is statistically significant, it explains just 7% of the variance in satisfaction ratings. But we should not rely on this as a way to evaluate our model. Instead, we would like to know how <em>wrong our model is, on average</em>. And to know that, we have to compute the root-mean-squared-error, or RMSE.</p>
+<p>Check the notes for the import and code that will do this. Take your fitted models values, and use the correct function to calculate the RMSE.</p>
+<p>What is it? Is it any good?</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Your answer here</span>
+<span class="c1"># Import rmse from statsmodels</span>
+<span class="kn">from</span> <span class="nn">statsmodels.tools.eval_measures</span> <span class="kn">import</span> <span class="n">rmse</span>
+
+<span class="c1"># Call it</span>
+<span class="n">accuracy</span> <span class="o">=</span> <span class="n">rmse</span><span class="p">(</span><span class="n">model_two</span><span class="o">.</span><span class="n">fittedvalues</span><span class="p">,</span> <span class="n">affairs</span><span class="p">[</span><span class="s1">&#39;rating&#39;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">accuracy</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1.0628082871251807
+</pre></div>
+</div>
+</div>
+</div>
+<p>Note that ‘any good’ depends entirely on your use case, though lower is generally better. Here, we’re wrong by about 1 rating scale point. That might be acceptable in some scenarios, but here it suggests that this is not particularly useful! We might consider more predictors, or more complex models, but we will get to that in time.</p>
+</section>
+</section>
+<section id="comparing-and-contrasting-analyses-through-the-glm">
+<h1>3. Comparing and contrasting analyses through the GLM<a class="headerlink" href="#comparing-and-contrasting-analyses-through-the-glm" title="Link to this heading">#</a></h1>
+<p>Finally, we will practice demonstrating comparisons between the analysis you performed earlier with <code class="docutils literal notranslate"><span class="pre">pingouin</span></code> and their GLM equivalents, just to drill home their similarities and to broaden your thinking about how models are used.</p>
+<section id="a-correlation">
+<h2>a. Correlation<a class="headerlink" href="#a-correlation" title="Link to this heading">#</a></h2>
+<p>Earlier, you showed that the number of affairs and marital satisfaction were negatively correlated. Reproduce that analysis with a GLM in <code class="docutils literal notranslate"><span class="pre">statsmodels</span></code> below.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Your answer here</span>
+<span class="c1"># It is the scaling that makes this analysis so</span>
+<span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="s1">&#39;scale(affairs) ~ scale(rating)&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">affairs</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span><span class="o">.</span><span class="n">summary</span><span class="p">(</span><span class="n">slim</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_html"><table class="simpletable">
+<caption>OLS Regression Results</caption>
+<tr>
+  <th>Dep. Variable:</th>    <td>scale(affairs)</td> <th>  R-squared:         </th> <td>   0.078</td>
+</tr>
+<tr>
+  <th>Model:</th>                  <td>OLS</td>      <th>  Adj. R-squared:    </th> <td>   0.077</td>
+</tr>
+<tr>
+  <th>No. Observations:</th>     <td>   601</td>     <th>  F-statistic:       </th> <td>   50.76</td>
+</tr>
+<tr>
+  <th>Covariance Type:</th>     <td>nonrobust</td>   <th>  Prob (F-statistic):</th> <td>3.00e-12</td>
+</tr>
+</table>
+<table class="simpletable">
+<tr>
+        <td></td>           <th>coef</th>     <th>std err</th>      <th>t</th>      <th>P>|t|</th>  <th>[0.025</th>    <th>0.975]</th>  
+</tr>
+<tr>
+  <th>Intercept</th>     <td> 1.615e-16</td> <td>    0.039</td> <td> 4.12e-15</td> <td> 1.000</td> <td>   -0.077</td> <td>    0.077</td>
+</tr>
+<tr>
+  <th>scale(rating)</th> <td>   -0.2795</td> <td>    0.039</td> <td>   -7.125</td> <td> 0.000</td> <td>   -0.357</td> <td>   -0.202</td>
+</tr>
+</table><br/><br/>Notes:<br/>[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.</div></div>
+</div>
+</section>
+<section id="b-t-test">
+<h2>b. T-test<a class="headerlink" href="#b-t-test" title="Link to this heading">#</a></h2>
+<p>Can you reproduce the t-test as you did earlier, comparing satisfaction for those with and without children? Note - the t-value will not match exactly unless you turned off the ‘correction’ in the t-test. T-tests are for cowards.</p>
+<p>What do the coefficients mean here? Which category of the <code class="docutils literal notranslate"><span class="pre">children</span></code> variable became the intercept?</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Your answer here</span>
+<span class="c1"># t-test is easy</span>
+<span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="s1">&#39;rating ~ children&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">affairs</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span><span class="o">.</span><span class="n">summary</span><span class="p">(</span><span class="n">slim</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_html"><table class="simpletable">
+<caption>OLS Regression Results</caption>
+<tr>
+  <th>Dep. Variable:</th>     <td>rating</td>   <th>  R-squared:         </th> <td>   0.039</td>
+</tr>
+<tr>
+  <th>Model:</th>               <td>OLS</td>    <th>  Adj. R-squared:    </th> <td>   0.037</td>
+</tr>
+<tr>
+  <th>No. Observations:</th>  <td>   601</td>   <th>  F-statistic:       </th> <td>   24.00</td>
+</tr>
+<tr>
+  <th>Covariance Type:</th>  <td>nonrobust</td> <th>  Prob (F-statistic):</th> <td>1.24e-06</td>
+</tr>
+</table>
+<table class="simpletable">
+<tr>
+         <td></td>            <th>coef</th>     <th>std err</th>      <th>t</th>      <th>P>|t|</th>  <th>[0.025</th>    <th>0.975]</th>  
+</tr>
+<tr>
+  <th>Intercept</th>       <td>    4.2749</td> <td>    0.083</td> <td>   51.635</td> <td> 0.000</td> <td>    4.112</td> <td>    4.437</td>
+</tr>
+<tr>
+  <th>children[T.yes]</th> <td>   -0.4795</td> <td>    0.098</td> <td>   -4.899</td> <td> 0.000</td> <td>   -0.672</td> <td>   -0.287</td>
+</tr>
+</table><br/><br/>Notes:<br/>[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.</div></div>
+</div>
+</section>
+<section id="c-ancova">
+<h2>c. ANCOVA<a class="headerlink" href="#c-ancova" title="Link to this heading">#</a></h2>
+<p>We will return to the link between ANOVA and GLM’s once we expand our modelling knowledge. But for now, we can demonstrate the equivalence between <em>ANCOVA</em> and a linear model. An ANCOVA is essentially a set of categorical predictors with several continuous predictors alongside. In the above challenge, you used an ANCOVA to address whether males and females differed in the number of affairs, while controlling for the length of their marriage. Can you reproduce that in a linear model form below, and can you draw comparisons to the ANCOVA output and the linear model version?</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Your answer here</span>
+<span class="c1"># Repeat ANCOVA</span>
+<span class="n">display</span><span class="p">(</span><span class="n">aocv</span><span class="p">)</span>
+
+<span class="c1"># GLM version</span>
+<span class="n">aocv_model</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="s1">&#39;affairs ~ gender + yearsmarried&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">affairs</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="n">aocv_model</span><span class="o">.</span><span class="n">summary</span><span class="p">(</span><span class="n">slim</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Source</th>
+      <th>SS</th>
+      <th>DF</th>
+      <th>F</th>
+      <th>p-unc</th>
+      <th>n2</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>gender</td>
+      <td>0.241436</td>
+      <td>1</td>
+      <td>0.022914</td>
+      <td>0.879732</td>
+      <td>0.000037</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>yearsmarried</td>
+      <td>227.271157</td>
+      <td>1</td>
+      <td>21.569603</td>
+      <td>0.000004</td>
+      <td>0.034813</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Residual</td>
+      <td>6300.911061</td>
+      <td>598</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+</div></div><div class="output text_html"><table class="simpletable">
+<caption>OLS Regression Results</caption>
+<tr>
+  <th>Dep. Variable:</th>     <td>affairs</td>  <th>  R-squared:         </th> <td>   0.035</td>
+</tr>
+<tr>
+  <th>Model:</th>               <td>OLS</td>    <th>  Adj. R-squared:    </th> <td>   0.032</td>
+</tr>
+<tr>
+  <th>No. Observations:</th>  <td>   601</td>   <th>  F-statistic:       </th> <td>   10.83</td>
+</tr>
+<tr>
+  <th>Covariance Type:</th>  <td>nonrobust</td> <th>  Prob (F-statistic):</th> <td>2.40e-05</td>
+</tr>
+</table>
+<table class="simpletable">
+<tr>
+         <td></td>           <th>coef</th>     <th>std err</th>      <th>t</th>      <th>P>|t|</th>  <th>[0.025</th>    <th>0.975]</th>  
+</tr>
+<tr>
+  <th>Intercept</th>      <td>    0.5330</td> <td>    0.264</td> <td>    2.017</td> <td> 0.044</td> <td>    0.014</td> <td>    1.052</td>
+</tr>
+<tr>
+  <th>gender[T.male]</th> <td>    0.0402</td> <td>    0.265</td> <td>    0.151</td> <td> 0.880</td> <td>   -0.481</td> <td>    0.561</td>
+</tr>
+<tr>
+  <th>yearsmarried</th>   <td>    0.1105</td> <td>    0.024</td> <td>    4.644</td> <td> 0.000</td> <td>    0.064</td> <td>    0.157</td>
+</tr>
+</table><br/><br/>Notes:<br/>[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.</div></div>
+</div>
+<p>Notice that the <span class="math notranslate nohighlight">\(R^2\)</span> is the same, and that the overall pattern of results is the same too. The ‘main effect’ of gender is small, as is the coefficient in the linear model. Second, the years married effect is also significant, as is the coefficient of years married.</p>
+<p>You can also access an attribute of your model called <code class="docutils literal notranslate"><span class="pre">.ssr</span></code>, which is the ‘sums of squares residual’. If you do this you’ll see its identical to the one reported by the ANCOVA. Its the same thing, just presented differently!</p>
+<p>As a final challenge, can you plot the regression line over the raw data, and can you calculate the RMSE for this ANCOVA style model?</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Your answer here</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">affairs</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;yearsmarried&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;affairs&#39;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;gender&#39;</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">aocv_model</span><span class="o">.</span><span class="n">fittedvalues</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="n">affairs</span><span class="p">[</span><span class="s1">&#39;yearsmarried&#39;</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">)</span>
+
+<span class="c1"># RMSE</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">rmse</span><span class="p">(</span><span class="n">aocv_model</span><span class="o">.</span><span class="n">fittedvalues</span><span class="p">,</span> <span class="n">affairs</span><span class="p">[</span><span class="s1">&#39;affairs&#39;</span><span class="p">]))</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>3.237907507490096
+</pre></div>
+</div>
+<img alt="../_images/a59d914d259f289e724c246a975caf75dc3eb16988555d82e05ea7f9822d6f02.png" src="../_images/a59d914d259f289e724c246a975caf75dc3eb16988555d82e05ea7f9822d6f02.png" />
+</div>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./2_The_GLM"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="QPoP%20-%20Week%202%20Workshop.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">2 - The General Linear Model</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../3_Advancing_GLM/QPoP%20-%20Week%203%20Workshop.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">3 - Advancing the general linear model</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Getting to grips with linear models in Python - Exercises &amp; Answers</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#basic-statistics-with-pingouin">1. Basic statistics with <code class="docutils literal notranslate"><span class="pre">pingouin</span></code></a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-importing-everything-we-need">a. Importing everything we need</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#b-loading-some-data">b. Loading some data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#c-using-correlation-to-test-relationships">c. Using correlation to test relationships</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#d-using-t-tests-to-examine-differences">d. Using t-tests to examine differences</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#e-using-anova-to-test-slightly-more-complicated-relationships">e. Using ANOVA to test slightly more complicated relationships</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#e-carrying-out-an-analysis-of-covariance-ancova">e. Carrying out an analysis of covariance (ANCOVA).</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#the-general-linear-model-with-statsmodels">2. The general linear model with <code class="docutils literal notranslate"><span class="pre">statsmodels</span></code></a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-fitting-an-actual-linear-model">a. Fitting an actual linear model</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#b-interpreting-the-coefficients">b. Interpreting the coefficients</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#c-altering-the-model-for-interpretability">c. Altering the model for interpretability</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#d-evaluating-the-model">d. Evaluating the model</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#comparing-and-contrasting-analyses-through-the-glm">3. Comparing and contrasting analyses through the GLM</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-correlation">a. Correlation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#b-t-test">b. T-test</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#c-ancova">c. ANCOVA</a></li>
+</ul>
+</li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Alex Jones, Ph.D
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

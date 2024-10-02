@@ -1,0 +1,949 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>3 - Advancing the general linear model &#8212; Statistical Modelling with Python</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '3_Advancing_GLM/QPoP - Week 3 Workshop';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Checking assumptions and including interactions - Exercises &amp; Answers" href="QPoP%20-%20Week%203%20Exercises%20-%20Answers.html" />
+    <link rel="prev" title="Getting to grips with linear models in Python - Exercises &amp; Answers" href="../2_The_GLM/QPoP%20-%20Week%202%20Exercises%20-%20Answers.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt="Statistical Modelling with Python - Home"/>
+    <script>document.write(`<img src="../_static/logo.png" class="logo__image only-dark" alt="Statistical Modelling with Python - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    Statistical Modelling with Python
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Python Basics</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../1_Introduction/QPoP%20-%20Week%201%20Workshop.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../1_Introduction/QPoP%20-%20Week%201%20Exercises%20-%20Answers.html">Using Python for Data Analysis - Exercises &amp; Answers</a></li>
+
+
+
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">The GLM</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../2_The_GLM/QPoP%20-%20Week%202%20Workshop.html">2 - The General Linear Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../2_The_GLM/QPoP%20-%20Week%202%20Exercises%20-%20Answers.html">Getting to grips with linear models in Python - Exercises &amp; Answers</a></li>
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Advancing the GLM</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">3 - Advancing the general linear model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="QPoP%20-%20Week%203%20Exercises%20-%20Answers.html">Checking assumptions and including interactions - Exercises &amp; Answers</a></li>
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">The art of prediction</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../4_Prediction/QPoP%20-%20Week%204%20Workshop.html">4 - The art of prediction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../4_Prediction/QPoP%20-%20Week%204%20Exercises%20-%20Answers.html">Asking scientific questions of models - Exercises &amp; Answers</a></li>
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Binary outcome models</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../5_Binary/QPoP%20-%20Week%205%20Workshop.html">5 - Binary outcome models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../5_Binary/QPoP%20-%20Week%205%20Exercises%20-%20Answers.html">Using and understanding probit models - Exercises &amp; Answers</a></li>
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Applications and other kinds of hypotheses</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../6_Applications/QPoP%20-%20Week%206%20Workshop.html">6 - Precision in Predictions</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../6_Applications/QPoP%20-%20Week%206%20Exercises%20-%20Answers.html">Quantitative Perspectives on Psychology</a></li>
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Linear Mixed Effects Models</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../7_MixedModel/QPoP%20-%20Week%207%20Workshop.html">7 - Linear mixed effects models</a></li>
+
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2F3_Advancing_GLM/QPoP - Week 3 Workshop.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/3_Advancing_GLM/QPoP - Week 3 Workshop.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>3 - Advancing the general linear model</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#checking-assumptions-and-including-interactions">Checking assumptions and including interactions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#part-1-assumption-checks">Part 1 - Assumption Checks</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#checking-the-normality-of-residuals">Checking the normality of residuals</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#checking-for-homoscedasticity">Checking for homoscedasticity</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#checking-for-linearity-additivity">Checking for linearity/additivity</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#part-2-interactions">Part 2 - Interactions</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="advancing-the-general-linear-model">
+<h1>3 - Advancing the general linear model<a class="headerlink" href="#advancing-the-general-linear-model" title="Link to this heading">#</a></h1>
+<section id="checking-assumptions-and-including-interactions">
+<h2>Checking assumptions and including interactions<a class="headerlink" href="#checking-assumptions-and-including-interactions" title="Link to this heading">#</a></h2>
+<p>This week we have two broad topics to cover, translating the theoretical discussions to practical applicaton:</p>
+<ul class="simple">
+<li><p>Assumption checking, or ensuring the mathematical assumptions of the GLM are supported</p></li>
+<li><p>Interactions, allowing our models to grow in complexity by letting one variable interact with another (or more!) to better predict the outcome.</p></li>
+</ul>
+</section>
+<section id="part-1-assumption-checks">
+<h2>Part 1 - Assumption Checks<a class="headerlink" href="#part-1-assumption-checks" title="Link to this heading">#</a></h2>
+<p>The most important assumptions of linear models are those of validity and representativeness. But those are things that should be checked long before a model is applied to the data. Here, we’ll focus on checking the mathematical components of the model.</p>
+<p>As always we’ll import the needed packages before we start.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import most of what we need</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span> <span class="c1"># dataframes</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span> <span class="c1"># plots</span>
+<span class="kn">import</span> <span class="nn">statsmodels.formula.api</span> <span class="k">as</span> <span class="nn">smf</span> <span class="c1"># stats, note the traditional alias</span>
+<span class="kn">import</span> <span class="nn">scipy.stats</span> <span class="k">as</span> <span class="nn">st</span>
+
+<span class="c1"># Set the style for plots</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">set_style</span><span class="p">(</span><span class="s1">&#39;whitegrid&#39;</span><span class="p">)</span> <span class="c1"># a different theme!</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">set_context</span><span class="p">(</span><span class="s1">&#39;talk&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="checking-the-normality-of-residuals">
+<h2>Checking the normality of residuals<a class="headerlink" href="#checking-the-normality-of-residuals" title="Link to this heading">#</a></h2>
+<p>Lets examine how to query the least-important assumption first. Checking whether the residuals of a model is very easy via a combination of plotting and tests. When you fit a regression model with <code class="docutils literal notranslate"><span class="pre">statsmodels</span></code>, the residuals are stored for you in the <code class="docutils literal notranslate"><span class="pre">.resid</span></code> attribute of the model.</p>
+<p>We will stick with the <code class="docutils literal notranslate"><span class="pre">tips</span></code> dataset to demonstrate, fitting a simple model predicting the tip amount from the cost of the total bill:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Load dataset</span>
+<span class="n">tips</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">load_dataset</span><span class="p">(</span><span class="s1">&#39;tips&#39;</span><span class="p">)</span>
+
+<span class="c1"># Fit the model</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="s1">&#39;tip ~ total_bill&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">tips</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can now access the <code class="docutils literal notranslate"><span class="pre">.resid</span></code> of our model, which contains all the residuals (observed datapoint - predicted datapoint). If we pass this to a <code class="docutils literal notranslate"><span class="pre">seaborn</span></code> function called <code class="docutils literal notranslate"><span class="pre">histplot</span></code>, we obtain a histogram and can add a density plot over it too in a simple command:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Histplot</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">histplot</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">resid</span><span class="p">,</span> <span class="n">kde</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Axes: ylabel=&#39;Count&#39;&gt;
+</pre></div>
+</div>
+<img alt="../_images/d4137ae5358a428e6ebba0dcc66e43e971a06a5542e8e7425349e45a602d8c90.png" src="../_images/d4137ae5358a428e6ebba0dcc66e43e971a06a5542e8e7425349e45a602d8c90.png" />
+</div>
+</div>
+<p>This looks pretty much like a normal distribution. You can go one step further and conduct a statistical test called the <em>Shapiro-Wilk</em> test, which tests whether a sample of data comes from a normal distribution. A significant result from this would indicate that the sample differs from a normal distribution. We can import it from a package called <code class="docutils literal notranslate"><span class="pre">scipy.stats</span></code> and run it on the residuals:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import </span>
+<span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">shapiro</span>
+<span class="n">shapiro</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">resid</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>ShapiroResult(statistic=0.9672804064016676, pvalue=2.171379854243929e-05)
+</pre></div>
+</div>
+</div>
+</div>
+<p>This test is significant, indicating this distribution of residuals is <em>unlikely to come from a normal distribution</em>. This is nothing to worry about. The simple truth is that real data does not conform perfectly to these reference distributions, but being able to check is a useful skill. Rarely will violation of this assumption cause issues with inference, and obviously severe issues should appear in the plots if they exist.</p>
+<p>Lets see what happens when it goes wrong. We’ll use the <code class="docutils literal notranslate"><span class="pre">affairs</span></code> dataset, and see if we can predict the number of affairs from years married.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># First read in the data</span>
+<span class="n">affairs</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;https://vincentarelbundock.github.io/Rdatasets/csv/AER/Affairs.csv&#39;</span><span class="p">)</span>
+
+<span class="c1"># Fit the simple model</span>
+<span class="n">model2</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="s1">&#39;affairs ~ yearsmarried&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">affairs</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+
+<span class="c1"># Plot the residuals</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">histplot</span><span class="p">(</span><span class="n">model2</span><span class="o">.</span><span class="n">resid</span><span class="p">,</span> <span class="n">kde</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Axes: ylabel=&#39;Count&#39;&gt;
+</pre></div>
+</div>
+<img alt="../_images/f2556b685c38e6634e0bd6a7bf2a1ba2219b63fbf04de7050dd76ab00693b8a2.png" src="../_images/f2556b685c38e6634e0bd6a7bf2a1ba2219b63fbf04de7050dd76ab00693b8a2.png" />
+</div>
+</div>
+<p>This is clearly off, and should give you pause. Particularly it suggests that a GLM is not a good model for this dependent variable - and that’s OK. You can still make predictions and draw conclusions, but with the caveat that your model makes big errors in certain places!</p>
+</section>
+<section id="checking-for-homoscedasticity">
+<h2>Checking for homoscedasticity<a class="headerlink" href="#checking-for-homoscedasticity" title="Link to this heading">#</a></h2>
+<p>We next consider how to examine whether the model exhibits equal variance of errors; that is, the magnitude of the errors is the same across the range of the X axis.</p>
+<p>We do this graphically, by plotting the <em>predicted</em> values against the <em>residuals</em>. Like the residuals, <code class="docutils literal notranslate"><span class="pre">statsmodels</span></code> stores the predicted values in the <code class="docutils literal notranslate"><span class="pre">.fittedvalues</span></code> attribute.</p>
+<p>Ideally we hope to see a simple random scatter, suggesting no association at all. If there was a pattern, it might suggest that, for example, that when the model makes a prediction that is large, the residuals get larger - the error is not constant!</p>
+<p>Let us take a look at these plots for the <code class="docutils literal notranslate"><span class="pre">tip</span></code> model, where we predicted tip amount from the total bill, stored in <code class="docutils literal notranslate"><span class="pre">model</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Homoscedasticity plot</span>
+<span class="n">axis</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">model</span><span class="o">.</span><span class="n">fittedvalues</span><span class="p">,</span> 
+                       <span class="n">y</span><span class="o">=</span><span class="n">model</span><span class="o">.</span><span class="n">resid</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">.5</span><span class="p">)</span> <span class="c1"># scatter is easy</span>
+<span class="n">axis</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Predicted Values&#39;</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Residual&#39;</span><span class="p">)</span> <span class="c1"># Renaming </span>
+<span class="n">axis</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="c1"># Adding a horizontal line at zero</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.lines.Line2D at 0x145b7bfd0&gt;
+</pre></div>
+</div>
+<img alt="../_images/4fd382ae9056312467ce3bd1c6db8c929249c8106d1e9ea2e2656ade62e87aca.png" src="../_images/4fd382ae9056312467ce3bd1c6db8c929249c8106d1e9ea2e2656ade62e87aca.png" />
+</div>
+</div>
+<p>This looks mostly OK, albeit with a little bit of a ‘fanning’ - as the predicted tip amount increases, the errors get larger. This indicates we could improve our model with more predictors, interactions, and so on. On the other hand, we can accept that there is simply less data in the higher tip ranges - about 11% of the tips are greater than $5. If we wanted more accurate predictions on bigger tips, we’d need more data!</p>
+</section>
+<section id="checking-for-linearity-additivity">
+<h2>Checking for linearity/additivity<a class="headerlink" href="#checking-for-linearity-additivity" title="Link to this heading">#</a></h2>
+<p>This assumption can be checked in two ways. One is by plotting the predictors against the dependent variable. You should hope to see straightforward linear relationships for a GLM to be effective.</p>
+<p>We can use <code class="docutils literal notranslate"><span class="pre">seaborn</span></code> and its <code class="docutils literal notranslate"><span class="pre">pairplot</span></code> function to build a grid of plots that show how each variable is related to others. If we were predicting tip amount from party size and total bill, we’d want to see if party size and total bill were <em>linearly</em> associated with tip, which we could assess like so:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Select variables</span>
+<span class="n">variables</span> <span class="o">=</span> <span class="n">tips</span><span class="p">[[</span><span class="s1">&#39;tip&#39;</span><span class="p">,</span> <span class="s1">&#39;total_bill&#39;</span><span class="p">,</span> <span class="s1">&#39;size&#39;</span><span class="p">]]</span>
+
+<span class="c1"># Pairplot</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">pairplot</span><span class="p">(</span><span class="n">variables</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.PairGrid at 0x145768b90&gt;
+</pre></div>
+</div>
+<img alt="../_images/f40209faa2b59c1f5c8b98be48719456df87bd3dc9b03f7b6c07fea035be79b1.png" src="../_images/f40209faa2b59c1f5c8b98be48719456df87bd3dc9b03f7b6c07fea035be79b1.png" />
+</div>
+</div>
+<p>This looks good! Similarly, you can assess the assumption of linearity by once again looking at the predicted vs residual plots. An inherently non-linear relationship will appear there, as the model tries to give linear predictions to something non-linear, showing wildly divergent residuals. A simulated example would look like this:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+
+<span class="n">N</span> <span class="o">=</span> <span class="mi">200</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">rng</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">N</span><span class="p">))</span>
+<span class="n">y</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="p">(</span><span class="n">X</span> <span class="o">*</span> <span class="mf">1.2</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">X</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="mf">2.4</span><span class="p">)</span> <span class="o">+</span> <span class="n">rng</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">N</span><span class="p">)</span>
+
+<span class="c1"># Linear combination</span>
+<span class="n">d</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;X&#39;</span><span class="p">:</span> <span class="n">X</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">:</span> <span class="n">y</span><span class="p">})</span>
+<span class="n">m</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="s1">&#39;y ~ X&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">d</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Plot</span>
+<span class="n">axis</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">m</span><span class="o">.</span><span class="n">fittedvalues</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">m</span><span class="o">.</span><span class="n">resid</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">.5</span><span class="p">)</span>
+<span class="n">axis</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Predicted Values&#39;</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Residual&#39;</span><span class="p">)</span> <span class="c1"># Renaming </span>
+<span class="n">axis</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="c1"># Adding a horizontal line at zero</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.lines.Line2D at 0x145e6a0d0&gt;
+</pre></div>
+</div>
+<img alt="../_images/b9a5ca2ac26578c03be493cd847ba33f026cb677d2bcfe3cba072ba68ec8f738.png" src="../_images/b9a5ca2ac26578c03be493cd847ba33f026cb677d2bcfe3cba072ba68ec8f738.png" />
+</div>
+</div>
+<p>Clearly the models linear predictions are severely off for this nonlinear association. If you see this, <em>you can still use linear regression</em>, but you will need to include some extra terms we won’t cover in this course. The GLM is very powerful!</p>
+</section>
+<section id="part-2-interactions">
+<h2>Part 2 - Interactions<a class="headerlink" href="#part-2-interactions" title="Link to this heading">#</a></h2>
+<p>Interactions allow us to flexibly alter our model, so that the influence of one predictor on the outcome can depend on the level of another. You are most likely familiar with interactions from ANOVA, where the difference between levels of one factor can vary depending on the level of other factors.</p>
+<p>Setting up an interaction is very straightforward with <code class="docutils literal notranslate"><span class="pre">statsmodels</span></code>. You can introduce one by using <code class="docutils literal notranslate"><span class="pre">:</span></code> between variables in a formula string, which will allow them to interact.</p>
+<p>First, let us see how this works with the <code class="docutils literal notranslate"><span class="pre">tips</span></code> dataset. We will fit a model that predicts the tip amount from the total bill value (<code class="docutils literal notranslate"><span class="pre">total_bill</span></code>) and the day (<code class="docutils literal notranslate"><span class="pre">day</span></code>), and then another that allows them to interact. The differences in output will highlight why relying on coefficients becomes very difficult when interpreting models beyond simple ones.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Fit a non interaction and examine model output</span>
+<span class="n">no_interaction</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="s1">&#39;tip ~ total_bill + day&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">tips</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="n">no_interaction</span><span class="o">.</span><span class="n">summary</span><span class="p">(</span><span class="n">slim</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table class="simpletable">
+<caption>OLS Regression Results</caption>
+<tr>
+  <th>Dep. Variable:</th>       <td>tip</td>    <th>  R-squared:         </th> <td>   0.459</td>
+</tr>
+<tr>
+  <th>Model:</th>               <td>OLS</td>    <th>  Adj. R-squared:    </th> <td>   0.450</td>
+</tr>
+<tr>
+  <th>No. Observations:</th>  <td>   244</td>   <th>  F-statistic:       </th> <td>   50.67</td>
+</tr>
+<tr>
+  <th>Covariance Type:</th>  <td>nonrobust</td> <th>  Prob (F-statistic):</th> <td>7.52e-31</td>
+</tr>
+</table>
+<table class="simpletable">
+<tr>
+       <td></td>         <th>coef</th>     <th>std err</th>      <th>t</th>      <th>P>|t|</th>  <th>[0.025</th>    <th>0.975]</th>  
+</tr>
+<tr>
+  <th>Intercept</th>  <td>    0.9205</td> <td>    0.186</td> <td>    4.943</td> <td> 0.000</td> <td>    0.554</td> <td>    1.287</td>
+</tr>
+<tr>
+  <th>day[T.Fri]</th> <td>    0.0189</td> <td>    0.269</td> <td>    0.070</td> <td> 0.944</td> <td>   -0.511</td> <td>    0.549</td>
+</tr>
+<tr>
+  <th>day[T.Sat]</th> <td>   -0.0671</td> <td>    0.172</td> <td>   -0.391</td> <td> 0.697</td> <td>   -0.406</td> <td>    0.271</td>
+</tr>
+<tr>
+  <th>day[T.Sun]</th> <td>    0.0935</td> <td>    0.178</td> <td>    0.526</td> <td> 0.599</td> <td>   -0.257</td> <td>    0.444</td>
+</tr>
+<tr>
+  <th>total_bill</th> <td>    0.1047</td> <td>    0.008</td> <td>   13.915</td> <td> 0.000</td> <td>    0.090</td> <td>    0.119</td>
+</tr>
+</table><br/><br/>Notes:<br/>[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.</div></div>
+</div>
+<p>And one with an interaction:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Interaction</span>
+<span class="n">interaction</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="s1">&#39;tip ~ total_bill + day + total_bill:day&#39;</span><span class="p">,</span>
+                      <span class="n">data</span><span class="o">=</span><span class="n">tips</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="n">interaction</span><span class="o">.</span><span class="n">summary</span><span class="p">(</span><span class="n">slim</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table class="simpletable">
+<caption>OLS Regression Results</caption>
+<tr>
+  <th>Dep. Variable:</th>       <td>tip</td>    <th>  R-squared:         </th> <td>   0.483</td>
+</tr>
+<tr>
+  <th>Model:</th>               <td>OLS</td>    <th>  Adj. R-squared:    </th> <td>   0.468</td>
+</tr>
+<tr>
+  <th>No. Observations:</th>  <td>   244</td>   <th>  F-statistic:       </th> <td>   31.49</td>
+</tr>
+<tr>
+  <th>Covariance Type:</th>  <td>nonrobust</td> <th>  Prob (F-statistic):</th> <td>1.24e-30</td>
+</tr>
+</table>
+<table class="simpletable">
+<tr>
+            <td></td>               <th>coef</th>     <th>std err</th>      <th>t</th>      <th>P>|t|</th>  <th>[0.025</th>    <th>0.975]</th>  
+</tr>
+<tr>
+  <th>Intercept</th>             <td>    0.5122</td> <td>    0.317</td> <td>    1.616</td> <td> 0.107</td> <td>   -0.112</td> <td>    1.137</td>
+</tr>
+<tr>
+  <th>day[T.Fri]</th>            <td>    0.5966</td> <td>    0.629</td> <td>    0.948</td> <td> 0.344</td> <td>   -0.643</td> <td>    1.836</td>
+</tr>
+<tr>
+  <th>day[T.Sat]</th>            <td>    0.0064</td> <td>    0.409</td> <td>    0.016</td> <td> 0.988</td> <td>   -0.799</td> <td>    0.812</td>
+</tr>
+<tr>
+  <th>day[T.Sun]</th>            <td>    1.2409</td> <td>    0.440</td> <td>    2.819</td> <td> 0.005</td> <td>    0.374</td> <td>    2.108</td>
+</tr>
+<tr>
+  <th>total_bill</th>            <td>    0.1278</td> <td>    0.016</td> <td>    7.795</td> <td> 0.000</td> <td>    0.095</td> <td>    0.160</td>
+</tr>
+<tr>
+  <th>total_bill:day[T.Fri]</th> <td>   -0.0330</td> <td>    0.033</td> <td>   -0.999</td> <td> 0.319</td> <td>   -0.098</td> <td>    0.032</td>
+</tr>
+<tr>
+  <th>total_bill:day[T.Sat]</th> <td>   -0.0067</td> <td>    0.020</td> <td>   -0.335</td> <td> 0.738</td> <td>   -0.046</td> <td>    0.033</td>
+</tr>
+<tr>
+  <th>total_bill:day[T.Sun]</th> <td>   -0.0576</td> <td>    0.021</td> <td>   -2.737</td> <td> 0.007</td> <td>   -0.099</td> <td>   -0.016</td>
+</tr>
+</table><br/><br/>Notes:<br/>[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.</div></div>
+</div>
+<p>The coefficients are hard to interpret. This is a categorical (day) by continuous (total bill) interaction, and already we’re struggling!</p>
+<ul class="simple">
+<li><p>The coefficients representing Friday, Saturday, and Sunday represent the differences between those days and Thursday (the intercept)</p></li>
+<li><p>The coefficient for total bill represents the association between total bill and tip, when all other coefficients are zero (so actually tips on Thursday!)</p></li>
+<li><p>The coefficients with the interaction operator (<code class="docutils literal notranslate"><span class="pre">:</span></code>) indicates differences between the total bill and tip association on Thursday with each day.</p></li>
+</ul>
+<p>If you have more variables, you can forget trying to interpret these - and even in their current form, explaining them to others is hard!</p>
+<p>We are often concerned about whether there ‘is’ an interaction between variables. The coefficients above do not speak to that, as they represent the individual components that make up the interaction effect and are hard to interpret.</p>
+<p>I don’t advocate this approach, since if we think there is an interaction, we include it in the model, and we progress to assessing our predictions from there. But sometimes you will want to assess whether the inclusion of the interaction <em>significantly improves the model</em> - that is, it increases the <span class="math notranslate nohighlight">\(R^2\)</span>. You can do that like so:</p>
+<ul class="simple">
+<li><p>Fit a model without the interaction.</p></li>
+<li><p>Fit a model with the inteaction.</p></li>
+<li><p>Let an <em>F</em>-test determine whether the model with the interaction has a higher <span class="math notranslate nohighlight">\(R^2\)</span> then the one without.</p></li>
+</ul>
+<p><span class="math notranslate nohighlight">\(R^2\)</span> has lots of issues, but to do this, you can use the following code:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># A test of whether the interaction significantly improves R2</span>
+<span class="n">interaction</span><span class="o">.</span><span class="n">compare_f_test</span><span class="p">(</span><span class="n">no_interaction</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(3.659151080807126, 0.013142903887848566, 3.0)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Each model has a <code class="docutils literal notranslate"><span class="pre">.compare_f_test</span></code> method. If you give it the model without the interaction, it will tell you the answer - an F value, a p-value, and the degrees of freedom. Here, this suggests a significant improvement with the interaction.</p>
+<p>Another useful apporach is to compare the RMSE, or the magnitude of errors in prediction, of both models:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import RMSE</span>
+<span class="kn">import</span> <span class="nn">statsmodels.tools.eval_measures</span> <span class="k">as</span> <span class="nn">measures</span>
+
+<span class="c1"># RMSE of no interaction</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;No interaction RMSE:&#39;</span><span class="p">,</span> 
+      <span class="n">measures</span><span class="o">.</span><span class="n">rmse</span><span class="p">(</span><span class="n">no_interaction</span><span class="o">.</span><span class="n">fittedvalues</span><span class="p">,</span> <span class="n">tips</span><span class="p">[</span><span class="s1">&#39;tip&#39;</span><span class="p">]),</span>
+      <span class="s1">&#39;Interaction RMSE:&#39;</span><span class="p">,</span>
+      <span class="n">measures</span><span class="o">.</span><span class="n">rmse</span><span class="p">(</span><span class="n">interaction</span><span class="o">.</span><span class="n">fittedvalues</span><span class="p">,</span> <span class="n">tips</span><span class="p">[</span><span class="s1">&#39;tip&#39;</span><span class="p">])</span>
+     <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>No interaction RMSE: 1.0157339160931298 Interaction RMSE: 0.9929040944116752
+</pre></div>
+</div>
+</div>
+</div>
+<p>A reduction, but not by much! In terms of accuracy, this about 2 cents (remember that the amount of tips is in terms of dollars). This is why we should be wary of significance tests and instead rely on careful evaluation of metrics.</p>
+<p>Finally, it is instructive to see what the model ‘sees’ when fitting an interaction. An interaction can be thought of as fitting separate regression lines for one variable at different levels of another variable, which is clearer with a graph:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Hide this cell</span>
+<span class="kn">import</span> <span class="nn">marginaleffects</span> <span class="k">as</span> <span class="nn">me</span>
+<span class="n">predmat_no</span> <span class="o">=</span> <span class="n">me</span><span class="o">.</span><span class="n">avg_predictions</span><span class="p">(</span><span class="n">no_interaction</span><span class="p">,</span> <span class="n">by</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;total_bill&#39;</span><span class="p">,</span> <span class="s1">&#39;day&#39;</span><span class="p">])</span>
+<span class="n">predmat_ye</span> <span class="o">=</span> <span class="n">me</span><span class="o">.</span><span class="n">avg_predictions</span><span class="p">(</span><span class="n">interaction</span><span class="p">,</span> <span class="n">by</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;total_bill&#39;</span><span class="p">,</span> <span class="s1">&#39;day&#39;</span><span class="p">])</span>
+
+<span class="n">predmat</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">predmat_no</span><span class="o">.</span><span class="n">to_pandas</span><span class="p">()</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">interaction</span><span class="o">=</span><span class="s1">&#39;Absent&#39;</span><span class="p">),</span>
+                     <span class="n">predmat_ye</span><span class="o">.</span><span class="n">to_pandas</span><span class="p">()</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">interaction</span><span class="o">=</span><span class="s1">&#39;Present&#39;</span><span class="p">)</span>
+                    <span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">sns</span><span class="o">.</span><span class="n">FacetGrid</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">predmat</span><span class="p">,</span> <span class="n">row</span><span class="o">=</span><span class="s1">&#39;interaction&#39;</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+ <span class="o">.</span><span class="n">map_dataframe</span><span class="p">(</span><span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;total_bill&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;estimate&#39;</span><span class="p">,</span> 
+                <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;day&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">.4</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="s1">&#39;inferno&#39;</span><span class="p">)</span>
+ <span class="o">.</span><span class="n">add_legend</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;Day&#39;</span><span class="p">)</span>
+ <span class="o">.</span><span class="n">set_xlabels</span><span class="p">(</span><span class="s1">&#39;Total Bill&#39;</span><span class="p">)</span>
+ <span class="o">.</span><span class="n">set_ylabels</span><span class="p">(</span><span class="s1">&#39;Estimated Tip&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.FacetGrid at 0x147a57bd0&gt;
+</pre></div>
+</div>
+<img alt="../_images/a18a7e31dfea5323121567b60208c1e5a4122ae74a79b330e039db1f8b3474dd.png" src="../_images/a18a7e31dfea5323121567b60208c1e5a4122ae74a79b330e039db1f8b3474dd.png" />
+</div>
+</div>
+<p>Ultimately, the rationale about whether you include an interaction should be more about a) whether it makes sense in the context of answering the question, and b) whether you have enough data to estimate it, a problem that we will return to.</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./3_Advancing_GLM"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../2_The_GLM/QPoP%20-%20Week%202%20Exercises%20-%20Answers.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Getting to grips with linear models in Python - Exercises &amp; Answers</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="QPoP%20-%20Week%203%20Exercises%20-%20Answers.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Checking assumptions and including interactions - Exercises &amp; Answers</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#checking-assumptions-and-including-interactions">Checking assumptions and including interactions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#part-1-assumption-checks">Part 1 - Assumption Checks</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#checking-the-normality-of-residuals">Checking the normality of residuals</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#checking-for-homoscedasticity">Checking for homoscedasticity</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#checking-for-linearity-additivity">Checking for linearity/additivity</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#part-2-interactions">Part 2 - Interactions</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Alex Jones, Ph.D
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

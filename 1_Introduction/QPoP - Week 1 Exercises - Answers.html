@@ -1,0 +1,2196 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Using Python for Data Analysis - Exercises &amp; Answers &#8212; Statistical Modelling with Python</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '1_Introduction/QPoP - Week 1 Exercises - Answers';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="2 - The General Linear Model" href="../2_The_GLM/QPoP%20-%20Week%202%20Workshop.html" />
+    <link rel="prev" title="Introduction" href="QPoP%20-%20Week%201%20Workshop.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt="Statistical Modelling with Python - Home"/>
+    <script>document.write(`<img src="../_static/logo.png" class="logo__image only-dark" alt="Statistical Modelling with Python - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    Statistical Modelling with Python
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Python Basics</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="QPoP%20-%20Week%201%20Workshop.html">Introduction</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Using Python for Data Analysis - Exercises &amp; Answers</a></li>
+
+
+
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">The GLM</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../2_The_GLM/QPoP%20-%20Week%202%20Workshop.html">2 - The General Linear Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../2_The_GLM/QPoP%20-%20Week%202%20Exercises%20-%20Answers.html">Getting to grips with linear models in Python - Exercises &amp; Answers</a></li>
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Advancing the GLM</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../3_Advancing_GLM/QPoP%20-%20Week%203%20Workshop.html">3 - Advancing the general linear model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../3_Advancing_GLM/QPoP%20-%20Week%203%20Exercises%20-%20Answers.html">Checking assumptions and including interactions - Exercises &amp; Answers</a></li>
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">The art of prediction</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../4_Prediction/QPoP%20-%20Week%204%20Workshop.html">4 - The art of prediction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../4_Prediction/QPoP%20-%20Week%204%20Exercises%20-%20Answers.html">Asking scientific questions of models - Exercises &amp; Answers</a></li>
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Binary outcome models</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../5_Binary/QPoP%20-%20Week%205%20Workshop.html">5 - Binary outcome models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../5_Binary/QPoP%20-%20Week%205%20Exercises%20-%20Answers.html">Using and understanding probit models - Exercises &amp; Answers</a></li>
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Applications and other kinds of hypotheses</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../6_Applications/QPoP%20-%20Week%206%20Workshop.html">6 - Precision in Predictions</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../6_Applications/QPoP%20-%20Week%206%20Exercises%20-%20Answers.html">Quantitative Perspectives on Psychology</a></li>
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Linear Mixed Effects Models</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../7_MixedModel/QPoP%20-%20Week%207%20Workshop.html">7 - Linear mixed effects models</a></li>
+
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2F1_Introduction/QPoP - Week 1 Exercises - Answers.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/1_Introduction/QPoP - Week 1 Exercises - Answers.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Using Python for Data Analysis - Exercises & Answers</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Using Python for Data Analysis - Exercises &amp; Answers</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#calculations-in-python-and-print">1. Calculations in Python, and <code class="docutils literal notranslate"><span class="pre">print</span></code></a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#variables-and-data-types">2. Variables and data types</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#data-containers-the-list">3. Data Containers - the list</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-making-a-list">a. Making a list</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#b-accessing-a-list">b. Accessing a list</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#c-complicated-lists">c. Complicated lists</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#data-containers-the-dictionary">4. Data Containers - the dictionary</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-making-a-dictionary">a. Making a dictionary</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#b-accessing-values-in-a-dictionary">b. Accessing values in a dictionary</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#c-adding-a-new-key-value-pair-to-a-dictionary">c. Adding a new key: value pair to a dictionary</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#using-pandas-for-some-data-analysis">5. Using Pandas for some data analysis!</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-importing-pandas">a. Importing pandas</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#b-reading-in-a-dataset">b. Reading in a dataset</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#c-checking-data-types">c. Checking data types</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#d-checking-and-removing-missing-values">d. Checking and removing missing values</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#e-querying-some-data">e. Querying some data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#f-summarising-data">f. Summarising data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#g-reshaping-data-with-some-pop-music">g. Reshaping data with some pop music</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#plotting">6. Plotting</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-plotting-some-penguin-bills">a. Plotting some penguin bills</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#b-expanding-our-plots-of-penguins">b. Expanding our plots of penguins</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#c-violins-and-penguins">c. Violins and penguins</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#d-more-violins-and-penguins">d. More violins and penguins</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#e-cat-plots-and-penguins">e. Cat(plots) and penguins</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#f-relplots">f. Relplots</a></li>
+</ul>
+</li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="using-python-for-data-analysis-exercises-answers">
+<h1>Using Python for Data Analysis - Exercises &amp; Answers<a class="headerlink" href="#using-python-for-data-analysis-exercises-answers" title="Link to this heading">#</a></h1>
+</section>
+<section id="calculations-in-python-and-print">
+<h1>1. Calculations in Python, and <code class="docutils literal notranslate"><span class="pre">print</span></code><a class="headerlink" href="#calculations-in-python-and-print" title="Link to this heading">#</a></h1>
+<p>For these exercises, try not to use Python. Instead, see if you can predict what would happen if you typed the commands into Python.</p>
+<ol class="arabic simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">2</span> <span class="pre">*</span> <span class="pre">4</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">1</span> <span class="pre">**</span> <span class="pre">3</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">10</span> <span class="pre">/</span> <span class="pre">5</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">10</span> <span class="pre">%</span> <span class="pre">9</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">print(4</span> <span class="pre">+</span> <span class="pre">3)</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">#</span> <span class="pre">print(9</span> <span class="pre">/</span> <span class="pre">3)</span></code></p></li>
+</ol>
+</section>
+<section id="variables-and-data-types">
+<h1>2. Variables and data types<a class="headerlink" href="#variables-and-data-types" title="Link to this heading">#</a></h1>
+<p>Again, try to imagine what would happen here. Then, try typing the commands to see if you were correct.</p>
+<p><code class="docutils literal notranslate"><span class="pre">#</span> <span class="pre">Here</span> <span class="pre">are</span> <span class="pre">some</span> <span class="pre">some</span> <span class="pre">variables,</span> <span class="pre">whose</span> <span class="pre">values</span> <span class="pre">are</span> <span class="pre">used</span> <span class="pre">below.</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">a</span> <span class="pre">=</span> <span class="pre">10</span></code>
+<code class="docutils literal notranslate"><span class="pre">b</span> <span class="pre">=</span> <span class="pre">5.789</span></code>
+<code class="docutils literal notranslate"><span class="pre">c</span> <span class="pre">=</span> <span class="pre">'55'</span></code>
+<code class="docutils literal notranslate"><span class="pre">d</span> <span class="pre">=</span> <span class="pre">True</span></code></p>
+<ol class="arabic simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">type(a)</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">b</span> <span class="pre">+</span> <span class="pre">a</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">c</span> <span class="pre">-</span> <span class="pre">a</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">print('50</span> <span class="pre">+</span> <span class="pre">5</span> <span class="pre">=</span> <span class="pre">'</span> <span class="pre">+</span> <span class="pre">c)</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">print('50</span> <span class="pre">-</span> <span class="pre">'</span> <span class="pre">+</span> <span class="pre">a</span> <span class="pre">'=</span> <span class="pre">40)</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">d</span> <span class="pre">+</span> <span class="pre">b</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">type(b)</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">c</span> <span class="pre">*</span> <span class="pre">2</span> <span class="pre">+</span> <span class="pre">c</span></code></p></li>
+</ol>
+</section>
+<section id="data-containers-the-list">
+<h1>3. Data Containers - the list<a class="headerlink" href="#data-containers-the-list" title="Link to this heading">#</a></h1>
+<p>Lists are an essential part of working with Python, being flexible, multipurpose containers for all kinds of data. The excercises below will require some coding on your part to fully answer the questions, and introduce some new topics and methods for lists not covered in the lecture material. As always with Python, exploring different options is the only way to really learn it.</p>
+<p>When completing these exercises, you might make mistakes and modify the original data repeatedly. If that happens, clean up your code, and click Kernel -&gt; Restart &amp; Run All in the toolbar to start afresh.</p>
+<section id="a-making-a-list">
+<h2>a. Making a list<a class="headerlink" href="#a-making-a-list" title="Link to this heading">#</a></h2>
+<p>First, define these variables:
+<code class="docutils literal notranslate"><span class="pre">age</span> <span class="pre">=</span> <span class="pre">22;</span> <span class="pre">gender</span> <span class="pre">=</span> <span class="pre">'M';</span> <span class="pre">score_A</span> <span class="pre">=</span> <span class="pre">459.321;</span> <span class="pre">score_B</span> <span class="pre">=</span> <span class="pre">199.232</span></code></p>
+<p>Now, store these in a list with the variable name <code class="docutils literal notranslate"><span class="pre">my_list</span></code>, in the order that they appear above.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># First define variables</span>
+<span class="n">age</span> <span class="o">=</span> <span class="mi">22</span>
+<span class="n">gender</span> <span class="o">=</span> <span class="s1">&#39;M&#39;</span>
+<span class="n">score_A</span> <span class="o">=</span> <span class="mf">459.321</span>
+<span class="n">score_B</span> <span class="o">=</span> <span class="mf">199.232</span>
+
+<span class="c1"># Then put into list</span>
+<span class="n">my_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">age</span><span class="p">,</span> <span class="n">gender</span><span class="p">,</span> <span class="n">score_A</span><span class="p">,</span> <span class="n">score_B</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">my_list</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[22, &#39;M&#39;, 459.321, 199.232]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="b-accessing-a-list">
+<h2>b. Accessing a list<a class="headerlink" href="#b-accessing-a-list" title="Link to this heading">#</a></h2>
+<p>Print out the value 199.232 from <code class="docutils literal notranslate"><span class="pre">my_list</span></code>. What index position do you need to use?</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Access this item with position number 3, or -1 (the last)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">my_list</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">my_list</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>199.232 199.232
+</pre></div>
+</div>
+</div>
+</div>
+<p>Use the <code class="docutils literal notranslate"><span class="pre">.index</span></code> method to find the index position of the letter ‘M’.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># .index is easy</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">my_list</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s1">&#39;M&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="c-complicated-lists">
+<h2>c. Complicated lists<a class="headerlink" href="#c-complicated-lists" title="Link to this heading">#</a></h2>
+<p>Define this rather long list:</p>
+<p><code class="docutils literal notranslate"><span class="pre">long_list</span> <span class="pre">=</span> <span class="pre">[3,</span> <span class="pre">8,</span> <span class="pre">[1,</span> <span class="pre">2],</span> <span class="pre">4,</span> <span class="pre">4,</span> <span class="pre">4,</span> <span class="pre">[99.234,</span> <span class="pre">89.99,</span> <span class="pre">45.322],</span> <span class="pre">['junk'],</span> <span class="pre">'final']</span></code></p>
+<p>How would you access the value 89.99 in this list?</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Its in the nested list in position 6, and then in THAT list its in position 1</span>
+<span class="n">long_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="p">[</span><span class="mf">99.234</span><span class="p">,</span> <span class="mf">89.99</span><span class="p">,</span> <span class="mf">45.322</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;junk&#39;</span><span class="p">],</span> <span class="s1">&#39;final&#39;</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">long_list</span><span class="p">[</span><span class="mi">6</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>89.99
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="data-containers-the-dictionary">
+<h1>4. Data Containers - the dictionary<a class="headerlink" href="#data-containers-the-dictionary" title="Link to this heading">#</a></h1>
+<p>Dictionaries are also key parts of working with Python. You will also have to do some coding here to learn how they work, but hopefully you will find them intuitive.</p>
+<section id="a-making-a-dictionary">
+<h2>a. Making a dictionary<a class="headerlink" href="#a-making-a-dictionary" title="Link to this heading">#</a></h2>
+<p>Make a dictionary, called <code class="docutils literal notranslate"><span class="pre">dictionary_1</span></code>, that has three entries. The first entry should have the key ‘a’, and the value ‘name’. The second entry should have the key ‘b’, and the value ‘age’. The third entry should have the key ‘c’, and the value <code class="docutils literal notranslate"><span class="pre">[1,</span> <span class="pre">2,</span> <span class="pre">3]</span></code> - so a list with the values 1, 2, 3.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Dictionary definition is easy</span>
+<span class="n">dictionary_1</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">:</span> <span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">:</span> <span class="s1">&#39;age&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]}</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+</section>
+<section id="b-accessing-values-in-a-dictionary">
+<h2>b. Accessing values in a dictionary<a class="headerlink" href="#b-accessing-values-in-a-dictionary" title="Link to this heading">#</a></h2>
+<p>Now you have made a dictionary, how do you access the list with the values [1, 2, 3] in it? That is, what is the key for this and how do you use it?</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># With the key</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">dictionary_1</span><span class="p">[</span><span class="s1">&#39;c&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[1, 2, 3]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="c-adding-a-new-key-value-pair-to-a-dictionary">
+<h2>c. Adding a new key: value pair to a dictionary<a class="headerlink" href="#c-adding-a-new-key-value-pair-to-a-dictionary" title="Link to this heading">#</a></h2>
+<p>Can you add a new key value pair to the dictionary? The key should be ‘d’, and the value the string ‘final’.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Just like this</span>
+<span class="n">dictionary_1</span><span class="p">[</span><span class="s1">&#39;d&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;final&#39;</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+</section>
+</section>
+<section id="using-pandas-for-some-data-analysis">
+<h1>5. Using Pandas for some data analysis!<a class="headerlink" href="#using-pandas-for-some-data-analysis" title="Link to this heading">#</a></h1>
+<p>Pandas is a vital part of working with data in Python. There are some exercises below to get you used to working with the package at a basic level.</p>
+<section id="a-importing-pandas">
+<h2>a. Importing pandas<a class="headerlink" href="#a-importing-pandas" title="Link to this heading">#</a></h2>
+<p>You won’t get far without importing pandas. Write the traditional import statement for it below, which will allow you to use its functions and capability.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># The classic import</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+</section>
+<section id="b-reading-in-a-dataset">
+<h2>b. Reading in a dataset<a class="headerlink" href="#b-reading-in-a-dataset" title="Link to this heading">#</a></h2>
+<p>Let us read a dataset in from the web. We will use the <strong>Palmer Penguins</strong> dataset, which is a real-life dataset of different penguin species on three different islands, containing mesaures of bill and flipper length, taken on different years, for male and female penguins (more <a class="reference external" href="https://allisonhorst.github.io/palmerpenguins/">here</a>).</p>
+<p>We will read this in directly from a location online, and explore some aspects of it using pandas.</p>
+<p>The url for the dataset is here: <a class="reference external" href="https://raw.githubusercontent.com/mwaskom/seaborn-data/master/penguins.csv">https://raw.githubusercontent.com/mwaskom/seaborn-data/master/penguins.csv</a></p>
+<p>Use pandas to read this in to a variable called <code class="docutils literal notranslate"><span class="pre">penguins</span></code>, and display the top and bottom 10 rows (head/tail) of the dataset.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Read straight from the internet like so </span>
+<span class="n">penguins</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;https://raw.githubusercontent.com/mwaskom/seaborn-data/master/penguins.csv&#39;</span><span class="p">)</span>
+
+<span class="c1"># Head and tail</span>
+<span class="n">display</span><span class="p">(</span><span class="n">penguins</span><span class="o">.</span><span class="n">head</span><span class="p">(),</span> <span class="n">penguins</span><span class="o">.</span><span class="n">tail</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>species</th>
+      <th>island</th>
+      <th>bill_length_mm</th>
+      <th>bill_depth_mm</th>
+      <th>flipper_length_mm</th>
+      <th>body_mass_g</th>
+      <th>sex</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Adelie</td>
+      <td>Torgersen</td>
+      <td>39.1</td>
+      <td>18.7</td>
+      <td>181.0</td>
+      <td>3750.0</td>
+      <td>MALE</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Adelie</td>
+      <td>Torgersen</td>
+      <td>39.5</td>
+      <td>17.4</td>
+      <td>186.0</td>
+      <td>3800.0</td>
+      <td>FEMALE</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Adelie</td>
+      <td>Torgersen</td>
+      <td>40.3</td>
+      <td>18.0</td>
+      <td>195.0</td>
+      <td>3250.0</td>
+      <td>FEMALE</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Adelie</td>
+      <td>Torgersen</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Adelie</td>
+      <td>Torgersen</td>
+      <td>36.7</td>
+      <td>19.3</td>
+      <td>193.0</td>
+      <td>3450.0</td>
+      <td>FEMALE</td>
+    </tr>
+  </tbody>
+</table>
+</div></div><div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>species</th>
+      <th>island</th>
+      <th>bill_length_mm</th>
+      <th>bill_depth_mm</th>
+      <th>flipper_length_mm</th>
+      <th>body_mass_g</th>
+      <th>sex</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>339</th>
+      <td>Gentoo</td>
+      <td>Biscoe</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>340</th>
+      <td>Gentoo</td>
+      <td>Biscoe</td>
+      <td>46.8</td>
+      <td>14.3</td>
+      <td>215.0</td>
+      <td>4850.0</td>
+      <td>FEMALE</td>
+    </tr>
+    <tr>
+      <th>341</th>
+      <td>Gentoo</td>
+      <td>Biscoe</td>
+      <td>50.4</td>
+      <td>15.7</td>
+      <td>222.0</td>
+      <td>5750.0</td>
+      <td>MALE</td>
+    </tr>
+    <tr>
+      <th>342</th>
+      <td>Gentoo</td>
+      <td>Biscoe</td>
+      <td>45.2</td>
+      <td>14.8</td>
+      <td>212.0</td>
+      <td>5200.0</td>
+      <td>FEMALE</td>
+    </tr>
+    <tr>
+      <th>343</th>
+      <td>Gentoo</td>
+      <td>Biscoe</td>
+      <td>49.9</td>
+      <td>16.1</td>
+      <td>213.0</td>
+      <td>5400.0</td>
+      <td>MALE</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="c-checking-data-types">
+<h2>c. Checking data types<a class="headerlink" href="#c-checking-data-types" title="Link to this heading">#</a></h2>
+<p>Can you check what the data types of this penguin data has? What do you notice about the way the values look in the dataframe, and their types? What might an <code class="docutils literal notranslate"><span class="pre">object</span></code> data type mean?</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Printing data types is easy</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">penguins</span><span class="o">.</span><span class="n">dtypes</span><span class="p">)</span> <span class="c1"># objects are basically &#39;strings&#39;</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>species               object
+island                object
+bill_length_mm       float64
+bill_depth_mm        float64
+flipper_length_mm    float64
+body_mass_g          float64
+sex                   object
+dtype: object
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="d-checking-and-removing-missing-values">
+<h2>d. Checking and removing missing values<a class="headerlink" href="#d-checking-and-removing-missing-values" title="Link to this heading">#</a></h2>
+<p>Can you check whether there are missing values in the data? Which columns have missing data, and can you figure out how to count the number of missing values?</p>
+<p>Once you have done this, do you think dropping or replacing the missing values is appropriate? Decide on an action and do it, storing the result in a new dataframe called <code class="docutils literal notranslate"><span class="pre">clean_penguins</span></code>.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Find the missing values like this</span>
+<span class="n">missing</span> <span class="o">=</span> <span class="n">penguins</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span> <span class="c1"># this is the dataset where True == missing, False == present.</span>
+
+<span class="c1"># then you can show which columns have any missing data</span>
+<span class="n">display</span><span class="p">(</span><span class="n">missing</span><span class="o">.</span><span class="n">any</span><span class="p">())</span>
+
+<span class="c1"># You can count them like this</span>
+<span class="n">display</span><span class="p">(</span><span class="n">missing</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span> <span class="c1"># count per columns</span>
+
+<span class="c1"># I would drop the missing values, so this</span>
+<span class="n">clean_penguins</span> <span class="o">=</span> <span class="n">penguins</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">how</span><span class="o">=</span><span class="s1">&#39;any&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>species              False
+island               False
+bill_length_mm        True
+bill_depth_mm         True
+flipper_length_mm     True
+body_mass_g           True
+sex                   True
+dtype: bool
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>species               0
+island                0
+bill_length_mm        2
+bill_depth_mm         2
+flipper_length_mm     2
+body_mass_g           2
+sex                  11
+dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="e-querying-some-data">
+<h2>e. Querying some data<a class="headerlink" href="#e-querying-some-data" title="Link to this heading">#</a></h2>
+<p>In the new clean dataset, can you use <code class="docutils literal notranslate"><span class="pre">describe</span></code> after filtering the data to select these subsets?</p>
+<ul class="simple">
+<li><p>Just male penguins?</p></li>
+<li><p>Just Adelie penguins?</p></li>
+<li><p>Penguins with a body mass above 4000 grams?</p></li>
+<li><p>Adelie penguins on the Torgersen island?</p></li>
+<li><p>Female penguins on the Biscoe or Torgerson island, with a body mass above 5000 grams?</p></li>
+</ul>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># For each of the queries you can do the following</span>
+<span class="c1"># Males</span>
+<span class="n">males</span> <span class="o">=</span> <span class="n">clean_penguins</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;sex == &quot;MALE&quot;&#39;</span><span class="p">)</span> <span class="c1"># note the different quotations, you can mix them</span>
+
+<span class="c1"># Adelie</span>
+<span class="n">adelie</span> <span class="o">=</span> <span class="n">clean_penguins</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;species == &quot;Adelie&quot;&#39;</span><span class="p">)</span>
+
+<span class="c1"># Penguins with mass above 4000</span>
+<span class="n">chonks</span> <span class="o">=</span> <span class="n">clean_penguins</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;body_mass_g &gt; 4000&#39;</span><span class="p">)</span>
+
+<span class="c1"># On Torgensen and adelie</span>
+<span class="n">torgensen_adelie</span> <span class="o">=</span> <span class="n">clean_penguins</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;species == &quot;Adelie&quot; and island == &quot;Torgenson&quot;&#39;</span><span class="p">)</span>
+
+<span class="c1"># Final one qhich is complex</span>
+<span class="c1"># Note you can ask whether island is &#39;in&#39; a list of options! Quite advanced.</span>
+<span class="n">complicated</span> <span class="o">=</span> <span class="n">clean_penguins</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;sex == &quot;FEMALE&quot; and island in [&quot;Biscoe&quot;, &quot;Torgerson&quot;] and body_mass_g &gt; 5000&#39;</span><span class="p">)</span> 
+
+<span class="c1"># Then you can use .describe on any of the above, e.g.</span>
+<span class="n">display</span><span class="p">(</span><span class="n">complicated</span><span class="o">.</span><span class="n">describe</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>bill_length_mm</th>
+      <th>bill_depth_mm</th>
+      <th>flipper_length_mm</th>
+      <th>body_mass_g</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>count</th>
+      <td>5.000000</td>
+      <td>5.000000</td>
+      <td>5.000000</td>
+      <td>5.000000</td>
+    </tr>
+    <tr>
+      <th>mean</th>
+      <td>46.160000</td>
+      <td>14.440000</td>
+      <td>213.800000</td>
+      <td>5140.000000</td>
+    </tr>
+    <tr>
+      <th>std</th>
+      <td>1.760114</td>
+      <td>0.650385</td>
+      <td>4.969909</td>
+      <td>65.192024</td>
+    </tr>
+    <tr>
+      <th>min</th>
+      <td>44.900000</td>
+      <td>13.300000</td>
+      <td>207.000000</td>
+      <td>5050.000000</td>
+    </tr>
+    <tr>
+      <th>25%</th>
+      <td>45.100000</td>
+      <td>14.500000</td>
+      <td>212.000000</td>
+      <td>5100.000000</td>
+    </tr>
+    <tr>
+      <th>50%</th>
+      <td>45.200000</td>
+      <td>14.800000</td>
+      <td>213.000000</td>
+      <td>5150.000000</td>
+    </tr>
+    <tr>
+      <th>75%</th>
+      <td>46.500000</td>
+      <td>14.800000</td>
+      <td>217.000000</td>
+      <td>5200.000000</td>
+    </tr>
+    <tr>
+      <th>max</th>
+      <td>49.100000</td>
+      <td>14.800000</td>
+      <td>220.000000</td>
+      <td>5200.000000</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="f-summarising-data">
+<h2>f. Summarising data<a class="headerlink" href="#f-summarising-data" title="Link to this heading">#</a></h2>
+<p>Here, we will compute some summary statistics from the penguins data, at both a single level (e.g., one column), and a grouped level. Remember the power of <code class="docutils literal notranslate"><span class="pre">.agg</span></code> here.</p>
+<ul class="simple">
+<li><p>Can you compute the mean of the body mass variable?</p></li>
+<li><p>What is the standard deviation of the bill length variable?</p></li>
+<li><p>Using group-by, can you compute the mean body mass for males and females?</p></li>
+<li><p>Taking it up a gear - can you compute the mean body mass for males and females, for all different species?</p></li>
+<li><p>Finally, compute the mean, median, and counts for the body mass variable, for each sex, species, and island combination.</p></li>
+</ul>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># This heavily relies on .agg</span>
+<span class="c1"># Mean body mass</span>
+<span class="n">mass</span> <span class="o">=</span> <span class="n">clean_penguins</span><span class="o">.</span><span class="n">agg</span><span class="p">({</span><span class="s1">&#39;body_mass_g&#39;</span><span class="p">:</span> <span class="s1">&#39;mean&#39;</span><span class="p">})</span>
+
+<span class="c1"># STD of bill</span>
+<span class="n">bill</span> <span class="o">=</span> <span class="n">clean_penguins</span><span class="o">.</span><span class="n">agg</span><span class="p">({</span><span class="s1">&#39;bill_length_mm&#39;</span><span class="p">:</span> <span class="s1">&#39;std&#39;</span><span class="p">})</span>
+
+<span class="c1"># Groupby males and females, aggregating mass</span>
+<span class="n">male_female_mass</span> <span class="o">=</span> <span class="n">clean_penguins</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;sex&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">agg</span><span class="p">({</span><span class="s1">&#39;body_mass_g&#39;</span><span class="p">:</span> <span class="s1">&#39;mean&#39;</span><span class="p">})</span>
+
+<span class="c1"># Same as above, but now including species</span>
+<span class="n">male_female_mass_species</span> <span class="o">=</span> <span class="n">clean_penguins</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;sex&#39;</span><span class="p">,</span> <span class="s1">&#39;species&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">agg</span><span class="p">({</span><span class="s1">&#39;body_mass_g&#39;</span><span class="p">:</span> <span class="s1">&#39;mean&#39;</span><span class="p">})</span>
+
+<span class="c1"># A big one, but made easy with the groupby and agg </span>
+<span class="n">complex_one</span> <span class="o">=</span> <span class="n">clean_penguins</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;sex&#39;</span><span class="p">,</span> <span class="s1">&#39;species&#39;</span><span class="p">,</span> <span class="s1">&#39;island&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">agg</span><span class="p">({</span><span class="s1">&#39;body_mass_g&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;mean&#39;</span><span class="p">,</span> <span class="s1">&#39;median&#39;</span><span class="p">,</span> <span class="s1">&#39;count&#39;</span><span class="p">]})</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+</section>
+<section id="g-reshaping-data-with-some-pop-music">
+<h2>g. Reshaping data with some pop music<a class="headerlink" href="#g-reshaping-data-with-some-pop-music" title="Link to this heading">#</a></h2>
+<p>Let us now advance a little bit to working with some bigger datasets and practicing reshaping. We’ll look at what is known as the <code class="docutils literal notranslate"><span class="pre">billboard</span></code> dataset, which contains all the songs that entered the billboard 100 during the year 2000 (retro I know), and their rankings at each of the recorded times.</p>
+<ul class="simple">
+<li><p>First, go to the URL here: <a class="github reference external" href="https://github.com/chendaniely/pandas_for_everyone/blob/master/data/billboard.csv">chendaniely/pandas_for_everyone</a></p></li>
+<li><p>Download the dataset by clicking on the download icon. Once you have it, upload it to the server so you can read it.</p></li>
+<li><p>Finally, read it into a variable called <code class="docutils literal notranslate"><span class="pre">billboard</span></code>, and examine the head of it.</p></li>
+</ul>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Read in easily enough once you have downloaded!</span>
+<span class="n">billboard</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;billboard.csv&#39;</span><span class="p">)</span>
+
+<span class="c1"># Quite a large dataset here</span>
+<span class="n">billboard</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>year</th>
+      <th>artist</th>
+      <th>track</th>
+      <th>time</th>
+      <th>date.entered</th>
+      <th>wk1</th>
+      <th>wk2</th>
+      <th>wk3</th>
+      <th>wk4</th>
+      <th>wk5</th>
+      <th>...</th>
+      <th>wk67</th>
+      <th>wk68</th>
+      <th>wk69</th>
+      <th>wk70</th>
+      <th>wk71</th>
+      <th>wk72</th>
+      <th>wk73</th>
+      <th>wk74</th>
+      <th>wk75</th>
+      <th>wk76</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2000</td>
+      <td>2 Pac</td>
+      <td>Baby Don't Cry (Keep...</td>
+      <td>4:22</td>
+      <td>2000-02-26</td>
+      <td>87</td>
+      <td>82.0</td>
+      <td>72.0</td>
+      <td>77.0</td>
+      <td>87.0</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2000</td>
+      <td>2Ge+her</td>
+      <td>The Hardest Part Of ...</td>
+      <td>3:15</td>
+      <td>2000-09-02</td>
+      <td>91</td>
+      <td>87.0</td>
+      <td>92.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2000</td>
+      <td>3 Doors Down</td>
+      <td>Kryptonite</td>
+      <td>3:53</td>
+      <td>2000-04-08</td>
+      <td>81</td>
+      <td>70.0</td>
+      <td>68.0</td>
+      <td>67.0</td>
+      <td>66.0</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2000</td>
+      <td>3 Doors Down</td>
+      <td>Loser</td>
+      <td>4:24</td>
+      <td>2000-10-21</td>
+      <td>76</td>
+      <td>76.0</td>
+      <td>72.0</td>
+      <td>69.0</td>
+      <td>67.0</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2000</td>
+      <td>504 Boyz</td>
+      <td>Wobble Wobble</td>
+      <td>3:35</td>
+      <td>2000-04-15</td>
+      <td>57</td>
+      <td>34.0</td>
+      <td>25.0</td>
+      <td>17.0</td>
+      <td>17.0</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 81 columns</p>
+</div></div></div>
+</div>
+<p>Now you have the dataset, you can see it is a classic definition of a <strong>wide</strong> dataset. Each row contains many columns, in particular the rankings of each song at each week of the recorded timepoints. This is particularly annoying to work with, and what we could do is <code class="docutils literal notranslate"><span class="pre">melt</span></code> it into a long format.</p>
+<p>Specifically, we want to keep the following columns as identifiers:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">year</span></code>, <code class="docutils literal notranslate"><span class="pre">artist</span></code>, <code class="docutils literal notranslate"><span class="pre">track</span></code>, <code class="docutils literal notranslate"><span class="pre">time</span></code>, and <code class="docutils literal notranslate"><span class="pre">date.entered</span></code>.</p></li>
+<li><p>The rest (e.g. <code class="docutils literal notranslate"><span class="pre">wk1</span></code>, <code class="docutils literal notranslate"><span class="pre">wk2</span></code> etc) are the value variables. You dont need to type all of them out. In fact, a clever trick is to simply not specify them, and pandas will know the ones you don’t specify in <code class="docutils literal notranslate"><span class="pre">id_vars</span></code> will be used as the <code class="docutils literal notranslate"><span class="pre">value_vars</span></code>.</p></li>
+<li><p>Can you set the name of the column capturing the questions to ‘week’ and the column capturing the score to <code class="docutils literal notranslate"><span class="pre">rank</span></code>?</p></li>
+</ul>
+<p>Store the result in a dataframe called <code class="docutils literal notranslate"><span class="pre">billboard_long</span></code>, and examine the head.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Melt billboard</span>
+<span class="n">billboard_long</span> <span class="o">=</span> <span class="n">billboard</span><span class="o">.</span><span class="n">melt</span><span class="p">(</span><span class="n">id_vars</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;year&#39;</span><span class="p">,</span> <span class="s1">&#39;artist&#39;</span><span class="p">,</span> <span class="s1">&#39;track&#39;</span><span class="p">,</span> <span class="s1">&#39;time&#39;</span><span class="p">,</span> <span class="s1">&#39;date.entered&#39;</span><span class="p">],</span>
+                                <span class="n">var_name</span><span class="o">=</span><span class="s1">&#39;week&#39;</span><span class="p">,</span> <span class="n">value_name</span><span class="o">=</span><span class="s1">&#39;rank&#39;</span><span class="p">)</span>
+
+<span class="c1"># Head</span>
+<span class="n">billboard_long</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>year</th>
+      <th>artist</th>
+      <th>track</th>
+      <th>time</th>
+      <th>date.entered</th>
+      <th>week</th>
+      <th>rank</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2000</td>
+      <td>2 Pac</td>
+      <td>Baby Don't Cry (Keep...</td>
+      <td>4:22</td>
+      <td>2000-02-26</td>
+      <td>wk1</td>
+      <td>87.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2000</td>
+      <td>2Ge+her</td>
+      <td>The Hardest Part Of ...</td>
+      <td>3:15</td>
+      <td>2000-09-02</td>
+      <td>wk1</td>
+      <td>91.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2000</td>
+      <td>3 Doors Down</td>
+      <td>Kryptonite</td>
+      <td>3:53</td>
+      <td>2000-04-08</td>
+      <td>wk1</td>
+      <td>81.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2000</td>
+      <td>3 Doors Down</td>
+      <td>Loser</td>
+      <td>4:24</td>
+      <td>2000-10-21</td>
+      <td>wk1</td>
+      <td>76.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2000</td>
+      <td>504 Boyz</td>
+      <td>Wobble Wobble</td>
+      <td>3:35</td>
+      <td>2000-04-15</td>
+      <td>wk1</td>
+      <td>57.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>This format will allow easier interpretation and plotting. For example, computing the average rank for each song is much simpler in this format.</p>
+<p>Finally for this - and without storing it anywhere, since you don’t need it - can you pivot the data back into its original form?</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Pivot back wide</span>
+<span class="n">billboard_long</span><span class="o">.</span><span class="n">pivot</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;year&#39;</span><span class="p">,</span> <span class="s1">&#39;artist&#39;</span><span class="p">,</span> <span class="s1">&#39;track&#39;</span><span class="p">,</span> <span class="s1">&#39;time&#39;</span><span class="p">,</span> <span class="s1">&#39;date.entered&#39;</span><span class="p">],</span>
+                     <span class="n">columns</span><span class="o">=</span><span class="s1">&#39;week&#39;</span><span class="p">,</span> <span class="n">values</span><span class="o">=</span><span class="s1">&#39;rank&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th>week</th>
+      <th>wk1</th>
+      <th>wk10</th>
+      <th>wk11</th>
+      <th>wk12</th>
+      <th>wk13</th>
+      <th>wk14</th>
+      <th>wk15</th>
+      <th>wk16</th>
+      <th>wk17</th>
+      <th>wk18</th>
+      <th>...</th>
+      <th>wk7</th>
+      <th>wk70</th>
+      <th>wk71</th>
+      <th>wk72</th>
+      <th>wk73</th>
+      <th>wk74</th>
+      <th>wk75</th>
+      <th>wk76</th>
+      <th>wk8</th>
+      <th>wk9</th>
+    </tr>
+    <tr>
+      <th>year</th>
+      <th>artist</th>
+      <th>track</th>
+      <th>time</th>
+      <th>date.entered</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th rowspan="11" valign="top">2000</th>
+      <th>2 Pac</th>
+      <th>Baby Don't Cry (Keep...</th>
+      <th>4:22</th>
+      <th>2000-02-26</th>
+      <td>87.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>...</td>
+      <td>99.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2Ge+her</th>
+      <th>The Hardest Part Of ...</th>
+      <th>3:15</th>
+      <th>2000-09-02</th>
+      <td>91.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th rowspan="2" valign="top">3 Doors Down</th>
+      <th>Kryptonite</th>
+      <th>3:53</th>
+      <th>2000-04-08</th>
+      <td>81.0</td>
+      <td>51.0</td>
+      <td>51.0</td>
+      <td>51.0</td>
+      <td>47.0</td>
+      <td>44.0</td>
+      <td>38.0</td>
+      <td>28.0</td>
+      <td>22.0</td>
+      <td>18.0</td>
+      <td>...</td>
+      <td>54.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>53.0</td>
+      <td>51.0</td>
+    </tr>
+    <tr>
+      <th>Loser</th>
+      <th>4:24</th>
+      <th>2000-10-21</th>
+      <td>76.0</td>
+      <td>61.0</td>
+      <td>61.0</td>
+      <td>59.0</td>
+      <td>61.0</td>
+      <td>66.0</td>
+      <td>72.0</td>
+      <td>76.0</td>
+      <td>75.0</td>
+      <td>67.0</td>
+      <td>...</td>
+      <td>55.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>59.0</td>
+      <td>62.0</td>
+    </tr>
+    <tr>
+      <th>504 Boyz</th>
+      <th>Wobble Wobble</th>
+      <th>3:35</th>
+      <th>2000-04-15</th>
+      <td>57.0</td>
+      <td>57.0</td>
+      <td>64.0</td>
+      <td>70.0</td>
+      <td>75.0</td>
+      <td>76.0</td>
+      <td>78.0</td>
+      <td>85.0</td>
+      <td>92.0</td>
+      <td>96.0</td>
+      <td>...</td>
+      <td>36.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>49.0</td>
+      <td>53.0</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <th>...</th>
+      <th>...</th>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>Yankee Grey</th>
+      <th>Another Nine Minutes</th>
+      <th>3:10</th>
+      <th>2000-04-29</th>
+      <td>86.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>...</td>
+      <td>88.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>95.0</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>Yearwood, Trisha</th>
+      <th>Real Live Woman</th>
+      <th>3:55</th>
+      <th>2000-04-01</th>
+      <td>85.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>Ying Yang Twins</th>
+      <th>Whistle While You Tw...</th>
+      <th>4:19</th>
+      <th>2000-03-18</th>
+      <td>95.0</td>
+      <td>89.0</td>
+      <td>97.0</td>
+      <td>96.0</td>
+      <td>99.0</td>
+      <td>99.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>...</td>
+      <td>74.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>78.0</td>
+      <td>85.0</td>
+    </tr>
+    <tr>
+      <th>Zombie Nation</th>
+      <th>Kernkraft 400</th>
+      <th>3:30</th>
+      <th>2000-09-02</th>
+      <td>99.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>matchbox twenty</th>
+      <th>Bent</th>
+      <th>4:12</th>
+      <th>2000-04-29</th>
+      <td>60.0</td>
+      <td>12.0</td>
+      <td>8.0</td>
+      <td>6.0</td>
+      <td>1.0</td>
+      <td>2.0</td>
+      <td>3.0</td>
+      <td>2.0</td>
+      <td>2.0</td>
+      <td>3.0</td>
+      <td>...</td>
+      <td>18.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>16.0</td>
+      <td>13.0</td>
+    </tr>
+  </tbody>
+</table>
+<p>317 rows × 76 columns</p>
+</div></div></div>
+</div>
+<p>There is no ‘right’ data format. But some formats are more amenable to computing certain statistics, others for plotting, and others for presenting to collaborators, viewing, etc. You have to know how to go between the two.</p>
+</section>
+</section>
+<section id="plotting">
+<h1>6. Plotting<a class="headerlink" href="#plotting" title="Link to this heading">#</a></h1>
+<p>We come to the last set of exercises now, where we will attempt some simple plots. First, let us import seaborn, and if you want, you can use the other bits of code I wrote to alter the appearance of the plots!</p>
+<p>Import seaborn with its usual alias below. If you like, add extra code to alter the visualisations.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import seaborn and set plotting appearance</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span> <span class="c1"># traditionally as `sns`</span>
+
+<span class="c1"># These lines are optional, but make our plots look nicer!</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">set_style</span><span class="p">(</span><span class="s1">&#39;whitegrid&#39;</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">set_context</span><span class="p">(</span><span class="s1">&#39;talk&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<section id="a-plotting-some-penguin-bills">
+<h2>a. Plotting some penguin bills<a class="headerlink" href="#a-plotting-some-penguin-bills" title="Link to this heading">#</a></h2>
+<p>We will rely on our <code class="docutils literal notranslate"><span class="pre">clean_penguins</span></code> dataset for this, and you should also have open in browser the <a class="reference external" href="https://seaborn.pydata.org/examples/index.html">Seaborn Gallery</a>, which will tell you the many commands to produce plots.</p>
+<ul class="simple">
+<li><p>First, can you do a simple scatterplot of bill length against bill depth?</p></li>
+</ul>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Plot like so</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">clean_penguins</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;bill_length_mm&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;bill_depth_mm&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Axes: xlabel=&#39;bill_length_mm&#39;, ylabel=&#39;bill_depth_mm&#39;&gt;
+</pre></div>
+</div>
+<img alt="../_images/4ce12c8d2f51d5ae565587136b4b7d809a3b9a0c63828f919274440c6898ab7b.png" src="../_images/4ce12c8d2f51d5ae565587136b4b7d809a3b9a0c63828f919274440c6898ab7b.png" />
+</div>
+</div>
+</section>
+<section id="b-expanding-our-plots-of-penguins">
+<h2>b. Expanding our plots of penguins<a class="headerlink" href="#b-expanding-our-plots-of-penguins" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Can you modify the answer to part a to alter the colour of the markers so they reveal whether the observation belongs to a female or a male penguin?</p></li>
+</ul>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Plot like so - add &#39;hue&#39;, and set it to sex</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">clean_penguins</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;bill_length_mm&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;bill_depth_mm&#39;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;sex&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Axes: xlabel=&#39;bill_length_mm&#39;, ylabel=&#39;bill_depth_mm&#39;&gt;
+</pre></div>
+</div>
+<img alt="../_images/544f95bdd2312bbfc741a3af02092d207c986cca3b0c7c460b466e90d4f6b597.png" src="../_images/544f95bdd2312bbfc741a3af02092d207c986cca3b0c7c460b466e90d4f6b597.png" />
+</div>
+</div>
+</section>
+<section id="c-violins-and-penguins">
+<h2>c. Violins and penguins<a class="headerlink" href="#c-violins-and-penguins" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Can you now produce a plot that shows the body mass of penguins at each island, in the form of a <strong>violin plot</strong> - see the example gallery if you are stuck!</p></li>
+</ul>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Violins like this</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">violinplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">clean_penguins</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;island&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;body_mass_g&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Axes: xlabel=&#39;island&#39;, ylabel=&#39;body_mass_g&#39;&gt;
+</pre></div>
+</div>
+<img alt="../_images/62d64d111a4d62bbf612594b2ed7ea76d6c37d2cdcb65a3679b47576a8376b59.png" src="../_images/62d64d111a4d62bbf612594b2ed7ea76d6c37d2cdcb65a3679b47576a8376b59.png" />
+</div>
+</div>
+</section>
+<section id="d-more-violins-and-penguins">
+<h2>d. More violins and penguins<a class="headerlink" href="#d-more-violins-and-penguins" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Expand the previous answer so you show the two different sexes for each island in your violin plot. You may need to use the <code class="docutils literal notranslate"><span class="pre">split</span></code> argument in your command.</p></li>
+</ul>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Add sex in like this</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">violinplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">clean_penguins</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;island&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;body_mass_g&#39;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;sex&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Axes: xlabel=&#39;island&#39;, ylabel=&#39;body_mass_g&#39;&gt;
+</pre></div>
+</div>
+<img alt="../_images/da956c6ca34cef4151c8c34a343d5d68d38a0e61163c7a3795b295f7da47c6ca.png" src="../_images/da956c6ca34cef4151c8c34a343d5d68d38a0e61163c7a3795b295f7da47c6ca.png" />
+</div>
+</div>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Add sex in like this, you can also split</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">violinplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">clean_penguins</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;island&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;body_mass_g&#39;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;sex&#39;</span><span class="p">,</span> <span class="n">split</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Axes: xlabel=&#39;island&#39;, ylabel=&#39;body_mass_g&#39;&gt;
+</pre></div>
+</div>
+<img alt="../_images/bf253c561c5edd2f49cb952c7e2a578b169463a5be1dfb9bb280c87db85c982f.png" src="../_images/bf253c561c5edd2f49cb952c7e2a578b169463a5be1dfb9bb280c87db85c982f.png" />
+</div>
+</div>
+</section>
+<section id="e-cat-plots-and-penguins">
+<h2>e. Cat(plots) and penguins<a class="headerlink" href="#e-cat-plots-and-penguins" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Lets take it up to as much complexity as we can handle. Using a <code class="docutils literal notranslate"><span class="pre">catplot</span></code>, produce a plot that has, for each island and penguin species, a bar chart for body mass between the sexes. You should end up with a 3 x 3 grid of plots.</p></li>
+<li><p>Why are some of these empty?</p></li>
+</ul>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Sounds hard, but its not so bad</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">catplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">clean_penguins</span><span class="p">,</span>
+            <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;bar&#39;</span><span class="p">,</span>
+            <span class="n">x</span><span class="o">=</span><span class="s1">&#39;sex&#39;</span><span class="p">,</span>
+            <span class="n">y</span><span class="o">=</span><span class="s1">&#39;body_mass_g&#39;</span><span class="p">,</span>
+            <span class="n">row</span><span class="o">=</span><span class="s1">&#39;island&#39;</span><span class="p">,</span>
+            <span class="n">col</span><span class="o">=</span><span class="s1">&#39;species&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.FacetGrid at 0x1360a7090&gt;
+</pre></div>
+</div>
+<img alt="../_images/28808578d915f63ed64b66c01b101d85f3d1368cf6de6a4788d97f10e8b1dc3b.png" src="../_images/28808578d915f63ed64b66c01b101d85f3d1368cf6de6a4788d97f10e8b1dc3b.png" />
+</div>
+</div>
+</section>
+<section id="f-relplots">
+<h2>f. Relplots<a class="headerlink" href="#f-relplots" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>A final challenge. Can you produce a scatterplot that plots body mass against bill length, and has different colours for each sex, and has a separate plot for each combination of species and island locations? If you use <code class="docutils literal notranslate"><span class="pre">relplot</span></code> this should not be as hard as it might sound!</p></li>
+<li><p>Can you figure out again why some of these are empty?</p></li>
+</ul>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Similar to the above, but using relplot</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">relplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">clean_penguins</span><span class="p">,</span>
+            <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;scatter&#39;</span><span class="p">,</span>
+            <span class="n">x</span><span class="o">=</span><span class="s1">&#39;body_mass_g&#39;</span><span class="p">,</span> 
+            <span class="n">y</span><span class="o">=</span><span class="s1">&#39;bill_length_mm&#39;</span><span class="p">,</span>
+            <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;sex&#39;</span><span class="p">,</span>
+            <span class="n">row</span><span class="o">=</span><span class="s1">&#39;island&#39;</span><span class="p">,</span>
+            <span class="n">col</span><span class="o">=</span><span class="s1">&#39;species&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.FacetGrid at 0x136d1b8d0&gt;
+</pre></div>
+</div>
+<img alt="../_images/212914f7cbf3553e0a14b258a2df478650543e9888bf0850d99da2ae93c437e8.png" src="../_images/212914f7cbf3553e0a14b258a2df478650543e9888bf0850d99da2ae93c437e8.png" />
+</div>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./1_Introduction"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="QPoP%20-%20Week%201%20Workshop.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Introduction</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../2_The_GLM/QPoP%20-%20Week%202%20Workshop.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">2 - The General Linear Model</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Using Python for Data Analysis - Exercises &amp; Answers</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#calculations-in-python-and-print">1. Calculations in Python, and <code class="docutils literal notranslate"><span class="pre">print</span></code></a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#variables-and-data-types">2. Variables and data types</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#data-containers-the-list">3. Data Containers - the list</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-making-a-list">a. Making a list</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#b-accessing-a-list">b. Accessing a list</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#c-complicated-lists">c. Complicated lists</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#data-containers-the-dictionary">4. Data Containers - the dictionary</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-making-a-dictionary">a. Making a dictionary</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#b-accessing-values-in-a-dictionary">b. Accessing values in a dictionary</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#c-adding-a-new-key-value-pair-to-a-dictionary">c. Adding a new key: value pair to a dictionary</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#using-pandas-for-some-data-analysis">5. Using Pandas for some data analysis!</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-importing-pandas">a. Importing pandas</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#b-reading-in-a-dataset">b. Reading in a dataset</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#c-checking-data-types">c. Checking data types</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#d-checking-and-removing-missing-values">d. Checking and removing missing values</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#e-querying-some-data">e. Querying some data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#f-summarising-data">f. Summarising data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#g-reshaping-data-with-some-pop-music">g. Reshaping data with some pop music</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#plotting">6. Plotting</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-plotting-some-penguin-bills">a. Plotting some penguin bills</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#b-expanding-our-plots-of-penguins">b. Expanding our plots of penguins</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#c-violins-and-penguins">c. Violins and penguins</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#d-more-violins-and-penguins">d. More violins and penguins</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#e-cat-plots-and-penguins">e. Cat(plots) and penguins</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#f-relplots">f. Relplots</a></li>
+</ul>
+</li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Alex Jones, Ph.D
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
