@@ -1,0 +1,1761 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Dealing with repeated measurements - Exercises &amp; Answers &#8212; Statistical Modelling with Python</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '7_MixedModel/QPoP - Week 7 Exercises - Answers';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="7 - Linear mixed effects models" href="QPoP%20-%20Week%207%20Workshop.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt="Statistical Modelling with Python - Home"/>
+    <script>document.write(`<img src="../_static/logo.png" class="logo__image only-dark" alt="Statistical Modelling with Python - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    Statistical Modelling with Python
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Python Basics</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../1_Introduction/QPoP%20-%20Week%201%20Workshop.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../1_Introduction/QPoP%20-%20Week%201%20Exercises%20-%20Answers.html">Using Python for Data Analysis - Exercises &amp; Answers</a></li>
+
+
+
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">The GLM</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../2_The_GLM/QPoP%20-%20Week%202%20Workshop.html">2 - The General Linear Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../2_The_GLM/QPoP%20-%20Week%202%20Exercises%20-%20Answers.html">Getting to grips with linear models in Python - Exercises &amp; Answers</a></li>
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Advancing the GLM</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../3_Advancing_GLM/QPoP%20-%20Week%203%20Workshop.html">3 - Advancing the general linear model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../3_Advancing_GLM/QPoP%20-%20Week%203%20Exercises%20-%20Answers.html">Checking assumptions and including interactions - Exercises &amp; Answers</a></li>
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">The art of prediction</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../4_Prediction/QPoP%20-%20Week%204%20Workshop.html">4 - The art of prediction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../4_Prediction/QPoP%20-%20Week%204%20Exercises%20-%20Answers.html">Asking scientific questions of models - Exercises &amp; Answers</a></li>
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Binary outcome models</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../5_Binary/QPoP%20-%20Week%205%20Workshop.html">5 - Binary outcome models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../5_Binary/QPoP%20-%20Week%205%20Exercises%20-%20Answers.html">Using and understanding probit models - Exercises &amp; Answers</a></li>
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Applications and other kinds of hypotheses</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../6_Applications/QPoP%20-%20Week%206%20Workshop.html">6 - Precision in Predictions</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../6_Applications/QPoP%20-%20Week%206%20Exercises%20-%20Answers.html">Example exercises using skills so far</a></li>
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Linear Mixed Effects Models</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="QPoP%20-%20Week%207%20Workshop.html">7 - Linear mixed effects models</a></li>
+
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Dealing with repeated measurements - Exercises &amp; Answers</a></li>
+
+
+
+
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2F7_MixedModel/QPoP - Week 7 Exercises - Answers.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/7_MixedModel/QPoP - Week 7 Exercises - Answers.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Dealing with repeated measurements - Exercises & Answers</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Dealing with repeated measurements - Exercises &amp; Answers</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#educational-hierarchies">1. Educational hierarchies</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#cosmetics-and-attractiveness">2. Cosmetics and attractiveness</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#further-challenges-in-linear-mixed-effects-models">3. Further challenges in linear mixed effects models</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#studying-individual-differences-with-mixed-models">4. Studying individual differences with mixed models</a></li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="dealing-with-repeated-measurements-exercises-answers">
+<h1>Dealing with repeated measurements - Exercises &amp; Answers<a class="headerlink" href="#dealing-with-repeated-measurements-exercises-answers" title="Link to this heading">#</a></h1>
+</section>
+<section id="educational-hierarchies">
+<h1>1. Educational hierarchies<a class="headerlink" href="#educational-hierarchies" title="Link to this heading">#</a></h1>
+<p>One of the classic examples of using linear mixed models is in education, because the models can incorporate the variation that students contribute to tests, being that they’re in different classrooms in different schools.</p>
+<p>Our first exercise is to examine a simple relationship - what is the association between the number of maths homework assignments a student completes and their scores on their mathematics exam? The dataset however has information on this relatonship from <em>10</em> different schools, and we want to incorporate that variability (because some schools may teach mathematics better or worse than others) into our model.</p>
+<p>The dataset is available here: <a class="reference external" href="https://raw.githubusercontent.com/SuryaThiru/hierarchical-model-blog/refs/heads/master/mlmldata.csv">https://raw.githubusercontent.com/SuryaThiru/hierarchical-model-blog/refs/heads/master/mlmldata.csv</a></p>
+<p>First import the usual things we need to get started:</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Your answer here</span>
+<span class="c1"># Imports</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span> <span class="c1"># dataframes</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span> <span class="c1"># plots</span>
+<span class="kn">import</span> <span class="nn">statsmodels.formula.api</span> <span class="k">as</span> <span class="nn">smf</span> <span class="c1"># Models</span>
+<span class="kn">import</span> <span class="nn">marginaleffects</span> <span class="k">as</span> <span class="nn">me</span> <span class="c1"># marginal effects</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span> <span class="c1"># numpy for some functions</span>
+<span class="kn">import</span> <span class="nn">statsmodels.tools.eval_measures</span> <span class="k">as</span> <span class="nn">measures</span>
+
+<span class="c1"># Set the style for plots</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">set_style</span><span class="p">(</span><span class="s1">&#39;whitegrid&#39;</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">set_context</span><span class="p">(</span><span class="s1">&#39;talk&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<p>Next, read in the data. There are a lot of columns here but we do not need many, only <code class="docutils literal notranslate"><span class="pre">schid</span></code> (school identifier), <code class="docutils literal notranslate"><span class="pre">homework</span></code>, the number of assignments they completed, and <code class="docutils literal notranslate"><span class="pre">math</span></code>, the students score on a mathematics exam. Read into a dataframe called <code class="docutils literal notranslate"><span class="pre">school</span></code>, show the top 10 rows.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Your answer here</span>
+<span class="c1"># Read in data</span>
+<span class="n">school</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;https://raw.githubusercontent.com/SuryaThiru/hierarchical-model-blog/refs/heads/master/mlmldata.csv&#39;</span><span class="p">)</span>
+<span class="n">school</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>schid</th>
+      <th>stuid</th>
+      <th>ses</th>
+      <th>meanses</th>
+      <th>homework</th>
+      <th>white</th>
+      <th>parented</th>
+      <th>public</th>
+      <th>ratio</th>
+      <th>percmin</th>
+      <th>math</th>
+      <th>sex</th>
+      <th>race</th>
+      <th>sctype</th>
+      <th>cstr</th>
+      <th>scsize</th>
+      <th>urban</th>
+      <th>region</th>
+      <th>schnum</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>7472</td>
+      <td>3</td>
+      <td>-0.13</td>
+      <td>-0.482609</td>
+      <td>1</td>
+      <td>1</td>
+      <td>2</td>
+      <td>1</td>
+      <td>19</td>
+      <td>0</td>
+      <td>48</td>
+      <td>2</td>
+      <td>4</td>
+      <td>1</td>
+      <td>2</td>
+      <td>3</td>
+      <td>2</td>
+      <td>2</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>7472</td>
+      <td>8</td>
+      <td>-0.39</td>
+      <td>-0.482609</td>
+      <td>0</td>
+      <td>1</td>
+      <td>2</td>
+      <td>1</td>
+      <td>19</td>
+      <td>0</td>
+      <td>48</td>
+      <td>1</td>
+      <td>4</td>
+      <td>1</td>
+      <td>2</td>
+      <td>3</td>
+      <td>2</td>
+      <td>2</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>7472</td>
+      <td>13</td>
+      <td>-0.80</td>
+      <td>-0.482609</td>
+      <td>0</td>
+      <td>1</td>
+      <td>2</td>
+      <td>1</td>
+      <td>19</td>
+      <td>0</td>
+      <td>53</td>
+      <td>1</td>
+      <td>4</td>
+      <td>1</td>
+      <td>2</td>
+      <td>3</td>
+      <td>2</td>
+      <td>2</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>7472</td>
+      <td>17</td>
+      <td>-0.72</td>
+      <td>-0.482609</td>
+      <td>1</td>
+      <td>1</td>
+      <td>2</td>
+      <td>1</td>
+      <td>19</td>
+      <td>0</td>
+      <td>42</td>
+      <td>1</td>
+      <td>4</td>
+      <td>1</td>
+      <td>2</td>
+      <td>3</td>
+      <td>2</td>
+      <td>2</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>7472</td>
+      <td>27</td>
+      <td>-0.74</td>
+      <td>-0.482609</td>
+      <td>2</td>
+      <td>1</td>
+      <td>2</td>
+      <td>1</td>
+      <td>19</td>
+      <td>0</td>
+      <td>43</td>
+      <td>2</td>
+      <td>4</td>
+      <td>1</td>
+      <td>2</td>
+      <td>3</td>
+      <td>2</td>
+      <td>2</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>7472</td>
+      <td>28</td>
+      <td>-0.58</td>
+      <td>-0.482609</td>
+      <td>1</td>
+      <td>1</td>
+      <td>2</td>
+      <td>1</td>
+      <td>19</td>
+      <td>0</td>
+      <td>57</td>
+      <td>2</td>
+      <td>4</td>
+      <td>1</td>
+      <td>2</td>
+      <td>3</td>
+      <td>2</td>
+      <td>2</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>7472</td>
+      <td>30</td>
+      <td>-0.83</td>
+      <td>-0.482609</td>
+      <td>5</td>
+      <td>1</td>
+      <td>2</td>
+      <td>1</td>
+      <td>19</td>
+      <td>0</td>
+      <td>33</td>
+      <td>2</td>
+      <td>4</td>
+      <td>1</td>
+      <td>2</td>
+      <td>3</td>
+      <td>2</td>
+      <td>2</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>7472</td>
+      <td>36</td>
+      <td>-0.51</td>
+      <td>-0.482609</td>
+      <td>1</td>
+      <td>1</td>
+      <td>3</td>
+      <td>1</td>
+      <td>19</td>
+      <td>0</td>
+      <td>64</td>
+      <td>1</td>
+      <td>4</td>
+      <td>1</td>
+      <td>2</td>
+      <td>3</td>
+      <td>2</td>
+      <td>2</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>7472</td>
+      <td>37</td>
+      <td>-0.56</td>
+      <td>-0.482609</td>
+      <td>1</td>
+      <td>1</td>
+      <td>2</td>
+      <td>1</td>
+      <td>19</td>
+      <td>0</td>
+      <td>36</td>
+      <td>2</td>
+      <td>4</td>
+      <td>1</td>
+      <td>2</td>
+      <td>3</td>
+      <td>2</td>
+      <td>2</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>7472</td>
+      <td>42</td>
+      <td>0.21</td>
+      <td>-0.482609</td>
+      <td>2</td>
+      <td>1</td>
+      <td>3</td>
+      <td>1</td>
+      <td>19</td>
+      <td>0</td>
+      <td>56</td>
+      <td>2</td>
+      <td>4</td>
+      <td>1</td>
+      <td>2</td>
+      <td>3</td>
+      <td>2</td>
+      <td>2</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Can you use <code class="docutils literal notranslate"><span class="pre">seaborn</span></code> to visualise the association between homework and math for each of the ten schools, with a scatterplot?</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Your answer here</span>
+<span class="c1"># Visualise all associations</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">relplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">school</span><span class="p">,</span>
+            <span class="n">x</span><span class="o">=</span><span class="s1">&#39;homework&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;math&#39;</span><span class="p">,</span>
+            <span class="n">col</span><span class="o">=</span><span class="s1">&#39;schid&#39;</span><span class="p">,</span> <span class="n">col_wrap</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+            <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;scatter&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.FacetGrid at 0x152a28f50&gt;
+</pre></div>
+</div>
+<img alt="../_images/1c721010e2edace85cfa50294ab72913fb5446daf1292edf836aa2597889f03b.png" src="../_images/1c721010e2edace85cfa50294ab72913fb5446daf1292edf836aa2597889f03b.png" />
+</div>
+</div>
+<p>Now, fit a simple GLM predicting math score from homework, which ignores the school id variable. We will use this to compare to a mixed model.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Your answer here</span>
+<span class="c1"># GLM</span>
+<span class="n">glm</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="s1">&#39;math ~ homework&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">school</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="n">glm</span><span class="o">.</span><span class="n">summary</span><span class="p">(</span><span class="n">slim</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_html"><table class="simpletable">
+<caption>OLS Regression Results</caption>
+<tr>
+  <th>Dep. Variable:</th>      <td>math</td>    <th>  R-squared:         </th> <td>   0.247</td>
+</tr>
+<tr>
+  <th>Model:</th>               <td>OLS</td>    <th>  Adj. R-squared:    </th> <td>   0.244</td>
+</tr>
+<tr>
+  <th>No. Observations:</th>  <td>   260</td>   <th>  F-statistic:       </th> <td>   84.64</td>
+</tr>
+<tr>
+  <th>Covariance Type:</th>  <td>nonrobust</td> <th>  Prob (F-statistic):</th> <td>1.25e-17</td>
+</tr>
+</table>
+<table class="simpletable">
+<tr>
+      <td></td>         <th>coef</th>     <th>std err</th>      <th>t</th>      <th>P>|t|</th>  <th>[0.025</th>    <th>0.975]</th>  
+</tr>
+<tr>
+  <th>Intercept</th> <td>   44.0739</td> <td>    0.989</td> <td>   44.580</td> <td> 0.000</td> <td>   42.127</td> <td>   46.021</td>
+</tr>
+<tr>
+  <th>homework</th>  <td>    3.5719</td> <td>    0.388</td> <td>    9.200</td> <td> 0.000</td> <td>    2.807</td> <td>    4.336</td>
+</tr>
+</table><br/><br/>Notes:<br/>[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.</div></div>
+</div>
+<p>Now, lets incorporate the variability from schools by giving a random intercept to schools, using a mixed model.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Your answer here</span>
+<span class="c1"># Mixed models</span>
+<span class="n">mix</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">mixedlm</span><span class="p">(</span><span class="s1">&#39;math ~ homework&#39;</span><span class="p">,</span>
+                  <span class="n">groups</span><span class="o">=</span><span class="s1">&#39;schid&#39;</span><span class="p">,</span>
+                  <span class="n">data</span><span class="o">=</span><span class="n">school</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="n">mix</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_html"><table class="simpletable">
+<tr>
+       <td>Model:</td>       <td>MixedLM</td> <td>Dependent Variable:</td>   <td>math</td>   
+</tr>
+<tr>
+  <td>No. Observations:</td>   <td>260</td>         <td>Method:</td>         <td>REML</td>   
+</tr>
+<tr>
+     <td>No. Groups:</td>      <td>10</td>          <td>Scale:</td>         <td>64.5228</td> 
+</tr>
+<tr>
+  <td>Min. group size:</td>    <td>20</td>      <td>Log-Likelihood:</td>   <td>-919.9738</td>
+</tr>
+<tr>
+  <td>Max. group size:</td>    <td>67</td>        <td>Converged:</td>         <td>Yes</td>   
+</tr>
+<tr>
+  <td>Mean group size:</td>   <td>26.0</td>            <td></td>               <td></td>     
+</tr>
+</table>
+<table class="simpletable">
+<tr>
+      <td></td>       <th>Coef.</th> <th>Std.Err.</th>    <th>z</th>   <th>P>|z|</th> <th>[0.025</th> <th>0.975]</th>
+</tr>
+<tr>
+  <th>Intercept</th> <td>44.982</td>   <td>1.803</td>  <td>24.947</td> <td>0.000</td> <td>41.448</td> <td>48.516</td>
+</tr>
+<tr>
+  <th>homework</th>   <td>2.207</td>   <td>0.381</td>   <td>5.798</td> <td>0.000</td>  <td>1.461</td>  <td>2.952</td>
+</tr>
+<tr>
+  <th>schid Var</th> <td>25.226</td>   <td>1.630</td>     <td></td>      <td></td>       <td></td>       <td></td>   
+</tr>
+</table><br/>
+</div></div>
+</div>
+<p>What happened to the association between homework and scores when incorporating the random effect of schools? Bonus points if you can plot the fitted values from the mixed model.</p>
+<p>Next, let us add some more complexity. Our existing mixed model incorporates only each schools baseline maths score (a good way to find out which school is over-or-under-performing). It assumes the amount of homework completed has <em>the same effect on maths exam scores</em> for every school. That’ not realistic. Expand the model so it allows this effect to vary (e.g., a random slope for homework).</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Your answer here</span>
+<span class="c1"># mixed model with random slope</span>
+<span class="n">mix2</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">mixedlm</span><span class="p">(</span><span class="s1">&#39;math ~ homework&#39;</span><span class="p">,</span>
+                   <span class="n">groups</span><span class="o">=</span><span class="s1">&#39;schid&#39;</span><span class="p">,</span>
+                   <span class="n">re_formula</span><span class="o">=</span><span class="s1">&#39;homework&#39;</span><span class="p">,</span>
+                   <span class="n">data</span><span class="o">=</span><span class="n">school</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+
+<span class="n">mix2</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_html"><table class="simpletable">
+<tr>
+       <td>Model:</td>       <td>MixedLM</td> <td>Dependent Variable:</td>   <td>math</td>   
+</tr>
+<tr>
+  <td>No. Observations:</td>   <td>260</td>         <td>Method:</td>         <td>REML</td>   
+</tr>
+<tr>
+     <td>No. Groups:</td>      <td>10</td>          <td>Scale:</td>         <td>43.0710</td> 
+</tr>
+<tr>
+  <td>Min. group size:</td>    <td>20</td>      <td>Log-Likelihood:</td>   <td>-881.9772</td>
+</tr>
+<tr>
+  <td>Max. group size:</td>    <td>67</td>        <td>Converged:</td>         <td>Yes</td>   
+</tr>
+<tr>
+  <td>Mean group size:</td>   <td>26.0</td>            <td></td>               <td></td>     
+</tr>
+</table>
+<table class="simpletable">
+<tr>
+            <td></td>            <th>Coef.</th>  <th>Std.Err.</th>    <th>z</th>   <th>P>|z|</th> <th>[0.025</th> <th>0.975]</th>
+</tr>
+<tr>
+  <th>Intercept</th>            <td>44.771</td>    <td>2.744</td>  <td>16.314</td> <td>0.000</td> <td>39.392</td> <td>50.149</td>
+</tr>
+<tr>
+  <th>homework</th>              <td>2.040</td>    <td>1.555</td>   <td>1.312</td> <td>0.190</td> <td>-1.008</td>  <td>5.089</td>
+</tr>
+<tr>
+  <th>schid Var</th>            <td>69.304</td>    <td>5.437</td>     <td></td>      <td></td>       <td></td>       <td></td>   
+</tr>
+<tr>
+  <th>schid x homework Cov</th> <td>-31.762</td>   <td>2.812</td>     <td></td>      <td></td>       <td></td>       <td></td>   
+</tr>
+<tr>
+  <th>homework Var</th>         <td>22.453</td>    <td>1.787</td>     <td></td>      <td></td>       <td></td>       <td></td>   
+</tr>
+</table><br/>
+</div></div>
+</div>
+<p><strong>Now</strong> what happens to the association? More bonus points if you can include the predictions in a plot.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Your answer here</span>
+<span class="c1"># Including fitted values</span>
+<span class="n">school</span><span class="p">[</span><span class="s1">&#39;fit_slopes&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">mix2</span><span class="o">.</span><span class="n">fittedvalues</span>
+<span class="n">school</span><span class="p">[</span><span class="s1">&#39;fit_intercept&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">mix</span><span class="o">.</span><span class="n">fittedvalues</span>
+<span class="p">(</span><span class="n">sns</span><span class="o">.</span><span class="n">relplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">school</span><span class="p">,</span>
+             <span class="n">x</span><span class="o">=</span><span class="s1">&#39;homework&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;math&#39;</span><span class="p">,</span>
+             <span class="n">col</span><span class="o">=</span><span class="s1">&#39;schid&#39;</span><span class="p">,</span> <span class="n">col_wrap</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+             <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;scatter&#39;</span><span class="p">)</span>
+ <span class="o">.</span><span class="n">map_dataframe</span><span class="p">(</span><span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;homework&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;fit_intercept&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Intercepts only&#39;</span><span class="p">)</span>
+ <span class="o">.</span><span class="n">map_dataframe</span><span class="p">(</span><span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;homework&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;fit_slopes&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;grey&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Intercepts and slopes&#39;</span><span class="p">)</span>
+ <span class="o">.</span><span class="n">add_legend</span><span class="p">()</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.FacetGrid at 0x154397b50&gt;
+</pre></div>
+</div>
+<img alt="../_images/daa28d2c8041df98ef810e82d7a1f3edb0bc3d981aeceff88e86d685a602033a.png" src="../_images/daa28d2c8041df98ef810e82d7a1f3edb0bc3d981aeceff88e86d685a602033a.png" />
+</div>
+</div>
+</section>
+<section id="cosmetics-and-attractiveness">
+<h1>2. Cosmetics and attractiveness<a class="headerlink" href="#cosmetics-and-attractiveness" title="Link to this heading">#</a></h1>
+<p>In the workshop we examined a model that included a random intercept for participants, a random intercept for models (both of those accounting for baseline levels of attractiveness ratings that each participant and model gives) and a random slope for cosmetics for each model (the model figures out the effect of a makeup application on the attractiveness of each model).</p>
+<p>There’s at least one more effect that was not considered here, which is how makeup affects the perceptions of each <strong>rater</strong>. Each rater may differ in their response to cosmetics, with some liking it, and some being put off by it. Can you read in the data from the example and expand the model to include the random slope for raters too?</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Your answer here</span>
+<span class="c1"># Read in data</span>
+<span class="n">cosmetics</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;https://raw.githubusercontent.com/alexjonesphd/py4psy2024/refs/heads/main/jones_kramer_2015.csv&#39;</span><span class="p">)</span>
+
+<span class="c1"># Add the grouping factor</span>
+<span class="n">cosmetics</span><span class="p">[</span><span class="s1">&#39;grouping&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+
+<span class="c1"># Expand the random effects to include rater random slopes like this</span>
+<span class="n">re</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;pid&#39;</span><span class="p">:</span> <span class="s1">&#39;0 + C(pid)&#39;</span><span class="p">,</span> 
+      <span class="s1">&#39;model_id&#39;</span><span class="p">:</span> <span class="s1">&#39;0 + C(model_id)&#39;</span><span class="p">,</span>
+      <span class="s1">&#39;cosmetics_model&#39;</span><span class="p">:</span> <span class="s1">&#39;0 + C(model_id):cosmetics_code&#39;</span><span class="p">,</span>
+      <span class="s1">&#39;cosmetics_pid&#39;</span><span class="p">:</span> <span class="s1">&#39;0 + C(pid):cosmetics_code&#39;</span><span class="p">}</span>
+
+<span class="c1"># Fit the odel</span>
+<span class="n">expand</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">mixedlm</span><span class="p">(</span><span class="s1">&#39;rating ~ cosmetics_code&#39;</span><span class="p">,</span>
+                     <span class="n">groups</span><span class="o">=</span><span class="s1">&#39;grouping&#39;</span><span class="p">,</span>
+                     <span class="n">vc_formula</span><span class="o">=</span><span class="n">re</span><span class="p">,</span>
+                     <span class="n">data</span><span class="o">=</span><span class="n">cosmetics</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+
+<span class="n">expand</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_html"><table class="simpletable">
+<tr>
+       <td>Model:</td>       <td>MixedLM</td> <td>Dependent Variable:</td>   <td>rating</td>  
+</tr>
+<tr>
+  <td>No. Observations:</td>  <td>3003</td>         <td>Method:</td>          <td>REML</td>   
+</tr>
+<tr>
+     <td>No. Groups:</td>       <td>1</td>          <td>Scale:</td>          <td>1.4235</td>  
+</tr>
+<tr>
+  <td>Min. group size:</td>   <td>3003</td>     <td>Log-Likelihood:</td>   <td>-5048.0688</td>
+</tr>
+<tr>
+  <td>Max. group size:</td>   <td>3003</td>       <td>Converged:</td>          <td>Yes</td>   
+</tr>
+<tr>
+  <td>Mean group size:</td>  <td>3003.0</td>           <td></td>                <td></td>     
+</tr>
+</table>
+<table class="simpletable">
+<tr>
+           <td></td>           <th>Coef.</th> <th>Std.Err.</th>    <th>z</th>   <th>P>|z|</th> <th>[0.025</th> <th>0.975]</th>
+</tr>
+<tr>
+  <th>Intercept</th>           <td>3.231</td>   <td>0.152</td>  <td>21.265</td> <td>0.000</td>  <td>2.933</td>  <td>3.529</td>
+</tr>
+<tr>
+  <th>cosmetics_code</th>      <td>1.163</td>   <td>0.145</td>   <td>8.008</td> <td>0.000</td>  <td>0.878</td>  <td>1.448</td>
+</tr>
+<tr>
+  <th>cosmetics_model Var</th> <td>0.514</td>   <td>0.122</td>     <td></td>      <td></td>       <td></td>       <td></td>   
+</tr>
+<tr>
+  <th>cosmetics_pid Var</th>   <td>0.322</td>   <td>0.063</td>     <td></td>      <td></td>       <td></td>       <td></td>   
+</tr>
+<tr>
+  <th>model_id Var</th>        <td>0.561</td>   <td>0.125</td>     <td></td>      <td></td>       <td></td>       <td></td>   
+</tr>
+<tr>
+  <th>pid Var</th>             <td>0.464</td>   <td>0.069</td>     <td></td>      <td></td>       <td></td>       <td></td>   
+</tr>
+</table><br/>
+</div></div>
+</div>
+<p>Once you have estimated this model, can you figure out what source of variation contributes the most to the attractiveness judgements out of:</p>
+<ul class="simple">
+<li><p>Baseline attractiveness of models</p></li>
+<li><p>Baseline tendency of attractiveness ratings of raters</p></li>
+<li><p>Variation in the effect of cosmetics on models</p></li>
+<li><p>Variation in the effect of cosmetics on participants?</p></li>
+</ul>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Your answer here</span>
+<span class="c1"># Sum up all random effects</span>
+<span class="n">total_variance</span> <span class="o">=</span> <span class="n">expand</span><span class="o">.</span><span class="n">vcomp</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">+</span> <span class="n">expand</span><span class="o">.</span><span class="n">scale</span>
+
+<span class="c1"># Divide the vcomp by the total</span>
+<span class="n">expand</span><span class="o">.</span><span class="n">vcomp</span><span class="o">/</span><span class="n">total_variance</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.15664007, 0.09793443, 0.170859  , 0.14117325])
+</pre></div>
+</div>
+</div>
+</div>
+<p>As an additional challenge - can you find the <em>rater</em> with the largest and smallest slope for cosmetics? This directly translates into someone for who cosmetics increased their ratings the most, and the one for who makeup was a major turn off. You will need to filter down the random effects which can be quite tricky.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Your answer here</span>
+<span class="c1"># Convert random effects to a dataframe</span>
+<span class="n">ranef</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">expand</span><span class="o">.</span><span class="n">random_effects</span><span class="p">)</span>
+
+<span class="c1"># Filter it to include only PID and cosmetics_code</span>
+<span class="n">ppt_slopes</span> <span class="o">=</span> <span class="n">ranef</span><span class="p">[</span><span class="n">ranef</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="s1">&#39;cosmetics_code&#39;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="n">ranef</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="s1">&#39;pid&#39;</span><span class="p">)]</span>
+
+<span class="c1"># With that, find the min + max</span>
+<span class="n">mini</span> <span class="o">=</span> <span class="n">ppt_slopes</span><span class="o">.</span><span class="n">idxmin</span><span class="p">()</span>
+<span class="n">maxi</span> <span class="o">=</span> <span class="n">ppt_slopes</span><span class="o">.</span><span class="n">idxmax</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">mini</span><span class="p">,</span> <span class="n">maxi</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1    cosmetics_pid[C(pid)[58]:cosmetics_code]
+dtype: object 1    cosmetics_pid[C(pid)[75]:cosmetics_code]
+dtype: object
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="further-challenges-in-linear-mixed-effects-models">
+<h1>3. Further challenges in linear mixed effects models<a class="headerlink" href="#further-challenges-in-linear-mixed-effects-models" title="Link to this heading">#</a></h1>
+<p>Linear mixed models are, essentially, a standard GLM with extra flexibility to account for observations in the data belonging to groups. As such, they are able to incorporate all the usual things a GLM can. Here, we’ll use some more education data to examine whether there are differences between male and female A-level students on a Chemistry A-level score, and whether it is linked to their average GCSE score.</p>
+<p>This data can be found from the Bristol Centre for Multilevel Modelling, <a class="reference external" href="https://www.bristol.ac.uk/cmm/learning/mmsoftware/data-rev.html%5D">here</a>. Download the datasets, and upload the <code class="docutils literal notranslate"><span class="pre">chem97.txt</span></code> file to the server to access it. The code below will read in the file for you (assuming you have uploaded it) and rename the columns to something meaningful, but you can also see the readout on the above page for more detail.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Reads in data and renames columns</span>
+<span class="n">chem97</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_table</span><span class="p">(</span><span class="s1">&#39;chem97.txt&#39;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s1">&#39;\s+&#39;</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+<span class="n">chem97</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;local_education_authority_ID&#39;</span><span class="p">,</span> <span class="s1">&#39;school_ID&#39;</span><span class="p">,</span> <span class="s1">&#39;pupil_ID&#39;</span><span class="p">,</span> <span class="s1">&#39;chem_Alevel_score&#39;</span><span class="p">,</span> <span class="s1">&#39;female&#39;</span><span class="p">,</span> <span class="s1">&#39;age_in_months&#39;</span><span class="p">,</span> <span class="s1">&#39;avg_GCSE&#39;</span><span class="p">]</span>
+<span class="n">chem97</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>local_education_authority_ID</th>
+      <th>school_ID</th>
+      <th>pupil_ID</th>
+      <th>chem_Alevel_score</th>
+      <th>female</th>
+      <th>age_in_months</th>
+      <th>avg_GCSE</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>4.0</td>
+      <td>1</td>
+      <td>3.0</td>
+      <td>6.625</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>2.0</td>
+      <td>10.0</td>
+      <td>1</td>
+      <td>-3.0</td>
+      <td>7.625</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>3.0</td>
+      <td>10.0</td>
+      <td>1</td>
+      <td>-4.0</td>
+      <td>7.250</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>4.0</td>
+      <td>10.0</td>
+      <td>1</td>
+      <td>-2.0</td>
+      <td>7.500</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>5.0</td>
+      <td>8.0</td>
+      <td>1</td>
+      <td>-1.0</td>
+      <td>6.444</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Fit a linear mixed model that predicts chemistry A level score from the interaction between female (1 = yes, 0 = No) and aveage GCSE grade. Include random intercepts for education authority and school ID.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Your answer here</span>
+<span class="n">chem97</span><span class="p">[</span><span class="s1">&#39;grouping&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span> <span class="c1"># creates group</span>
+
+<span class="c1"># create random effects</span>
+<span class="n">re</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;ed_authority&#39;</span><span class="p">:</span> <span class="s1">&#39;0 + C(local_education_authority_ID)&#39;</span><span class="p">,</span>
+      <span class="s1">&#39;school&#39;</span><span class="p">:</span> <span class="s1">&#39;0 + C(school_ID)&#39;</span><span class="p">}</span>
+
+<span class="c1"># Model - this MAY TAKE A WHILE!</span>
+<span class="n">md</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">mixedlm</span><span class="p">(</span><span class="s1">&#39;chem_Alevel_score ~ female * avg_GCSE&#39;</span><span class="p">,</span> 
+                 <span class="n">groups</span><span class="o">=</span><span class="s1">&#39;grouping&#39;</span><span class="p">,</span>
+                 <span class="n">vc_formula</span><span class="o">=</span><span class="n">re</span><span class="p">,</span> 
+                 <span class="n">data</span><span class="o">=</span><span class="n">chem97</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+
+<span class="n">md</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_html"><table class="simpletable">
+<tr>
+       <td>Model:</td>       <td>MixedLM</td> <td>Dependent Variable:</td> <td>chem_Alevel_score</td>
+</tr>
+<tr>
+  <td>No. Observations:</td>  <td>31022</td>        <td>Method:</td>             <td>REML</td>       
+</tr>
+<tr>
+     <td>No. Groups:</td>       <td>1</td>          <td>Scale:</td>             <td>5.0495</td>      
+</tr>
+<tr>
+  <td>Min. group size:</td>   <td>31022</td>    <td>Log-Likelihood:</td>      <td>-70526.6060</td>   
+</tr>
+<tr>
+  <td>Max. group size:</td>   <td>31022</td>      <td>Converged:</td>             <td>Yes</td>       
+</tr>
+<tr>
+  <td>Mean group size:</td>  <td>31022.0</td>          <td></td>                   <td></td>         
+</tr>
+</table>
+<table class="simpletable">
+<tr>
+          <td></td>          <th>Coef.</th> <th>Std.Err.</th>    <th>z</th>    <th>P>|z|</th> <th>[0.025</th> <th>0.975]</th>
+</tr>
+<tr>
+  <th>Intercept</th>        <td>-9.500</td>   <td>0.133</td>  <td>-71.585</td> <td>0.000</td> <td>-9.760</td> <td>-9.240</td>
+</tr>
+<tr>
+  <th>female</th>           <td>-2.377</td>   <td>0.209</td>  <td>-11.375</td> <td>0.000</td> <td>-2.787</td> <td>-1.968</td>
+</tr>
+<tr>
+  <th>avg_GCSE</th>          <td>2.460</td>   <td>0.021</td>  <td>115.526</td> <td>0.000</td>  <td>2.418</td>  <td>2.502</td>
+</tr>
+<tr>
+  <th>female:avg_GCSE</th>   <td>0.262</td>   <td>0.033</td>   <td>7.911</td>  <td>0.000</td>  <td>0.197</td>  <td>0.327</td>
+</tr>
+<tr>
+  <th>ed_authority Var</th>  <td>0.021</td>   <td>0.007</td>     <td></td>       <td></td>       <td></td>       <td></td>   
+</tr>
+<tr>
+  <th>school Var</th>        <td>1.125</td>   <td>0.025</td>     <td></td>       <td></td>       <td></td>       <td></td>   
+</tr>
+</table><br/>
+</div></div>
+</div>
+<p>With the model fitted, note the variance estimates and the coefficients. As with a GLM its not so easy to interpret whats going on - but we can rely on using average slopes to get conditional estimates, like always. Use <code class="docutils literal notranslate"><span class="pre">marginaleffects</span></code> to compute the slope for females and males with regards to GCSEs to explain the interaction.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Your answer here</span>
+<span class="c1"># Get the slopes of GCSE for each sex</span>
+<span class="n">me</span><span class="o">.</span><span class="n">slopes</span><span class="p">(</span><span class="n">md</span><span class="p">,</span> <span class="n">variables</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;avg_GCSE&#39;</span><span class="p">],</span> <span class="n">by</span><span class="o">=</span><span class="s1">&#39;female&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_html"><div><style>
+.dataframe > thead > tr,
+.dataframe > tbody > tr {
+  text-align: right;
+  white-space: pre-wrap;
+}
+</style>
+<small>shape: (2, 10)</small><table border="1" class="dataframe"><thead><tr><th>female</th><th>term</th><th>contrast</th><th>estimate</th><th>std_error</th><th>statistic</th><th>p_value</th><th>s_value</th><th>conf_low</th><th>conf_high</th></tr><tr><td>i64</td><td>str</td><td>str</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td></tr></thead><tbody><tr><td>0</td><td>&quot;avg_GCSE&quot;</td><td>&quot;mean(dY/dX)&quot;</td><td>2.459902</td><td>0.021293</td><td>115.526716</td><td>0.0</td><td>inf</td><td>2.418169</td><td>2.501635</td></tr><tr><td>1</td><td>&quot;avg_GCSE&quot;</td><td>&quot;mean(dY/dX)&quot;</td><td>2.721689</td><td>0.02665</td><td>102.127443</td><td>0.0</td><td>inf</td><td>2.669456</td><td>2.773922</td></tr></tbody></table></div></div></div>
+</div>
+</section>
+<section id="studying-individual-differences-with-mixed-models">
+<h1>4. Studying individual differences with mixed models<a class="headerlink" href="#studying-individual-differences-with-mixed-models" title="Link to this heading">#</a></h1>
+<p>As a final example, lets see how mixed models can be used to understand measures of individual differences.</p>
+<p>In the next dataset, we’ll see how individual raters are sensitive to facial cues of symmetry, averageness, and sexual dimorphism, three important predictors of facial attractiveness. Participants rated 100 faces on how attractive they thought they were (on a scale of 1-100). For each of the faces, we measured how symmetrical, distinctive, and sexually dimorphic it was.</p>
+<p>First, read in the data from the following link and display the top 10 rows: <a class="reference external" href="https://raw.githubusercontent.com/alexjonesphd/py4psy2024/refs/heads/main/cue_sensitivity.csv">https://raw.githubusercontent.com/alexjonesphd/py4psy2024/refs/heads/main/cue_sensitivity.csv</a></p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Your answer here</span>
+<span class="n">cues</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;https://raw.githubusercontent.com/alexjonesphd/py4psy2024/refs/heads/main/cue_sensitivity.csv&#39;</span><span class="p">)</span>
+<span class="n">cues</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>pid</th>
+      <th>face_id</th>
+      <th>face_sex</th>
+      <th>attractiveness</th>
+      <th>distinctiveness</th>
+      <th>symmetry</th>
+      <th>dimorphism</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>3168134.0</td>
+      <td>galina</td>
+      <td>female</td>
+      <td>44</td>
+      <td>-1.535898</td>
+      <td>-0.926857</td>
+      <td>0.056173</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>3168134.0</td>
+      <td>tamara</td>
+      <td>female</td>
+      <td>25</td>
+      <td>1.506863</td>
+      <td>0.567697</td>
+      <td>-1.542840</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3168134.0</td>
+      <td>blazej</td>
+      <td>male</td>
+      <td>50</td>
+      <td>1.066100</td>
+      <td>-1.977071</td>
+      <td>0.758609</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>3168134.0</td>
+      <td>irena</td>
+      <td>female</td>
+      <td>58</td>
+      <td>-1.196141</td>
+      <td>-0.929967</td>
+      <td>0.751037</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>3168134.0</td>
+      <td>jan</td>
+      <td>male</td>
+      <td>27</td>
+      <td>0.039301</td>
+      <td>0.769465</td>
+      <td>-0.082505</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>3168134.0</td>
+      <td>svatopluk</td>
+      <td>male</td>
+      <td>32</td>
+      <td>-0.676461</td>
+      <td>-1.102852</td>
+      <td>-0.591465</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>3168134.0</td>
+      <td>miroslav1</td>
+      <td>male</td>
+      <td>35</td>
+      <td>0.479499</td>
+      <td>1.627821</td>
+      <td>-0.714593</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>3168134.0</td>
+      <td>viola</td>
+      <td>female</td>
+      <td>61</td>
+      <td>-1.300203</td>
+      <td>1.283004</td>
+      <td>0.304360</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>3168134.0</td>
+      <td>vincent</td>
+      <td>male</td>
+      <td>2</td>
+      <td>0.715087</td>
+      <td>-1.160949</td>
+      <td>1.252532</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>3168134.0</td>
+      <td>blazana</td>
+      <td>female</td>
+      <td>69</td>
+      <td>-1.004162</td>
+      <td>0.838649</td>
+      <td>-0.965687</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Each participant rates 100 faces and we know the measurements of those faces. Lets fit a model that uses those measurements as predictors and accounts for participant and face variability with random slopes, as a starter.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Your answer here</span>
+<span class="n">cues</span><span class="p">[</span><span class="s1">&#39;grouping&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+
+<span class="c1"># VC</span>
+<span class="n">vc</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;pid&#39;</span><span class="p">:</span> <span class="s1">&#39;0 + C(pid)&#39;</span><span class="p">,</span>
+      <span class="s1">&#39;face&#39;</span><span class="p">:</span> <span class="s1">&#39;0 + C(face_id)&#39;</span><span class="p">}</span>
+
+<span class="c1"># models</span>
+<span class="n">model1</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">mixedlm</span><span class="p">(</span><span class="s1">&#39;attractiveness ~ distinctiveness + symmetry + dimorphism&#39;</span><span class="p">,</span>
+                     <span class="n">groups</span><span class="o">=</span><span class="s1">&#39;grouping&#39;</span><span class="p">,</span> <span class="n">vc_formula</span><span class="o">=</span><span class="n">vc</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">cues</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+
+<span class="n">model1</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_html"><table class="simpletable">
+<tr>
+       <td>Model:</td>       <td>MixedLM</td> <td>Dependent Variable:</td> <td>attractiveness</td>
+</tr>
+<tr>
+  <td>No. Observations:</td>  <td>3200</td>         <td>Method:</td>            <td>REML</td>     
+</tr>
+<tr>
+     <td>No. Groups:</td>       <td>1</td>          <td>Scale:</td>           <td>227.0840</td>   
+</tr>
+<tr>
+  <td>Min. group size:</td>   <td>3200</td>     <td>Log-Likelihood:</td>     <td>-13408.9376</td> 
+</tr>
+<tr>
+  <td>Max. group size:</td>   <td>3200</td>       <td>Converged:</td>            <td>Yes</td>     
+</tr>
+<tr>
+  <td>Mean group size:</td>  <td>3200.0</td>           <td></td>                  <td></td>       
+</tr>
+</table>
+<table class="simpletable">
+<tr>
+         <td></td>          <th>Coef.</th>  <th>Std.Err.</th>    <th>z</th>   <th>P>|z|</th> <th>[0.025</th> <th>0.975]</th>
+</tr>
+<tr>
+  <th>Intercept</th>       <td>35.681</td>    <td>2.225</td>  <td>16.038</td> <td>0.000</td> <td>31.321</td> <td>40.042</td>
+</tr>
+<tr>
+  <th>distinctiveness</th> <td>-2.398</td>    <td>1.013</td>  <td>-2.367</td> <td>0.018</td> <td>-4.383</td> <td>-0.413</td>
+</tr>
+<tr>
+  <th>symmetry</th>        <td>-1.763</td>    <td>1.007</td>  <td>-1.752</td> <td>0.080</td> <td>-3.736</td>  <td>0.209</td>
+</tr>
+<tr>
+  <th>dimorphism</th>      <td>-0.389</td>    <td>1.034</td>  <td>-0.376</td> <td>0.707</td> <td>-2.415</td>  <td>1.638</td>
+</tr>
+<tr>
+  <th>face Var</th>        <td>89.992</td>    <td>0.944</td>     <td></td>      <td></td>       <td></td>       <td></td>   
+</tr>
+<tr>
+  <th>pid Var</th>         <td>127.324</td>   <td>2.195</td>     <td></td>      <td></td>       <td></td>       <td></td>   
+</tr>
+</table><br/>
+</div></div>
+</div>
+<p>This model efffectively accounts for participant variability and face variability, and suggests only distinctiveness decreases attractiveness. But we must be clear on what it implies - it says that the effect of, say, distinctiveness is <em>exactly</em> the same for all raters. That is, raters are influenced by the distinctiveness of the face in the same way. Is this realistic? Would it be better to allow each rater their own distinctiveness slope (as well as others) to allow their own preferences to come out? We can do this of course by including a random slope for each rater for each trait. Do that below and see what happens.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Your answer here</span>
+<span class="c1"># VC</span>
+<span class="n">re</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;pid&#39;</span><span class="p">:</span> <span class="s1">&#39;0 + C(pid)&#39;</span><span class="p">,</span>
+      <span class="s1">&#39;face&#39;</span><span class="p">:</span> <span class="s1">&#39;0 + C(face_id)&#39;</span><span class="p">,</span>
+      <span class="s1">&#39;distinctiveness&#39;</span><span class="p">:</span> <span class="s1">&#39;0 + C(pid):distinctiveness&#39;</span><span class="p">,</span>
+      <span class="s1">&#39;symmetry&#39;</span><span class="p">:</span> <span class="s1">&#39;0 + C(pid):symmetry&#39;</span><span class="p">,</span>
+      <span class="s1">&#39;dimorphism&#39;</span><span class="p">:</span> <span class="s1">&#39;0 + C(pid):dimorphism&#39;</span><span class="p">}</span>
+
+<span class="c1"># models</span>
+<span class="n">model2</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">mixedlm</span><span class="p">(</span><span class="s1">&#39;attractiveness ~ distinctiveness + symmetry + dimorphism&#39;</span><span class="p">,</span>
+                     <span class="n">groups</span><span class="o">=</span><span class="s1">&#39;grouping&#39;</span><span class="p">,</span> <span class="n">vc_formula</span><span class="o">=</span><span class="n">re</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">cues</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+
+<span class="n">model2</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/miniconda3/envs/py11/lib/python3.11/site-packages/statsmodels/base/model.py:607: ConvergenceWarning: Maximum Likelihood optimization failed to converge. Check mle_retvals
+/opt/miniconda3/envs/py11/lib/python3.11/site-packages/statsmodels/regression/mixed_linear_model.py:2201: ConvergenceWarning: Retrying MixedLM optimization with lbfgs
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/miniconda3/envs/py11/lib/python3.11/site-packages/statsmodels/regression/mixed_linear_model.py:2262: ConvergenceWarning: The Hessian matrix at the estimated parameter values is not positive definite.
+</pre></div>
+</div>
+<div class="output text_html"><table class="simpletable">
+<tr>
+       <td>Model:</td>       <td>MixedLM</td> <td>Dependent Variable:</td> <td>attractiveness</td>
+</tr>
+<tr>
+  <td>No. Observations:</td>  <td>3200</td>         <td>Method:</td>            <td>REML</td>     
+</tr>
+<tr>
+     <td>No. Groups:</td>       <td>1</td>          <td>Scale:</td>           <td>222.5967</td>   
+</tr>
+<tr>
+  <td>Min. group size:</td>   <td>3200</td>     <td>Log-Likelihood:</td>     <td>-13424.8905</td> 
+</tr>
+<tr>
+  <td>Max. group size:</td>   <td>3200</td>       <td>Converged:</td>            <td>Yes</td>     
+</tr>
+<tr>
+  <td>Mean group size:</td>  <td>3200.0</td>           <td></td>                  <td></td>       
+</tr>
+</table>
+<table class="simpletable">
+<tr>
+           <td></td>            <th>Coef.</th>  <th>Std.Err.</th>    <th>z</th>   <th>P>|z|</th> <th>[0.025</th> <th>0.975]</th>
+</tr>
+<tr>
+  <th>Intercept</th>           <td>35.681</td>    <td>2.282</td>  <td>15.633</td> <td>0.000</td> <td>31.208</td> <td>40.155</td>
+</tr>
+<tr>
+  <th>distinctiveness</th>     <td>-2.398</td>    <td>1.517</td>  <td>-1.581</td> <td>0.114</td> <td>-5.371</td>  <td>0.575</td>
+</tr>
+<tr>
+  <th>symmetry</th>            <td>-1.763</td>    <td>1.509</td>  <td>-1.169</td> <td>0.243</td> <td>-4.721</td>  <td>1.194</td>
+</tr>
+<tr>
+  <th>dimorphism</th>          <td>-0.389</td>    <td>1.549</td>  <td>-0.251</td> <td>0.802</td> <td>-3.425</td>  <td>2.648</td>
+</tr>
+<tr>
+  <th>dimorphism Var</th>       <td>0.670</td>    <td>0.121</td>     <td></td>      <td></td>       <td></td>       <td></td>   
+</tr>
+<tr>
+  <th>distinctiveness Var</th>  <td>0.591</td>    <td>0.060</td>     <td></td>      <td></td>       <td></td>       <td></td>   
+</tr>
+<tr>
+  <th>face Var</th>            <td>209.005</td>     <td></td>        <td></td>      <td></td>       <td></td>       <td></td>   
+</tr>
+<tr>
+  <th>pid Var</th>             <td>97.593</td>    <td>1.352</td>     <td></td>      <td></td>       <td></td>       <td></td>   
+</tr>
+<tr>
+  <th>symmetry Var</th>         <td>0.769</td>    <td>0.143</td>     <td></td>      <td></td>       <td></td>       <td></td>   
+</tr>
+</table><br/>
+</div></div>
+</div>
+<p>Now the effects go away when you consider how variable these effects are for people. If we wanted, we could extract each persons individual slope to see how sensitive they are to an individual cue.</p>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./7_MixedModel"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="QPoP%20-%20Week%207%20Workshop.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">7 - Linear mixed effects models</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Dealing with repeated measurements - Exercises &amp; Answers</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#educational-hierarchies">1. Educational hierarchies</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#cosmetics-and-attractiveness">2. Cosmetics and attractiveness</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#further-challenges-in-linear-mixed-effects-models">3. Further challenges in linear mixed effects models</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#studying-individual-differences-with-mixed-models">4. Studying individual differences with mixed models</a></li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Alex Jones, Ph.D
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
