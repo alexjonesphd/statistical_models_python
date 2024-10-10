@@ -1,0 +1,2233 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Finding latent variables in data - Exercises &amp; Answers &#8212; Statistical Modelling with Python</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '8_EFA/QPoP - Week 8 Exercises - Answers';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="8 - Exploratory Factor Analysis" href="QPoP%20-%20Week%208%20Workshop.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt="Statistical Modelling with Python - Home"/>
+    <script>document.write(`<img src="../_static/logo.png" class="logo__image only-dark" alt="Statistical Modelling with Python - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    Statistical Modelling with Python
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Python Basics</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../1_Introduction/QPoP%20-%20Week%201%20Workshop.html">1 - Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../1_Introduction/QPoP%20-%20Week%201%20Exercises%20-%20Answers.html">Using Python for Data Analysis - Exercises &amp; Answers</a></li>
+
+
+
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">The GLM</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../2_The_GLM/QPoP%20-%20Week%202%20Workshop.html">2 - The General Linear Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../2_The_GLM/QPoP%20-%20Week%202%20Exercises%20-%20Answers.html">Getting to grips with linear models in Python - Exercises &amp; Answers</a></li>
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Advancing the GLM</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../3_Advancing_GLM/QPoP%20-%20Week%203%20Workshop.html">3 - Advancing the general linear model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../3_Advancing_GLM/QPoP%20-%20Week%203%20Exercises%20-%20Answers.html">Checking assumptions and including interactions - Exercises &amp; Answers</a></li>
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">The art of prediction</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../4_Prediction/QPoP%20-%20Week%204%20Workshop.html">4 - The art of prediction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../4_Prediction/QPoP%20-%20Week%204%20Exercises%20-%20Answers.html">Asking scientific questions of models - Exercises &amp; Answers</a></li>
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Binary outcome models</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../5_Binary/QPoP%20-%20Week%205%20Workshop.html">5 - Binary outcome models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../5_Binary/QPoP%20-%20Week%205%20Exercises%20-%20Answers.html">Using and understanding probit models - Exercises &amp; Answers</a></li>
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Applications and other kinds of hypotheses</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../6_Applications/QPoP%20-%20Week%206%20Workshop.html">6 - Precision in Predictions</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../6_Applications/QPoP%20-%20Week%206%20Exercises%20-%20Answers.html">Example exercises using skills so far</a></li>
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Linear Mixed Effects Models</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../7_MixedModel/QPoP%20-%20Week%207%20Workshop.html">7 - Linear mixed effects models</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../7_MixedModel/QPoP%20-%20Week%207%20Exercises%20-%20Answers.html">Dealing with repeated measurements - Exercises &amp; Answers</a></li>
+
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Exploratory Factor Analysis</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="QPoP%20-%20Week%208%20Workshop.html">8 - Exploratory Factor Analysis</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Finding latent variables in data - Exercises &amp; Answers</a></li>
+
+
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2F8_EFA/QPoP - Week 8 Exercises - Answers.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/8_EFA/QPoP - Week 8 Exercises - Answers.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Finding latent variables in data - Exercises & Answers</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Finding latent variables in data - Exercises &amp; Answers</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#grit-what-is-it">1. Grit - what is it?</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#the-nerdiness-scale-how-many-factors-determine-nerd-status">2. The Nerdiness Scale - how many factors determine nerd status?</a></li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="finding-latent-variables-in-data-exercises-answers">
+<h1>Finding latent variables in data - Exercises &amp; Answers<a class="headerlink" href="#finding-latent-variables-in-data-exercises-answers" title="Link to this heading">#</a></h1>
+</section>
+<section id="grit-what-is-it">
+<h1>1. Grit - what is it?<a class="headerlink" href="#grit-what-is-it" title="Link to this heading">#</a></h1>
+<p>The ‘grit’ factor is a concept from psychology research made mainstream by the popular science book of the same name, by the author and researcher Professor Angela Duckworth. Those high on the ‘grit’ factor have greater success in life, as they are able to persevere in the face of adversity to achieve their goals. Grit is thought of as a dimension of personality, or individual differences.</p>
+<p>This is all well and good, but many researchers criticise the idea of ‘grit’ being an aspect of personality - rather, they claim it is simply an aspect of the trait Conscientiousness, which is indeed all about peoples tendency to persevere.</p>
+<p>One way we can identify the ‘uniqueness’ of grit is by conducting a factor analysis of its individual questions along with questions measuring the Big Five. If everyone completes both of these questionnaires, then we have the perfect dataset to test this question.</p>
+<p>That dataset exists! Download the data from this link: <a class="reference external" href="https://openpsychometrics.org/_rawdata/duckworth-grit-scale-data.zip">https://openpsychometrics.org/_rawdata/duckworth-grit-scale-data.zip</a></p>
+<p>You will need to unzip it and grab the <code class="docutils literal notranslate"><span class="pre">data.csv</span></code> file.</p>
+<p>Import everything we need first, including <code class="docutils literal notranslate"><span class="pre">FactorAnalyzer</span></code> and <code class="docutils literal notranslate"><span class="pre">parallel_analysis</span></code>.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Your answer here</span>
+<span class="c1"># Import what we need</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span> <span class="c1"># dataframes</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span> <span class="c1"># plots</span>
+<span class="kn">import</span> <span class="nn">statsmodels.formula.api</span> <span class="k">as</span> <span class="nn">smf</span> <span class="c1"># Models</span>
+<span class="kn">import</span> <span class="nn">marginaleffects</span> <span class="k">as</span> <span class="nn">me</span> <span class="c1"># marginal effects</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span> <span class="c1"># numpy for some functions</span>
+<span class="kn">import</span> <span class="nn">pingouin</span> <span class="k">as</span> <span class="nn">pg</span>
+<span class="kn">from</span> <span class="nn">factor_analyzer</span> <span class="kn">import</span> <span class="n">FactorAnalyzer</span> <span class="c1"># Note we write from factor_analyzer</span>
+<span class="kn">from</span> <span class="nn">horns</span> <span class="kn">import</span> <span class="n">parallel_analysis</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<p>Then read in the data into a dataframe called <code class="docutils literal notranslate"><span class="pre">grit</span></code>, specifying the separator as ‘\t’ (sep=’\t’).</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Your answer here</span>
+<span class="c1"># Read in</span>
+<span class="n">grit</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data.csv&#39;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="n">grit</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>country</th>
+      <th>surveyelapse</th>
+      <th>GS1</th>
+      <th>GS2</th>
+      <th>GS3</th>
+      <th>GS4</th>
+      <th>GS5</th>
+      <th>GS6</th>
+      <th>GS7</th>
+      <th>GS8</th>
+      <th>...</th>
+      <th>O7</th>
+      <th>O8</th>
+      <th>O9</th>
+      <th>O10</th>
+      <th>operatingsystem</th>
+      <th>browser</th>
+      <th>screenw</th>
+      <th>screenh</th>
+      <th>introelapse</th>
+      <th>testelapse</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>RO</td>
+      <td>174</td>
+      <td>1</td>
+      <td>1</td>
+      <td>3</td>
+      <td>3</td>
+      <td>3</td>
+      <td>2</td>
+      <td>3</td>
+      <td>1</td>
+      <td>...</td>
+      <td>5</td>
+      <td>4</td>
+      <td>5</td>
+      <td>4</td>
+      <td>Windows</td>
+      <td>Chrome</td>
+      <td>1366</td>
+      <td>768</td>
+      <td>69590</td>
+      <td>307</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>US</td>
+      <td>120</td>
+      <td>2</td>
+      <td>2</td>
+      <td>3</td>
+      <td>3</td>
+      <td>2</td>
+      <td>1</td>
+      <td>3</td>
+      <td>3</td>
+      <td>...</td>
+      <td>4</td>
+      <td>3</td>
+      <td>4</td>
+      <td>5</td>
+      <td>Macintosh</td>
+      <td>Chrome</td>
+      <td>1280</td>
+      <td>800</td>
+      <td>33657</td>
+      <td>134</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>US</td>
+      <td>99</td>
+      <td>3</td>
+      <td>3</td>
+      <td>3</td>
+      <td>3</td>
+      <td>4</td>
+      <td>3</td>
+      <td>4</td>
+      <td>4</td>
+      <td>...</td>
+      <td>5</td>
+      <td>5</td>
+      <td>4</td>
+      <td>4</td>
+      <td>Windows</td>
+      <td>Firefox</td>
+      <td>1920</td>
+      <td>1080</td>
+      <td>95550</td>
+      <td>138</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>KE</td>
+      <td>5098</td>
+      <td>1</td>
+      <td>3</td>
+      <td>4</td>
+      <td>2</td>
+      <td>4</td>
+      <td>1</td>
+      <td>5</td>
+      <td>4</td>
+      <td>...</td>
+      <td>4</td>
+      <td>2</td>
+      <td>5</td>
+      <td>4</td>
+      <td>Windows</td>
+      <td>Chrome</td>
+      <td>1600</td>
+      <td>900</td>
+      <td>4</td>
+      <td>4440</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>JP</td>
+      <td>340</td>
+      <td>1</td>
+      <td>2</td>
+      <td>3</td>
+      <td>3</td>
+      <td>2</td>
+      <td>2</td>
+      <td>2</td>
+      <td>4</td>
+      <td>...</td>
+      <td>4</td>
+      <td>1</td>
+      <td>3</td>
+      <td>2</td>
+      <td>Windows</td>
+      <td>Firefox</td>
+      <td>1920</td>
+      <td>1080</td>
+      <td>3</td>
+      <td>337</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>AU</td>
+      <td>515</td>
+      <td>1</td>
+      <td>2</td>
+      <td>5</td>
+      <td>1</td>
+      <td>3</td>
+      <td>1</td>
+      <td>4</td>
+      <td>5</td>
+      <td>...</td>
+      <td>5</td>
+      <td>2</td>
+      <td>5</td>
+      <td>5</td>
+      <td>Windows</td>
+      <td>Chrome</td>
+      <td>1920</td>
+      <td>1080</td>
+      <td>2090</td>
+      <td>554</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>US</td>
+      <td>126</td>
+      <td>2</td>
+      <td>1</td>
+      <td>3</td>
+      <td>4</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>...</td>
+      <td>5</td>
+      <td>5</td>
+      <td>5</td>
+      <td>5</td>
+      <td>Windows</td>
+      <td>Chrome</td>
+      <td>1366</td>
+      <td>768</td>
+      <td>36</td>
+      <td>212</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>RO</td>
+      <td>208</td>
+      <td>3</td>
+      <td>1</td>
+      <td>1</td>
+      <td>4</td>
+      <td>1</td>
+      <td>3</td>
+      <td>4</td>
+      <td>4</td>
+      <td>...</td>
+      <td>5</td>
+      <td>3</td>
+      <td>4</td>
+      <td>3</td>
+      <td>Windows</td>
+      <td>Chrome</td>
+      <td>1366</td>
+      <td>768</td>
+      <td>6</td>
+      <td>207</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>EU</td>
+      <td>130</td>
+      <td>1</td>
+      <td>3</td>
+      <td>3</td>
+      <td>1</td>
+      <td>4</td>
+      <td>1</td>
+      <td>5</td>
+      <td>4</td>
+      <td>...</td>
+      <td>5</td>
+      <td>1</td>
+      <td>4</td>
+      <td>5</td>
+      <td>Windows</td>
+      <td>Microsoft Internet Explorer</td>
+      <td>1600</td>
+      <td>1000</td>
+      <td>14</td>
+      <td>183</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>NZ</td>
+      <td>129</td>
+      <td>2</td>
+      <td>3</td>
+      <td>2</td>
+      <td>2</td>
+      <td>4</td>
+      <td>2</td>
+      <td>4</td>
+      <td>4</td>
+      <td>...</td>
+      <td>4</td>
+      <td>3</td>
+      <td>4</td>
+      <td>4</td>
+      <td>Macintosh</td>
+      <td>Chrome</td>
+      <td>1440</td>
+      <td>900</td>
+      <td>68</td>
+      <td>143</td>
+    </tr>
+  </tbody>
+</table>
+<p>10 rows × 98 columns</p>
+</div></div></div>
+</div>
+<p>There’s a lot of extra variables we don’t need. Make a new dataframe called <code class="docutils literal notranslate"><span class="pre">grit2</span></code>, by running the following command - this is a quick way to select the columns that correspond to the personality items we need (I am trying to save you a lot of typing!):</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Get what is needed</span>
+<span class="n">grit2</span> <span class="o">=</span> <span class="n">grit</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">regex</span><span class="o">=</span><span class="s1">&#39;[GSENACO]+\d+&#39;</span><span class="p">)</span>
+<span class="n">grit2</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>GS1</th>
+      <th>GS2</th>
+      <th>GS3</th>
+      <th>GS4</th>
+      <th>GS5</th>
+      <th>GS6</th>
+      <th>GS7</th>
+      <th>GS8</th>
+      <th>GS9</th>
+      <th>GS10</th>
+      <th>...</th>
+      <th>O1</th>
+      <th>O2</th>
+      <th>O3</th>
+      <th>O4</th>
+      <th>O5</th>
+      <th>O6</th>
+      <th>O7</th>
+      <th>O8</th>
+      <th>O9</th>
+      <th>O10</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>1</td>
+      <td>3</td>
+      <td>3</td>
+      <td>3</td>
+      <td>2</td>
+      <td>3</td>
+      <td>1</td>
+      <td>3</td>
+      <td>2</td>
+      <td>...</td>
+      <td>5</td>
+      <td>2</td>
+      <td>4</td>
+      <td>1</td>
+      <td>4</td>
+      <td>2</td>
+      <td>5</td>
+      <td>4</td>
+      <td>5</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>2</td>
+      <td>3</td>
+      <td>3</td>
+      <td>2</td>
+      <td>1</td>
+      <td>3</td>
+      <td>3</td>
+      <td>2</td>
+      <td>1</td>
+      <td>...</td>
+      <td>4</td>
+      <td>2</td>
+      <td>5</td>
+      <td>2</td>
+      <td>4</td>
+      <td>1</td>
+      <td>4</td>
+      <td>3</td>
+      <td>4</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3</td>
+      <td>3</td>
+      <td>3</td>
+      <td>3</td>
+      <td>4</td>
+      <td>3</td>
+      <td>4</td>
+      <td>4</td>
+      <td>3</td>
+      <td>3</td>
+      <td>...</td>
+      <td>4</td>
+      <td>2</td>
+      <td>4</td>
+      <td>2</td>
+      <td>4</td>
+      <td>3</td>
+      <td>5</td>
+      <td>5</td>
+      <td>4</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1</td>
+      <td>3</td>
+      <td>4</td>
+      <td>2</td>
+      <td>4</td>
+      <td>1</td>
+      <td>5</td>
+      <td>4</td>
+      <td>1</td>
+      <td>1</td>
+      <td>...</td>
+      <td>5</td>
+      <td>2</td>
+      <td>3</td>
+      <td>2</td>
+      <td>4</td>
+      <td>1</td>
+      <td>4</td>
+      <td>2</td>
+      <td>5</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>1</td>
+      <td>2</td>
+      <td>3</td>
+      <td>3</td>
+      <td>2</td>
+      <td>2</td>
+      <td>2</td>
+      <td>4</td>
+      <td>3</td>
+      <td>3</td>
+      <td>...</td>
+      <td>5</td>
+      <td>3</td>
+      <td>2</td>
+      <td>2</td>
+      <td>3</td>
+      <td>3</td>
+      <td>4</td>
+      <td>1</td>
+      <td>3</td>
+      <td>2</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 62 columns</p>
+</div></div></div>
+</div>
+<p>This is now suitable to work with. First, let us examine the psychometric properties of the grit scale in and of itself.</p>
+<p>Below, select out the 12 grit scale items into its own dataframe (e.g., <code class="docutils literal notranslate"><span class="pre">grit_only</span></code>).
+Then, conduct an EFA with <em>two</em> factors to see how well the questions load onto it. Plot it as a heatmap. Why 2 factors? This is the number that Duckworth et al suggest the scale has, tapping <em>persistence of interest</em> and <em>perseverance of effort</em>.</p>
+<p>If you are interested, you can see what questions the codes represent here (e.g. what GS1, GS2 means): <a class="reference external" href="https://mcnairscholars.com/wp-content/uploads/2015/02/12-item-Grit-Scale-Angela-Duckworth.pdf">https://mcnairscholars.com/wp-content/uploads/2015/02/12-item-Grit-Scale-Angela-Duckworth.pdf</a></p>
+<p>Does it appear that all questions in the grit scale load onto two factors?</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Your answer here</span>
+<span class="c1"># Select out grit</span>
+<span class="n">grit_only</span> <span class="o">=</span> <span class="n">grit2</span><span class="p">[[</span><span class="s1">&#39;GS1&#39;</span><span class="p">,</span> <span class="s1">&#39;GS2&#39;</span><span class="p">,</span> <span class="s1">&#39;GS3&#39;</span><span class="p">,</span> <span class="s1">&#39;GS4&#39;</span><span class="p">,</span> <span class="s1">&#39;GS5&#39;</span><span class="p">,</span> <span class="s1">&#39;GS6&#39;</span><span class="p">,</span> <span class="s1">&#39;GS7&#39;</span><span class="p">,</span> <span class="s1">&#39;GS8&#39;</span><span class="p">,</span> <span class="s1">&#39;GS9&#39;</span><span class="p">,</span> <span class="s1">&#39;GS10&#39;</span><span class="p">,</span> <span class="s1">&#39;GS11&#39;</span><span class="p">,</span> <span class="s1">&#39;GS12&#39;</span><span class="p">]]</span>
+
+<span class="c1"># A single factor EFA</span>
+<span class="n">grit_efa</span> <span class="o">=</span> <span class="n">FactorAnalyzer</span><span class="p">(</span><span class="n">n_factors</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">grit_only</span><span class="p">)</span>
+
+<span class="c1"># Get loadings</span>
+<span class="n">grit_loadings</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">grit_efa</span><span class="o">.</span><span class="n">loadings_</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">grit_only</span><span class="o">.</span><span class="n">columns</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;grit1&#39;</span><span class="p">,</span> <span class="s1">&#39;grit2&#39;</span><span class="p">])</span>
+
+<span class="c1"># Heatmap</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">grit_loadings</span><span class="p">,</span> <span class="n">annot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;.2f&#39;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;Greys&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Axes: &gt;
+</pre></div>
+</div>
+<img alt="../_images/b8a0867751fa8757ace54770b50963b1d64d19954f6d84c966186a32731f64df.png" src="../_images/b8a0867751fa8757ace54770b50963b1d64d19954f6d84c966186a32731f64df.png" />
+</div>
+</div>
+<p>This appears to be the case. There’s a clear separation here and the two factors appear to emerge, much like in the original publication.</p>
+<p>Now, onto the bigger question. To what extent are these grit-factors distinct from Conscientiousness? One way to test this is to use EFA to determine how many factors underpin responses to Conscientiousness <em>and</em> the grit scale at the same time. If they are distinct components, we should see separate latent variables emerge to capture them. Lets do this - extract the grit questions (e.g. GS1-GS12) and the Conscientiousness questions (C1-C10) into a single dataframe first:</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Your answer here</span>
+<span class="c1"># Get grit and conscientiousness</span>
+<span class="n">grit_consc_names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;GS1&#39;</span><span class="p">,</span> <span class="s1">&#39;GS2&#39;</span><span class="p">,</span> <span class="s1">&#39;GS3&#39;</span><span class="p">,</span> <span class="s1">&#39;GS4&#39;</span><span class="p">,</span> <span class="s1">&#39;GS5&#39;</span><span class="p">,</span> <span class="s1">&#39;GS6&#39;</span><span class="p">,</span> <span class="s1">&#39;GS7&#39;</span><span class="p">,</span> <span class="s1">&#39;GS8&#39;</span><span class="p">,</span> <span class="s1">&#39;GS9&#39;</span><span class="p">,</span> <span class="s1">&#39;GS10&#39;</span><span class="p">,</span> <span class="s1">&#39;GS11&#39;</span><span class="p">,</span> <span class="s1">&#39;GS12&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;C1&#39;</span><span class="p">,</span> <span class="s1">&#39;C2&#39;</span><span class="p">,</span> <span class="s1">&#39;C3&#39;</span><span class="p">,</span> <span class="s1">&#39;C4&#39;</span><span class="p">,</span> <span class="s1">&#39;C5&#39;</span><span class="p">,</span> <span class="s1">&#39;C6&#39;</span><span class="p">,</span> <span class="s1">&#39;C7&#39;</span><span class="p">,</span> <span class="s1">&#39;C8&#39;</span><span class="p">,</span> <span class="s1">&#39;C9&#39;</span><span class="p">,</span> <span class="s1">&#39;C10&#39;</span><span class="p">]</span>
+
+<span class="c1"># Extract them</span>
+<span class="n">grit_consc</span> <span class="o">=</span> <span class="n">grit2</span><span class="p">[</span><span class="n">grit_consc_names</span><span class="p">]</span>
+<span class="n">grit_consc</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> 
+              
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>GS1</th>
+      <th>GS2</th>
+      <th>GS3</th>
+      <th>GS4</th>
+      <th>GS5</th>
+      <th>GS6</th>
+      <th>GS7</th>
+      <th>GS8</th>
+      <th>GS9</th>
+      <th>GS10</th>
+      <th>...</th>
+      <th>C1</th>
+      <th>C2</th>
+      <th>C3</th>
+      <th>C4</th>
+      <th>C5</th>
+      <th>C6</th>
+      <th>C7</th>
+      <th>C8</th>
+      <th>C9</th>
+      <th>C10</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>1</td>
+      <td>3</td>
+      <td>3</td>
+      <td>3</td>
+      <td>2</td>
+      <td>3</td>
+      <td>1</td>
+      <td>3</td>
+      <td>2</td>
+      <td>...</td>
+      <td>2</td>
+      <td>4</td>
+      <td>4</td>
+      <td>3</td>
+      <td>2</td>
+      <td>4</td>
+      <td>3</td>
+      <td>2</td>
+      <td>2</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>2</td>
+      <td>3</td>
+      <td>3</td>
+      <td>2</td>
+      <td>1</td>
+      <td>3</td>
+      <td>3</td>
+      <td>2</td>
+      <td>1</td>
+      <td>...</td>
+      <td>4</td>
+      <td>3</td>
+      <td>4</td>
+      <td>3</td>
+      <td>1</td>
+      <td>3</td>
+      <td>5</td>
+      <td>2</td>
+      <td>5</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3</td>
+      <td>3</td>
+      <td>3</td>
+      <td>3</td>
+      <td>4</td>
+      <td>3</td>
+      <td>4</td>
+      <td>4</td>
+      <td>3</td>
+      <td>3</td>
+      <td>...</td>
+      <td>2</td>
+      <td>2</td>
+      <td>4</td>
+      <td>2</td>
+      <td>3</td>
+      <td>4</td>
+      <td>5</td>
+      <td>3</td>
+      <td>3</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1</td>
+      <td>3</td>
+      <td>4</td>
+      <td>2</td>
+      <td>4</td>
+      <td>1</td>
+      <td>5</td>
+      <td>4</td>
+      <td>1</td>
+      <td>1</td>
+      <td>...</td>
+      <td>4</td>
+      <td>1</td>
+      <td>5</td>
+      <td>1</td>
+      <td>4</td>
+      <td>1</td>
+      <td>4</td>
+      <td>1</td>
+      <td>4</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>1</td>
+      <td>2</td>
+      <td>3</td>
+      <td>3</td>
+      <td>2</td>
+      <td>2</td>
+      <td>2</td>
+      <td>4</td>
+      <td>3</td>
+      <td>3</td>
+      <td>...</td>
+      <td>3</td>
+      <td>1</td>
+      <td>3</td>
+      <td>1</td>
+      <td>4</td>
+      <td>2</td>
+      <td>3</td>
+      <td>2</td>
+      <td>3</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>1</td>
+      <td>2</td>
+      <td>5</td>
+      <td>1</td>
+      <td>3</td>
+      <td>1</td>
+      <td>4</td>
+      <td>5</td>
+      <td>2</td>
+      <td>3</td>
+      <td>...</td>
+      <td>5</td>
+      <td>3</td>
+      <td>4</td>
+      <td>1</td>
+      <td>4</td>
+      <td>3</td>
+      <td>4</td>
+      <td>1</td>
+      <td>4</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>2</td>
+      <td>1</td>
+      <td>3</td>
+      <td>4</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>4</td>
+      <td>1</td>
+      <td>...</td>
+      <td>2</td>
+      <td>4</td>
+      <td>5</td>
+      <td>3</td>
+      <td>2</td>
+      <td>1</td>
+      <td>4</td>
+      <td>3</td>
+      <td>4</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>3</td>
+      <td>1</td>
+      <td>1</td>
+      <td>4</td>
+      <td>1</td>
+      <td>3</td>
+      <td>4</td>
+      <td>4</td>
+      <td>3</td>
+      <td>3</td>
+      <td>...</td>
+      <td>4</td>
+      <td>1</td>
+      <td>5</td>
+      <td>3</td>
+      <td>3</td>
+      <td>1</td>
+      <td>5</td>
+      <td>3</td>
+      <td>5</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>1</td>
+      <td>3</td>
+      <td>3</td>
+      <td>1</td>
+      <td>4</td>
+      <td>1</td>
+      <td>5</td>
+      <td>4</td>
+      <td>2</td>
+      <td>1</td>
+      <td>...</td>
+      <td>4</td>
+      <td>3</td>
+      <td>4</td>
+      <td>1</td>
+      <td>3</td>
+      <td>1</td>
+      <td>3</td>
+      <td>1</td>
+      <td>4</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>2</td>
+      <td>3</td>
+      <td>2</td>
+      <td>2</td>
+      <td>4</td>
+      <td>2</td>
+      <td>4</td>
+      <td>4</td>
+      <td>2</td>
+      <td>3</td>
+      <td>...</td>
+      <td>4</td>
+      <td>3</td>
+      <td>4</td>
+      <td>3</td>
+      <td>2</td>
+      <td>3</td>
+      <td>4</td>
+      <td>2</td>
+      <td>3</td>
+      <td>4</td>
+    </tr>
+  </tbody>
+</table>
+<p>10 rows × 22 columns</p>
+</div></div></div>
+</div>
+<p>We could approach this by extracting a single factor, two, three, etc, and checking the loadings. Instead, we’ll use parallel analysis here to determine the number of factors. Do this below, setting simulations to 500 to ensure it finishes reasonably swiftly.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Your answer here</span>
+<span class="n">grit_consc_parallel</span> <span class="o">=</span> <span class="n">parallel_analysis</span><span class="p">(</span><span class="n">grit_consc</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">(),</span> <span class="n">simulations</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">analysis_type</span><span class="o">=</span><span class="s1">&#39;fa&#39;</span><span class="p">,</span> <span class="n">full_output</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># Print number of factors</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">grit_consc_parallel</span><span class="p">[</span><span class="s1">&#39;factors&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>OMP: Info #276: omp_set_nested routine deprecated, please use omp_set_max_active_levels instead.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>OMP: Info #276: omp_set_nested routine deprecated, please use omp_set_max_active_levels instead.
+OMP: Info #276: omp_set_nested routine deprecated, please use omp_set_max_active_levels instead.
+OMP: Info #276: omp_set_nested routine deprecated, please use omp_set_max_active_levels instead.
+OMP: Info #276: omp_set_nested routine deprecated, please use omp_set_max_active_levels instead.
+OMP: Info #276: omp_set_nested routine deprecated, please use omp_set_max_active_levels instead.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>OMP: Info #276: omp_set_nested routine deprecated, please use omp_set_max_active_levels instead.
+OMP: Info #276: omp_set_nested routine deprecated, please use omp_set_max_active_levels instead.
+OMP: Info #276: omp_set_nested routine deprecated, please use omp_set_max_active_levels instead.
+OMP: Info #276: omp_set_nested routine deprecated, please use omp_set_max_active_levels instead.
+OMP: Info #276: omp_set_nested routine deprecated, please use omp_set_max_active_levels instead.
+OMP: Info #276: omp_set_nested routine deprecated, please use omp_set_max_active_levels instead.
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>6
+</pre></div>
+</div>
+<img alt="../_images/83101389519cc56bfe7622d66200d22a096d974afb0ef34fa88a4ac68fcd4efa.png" src="../_images/83101389519cc56bfe7622d66200d22a096d974afb0ef34fa88a4ac68fcd4efa.png" />
+</div>
+</div>
+<p>Parallel analysis suggests SIX(!) factors! In that case, fit an EFA, create the loadings matrix, and use <code class="docutils literal notranslate"><span class="pre">seaborn</span></code> to make a heatmap of them.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Your answer here</span>
+<span class="c1"># fit model</span>
+<span class="n">efa_6</span> <span class="o">=</span> <span class="n">FactorAnalyzer</span><span class="p">(</span><span class="n">n_factors</span><span class="o">=</span><span class="mi">6</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">grit_consc</span><span class="p">)</span>
+
+<span class="c1"># Extract loadings</span>
+<span class="n">efa_6_loadings</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">efa_6</span><span class="o">.</span><span class="n">loadings_</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">grit_consc</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+
+<span class="c1"># Visualise</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">efa_6_loadings</span><span class="p">,</span> <span class="n">annot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;.2f&#39;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;Greys&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Axes: &gt;
+</pre></div>
+</div>
+<img alt="../_images/94bc5136979309da5b26f370c2bff9b33b66525e29df6f954f18c5d61c680f89.png" src="../_images/94bc5136979309da5b26f370c2bff9b33b66525e29df6f954f18c5d61c680f89.png" />
+</div>
+</div>
+<p>What is interesting here is that the grit scale emerges as two factors in its own right, but the Conscientiousness factor is diluted across around four factors - though some are indeed rather poor. We can check the communalities for more information:</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Your answer here</span>
+<span class="c1"># get communalities</span>
+<span class="n">efa_6</span><span class="o">.</span><span class="n">get_communalities</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.54301249, 0.28436809, 0.63299058, 0.36138483, 0.3993016 ,
+       0.42713604, 0.45891183, 0.34347377, 0.25445919, 0.38493826,
+       0.63124181, 0.371517  , 0.19125906, 0.6211762 , 0.31804021,
+       0.40373643, 0.23457326, 0.5091881 , 0.28339791, 0.19473899,
+       0.72426748, 0.36885508])
+</pre></div>
+</div>
+</div>
+</div>
+<p>Most of these are not particularly strong. What about the proportion of variance explained by each factor?</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Your answer here</span>
+<span class="n">efa_6</span><span class="o">.</span><span class="n">get_factor_variance</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(array([2.30893142, 2.19415419, 1.73302355, 1.30210127, 0.82039219,
+        0.5833656 ]),
+ array([0.10495143, 0.09973428, 0.0787738 , 0.05918642, 0.03729055,
+        0.02651662]),
+ array([0.10495143, 0.20468571, 0.28345951, 0.34264593, 0.37993648,
+        0.4064531 ]))
+</pre></div>
+</div>
+</div>
+</div>
+<p>The center row shows that these factors alone don’t explain much variance each, and together they get around 40% of the variance in the data. One final suggestion would be to consider the grit scales against the backdrop of all the other traits in the Big 5. Perhaps not just Conscientiousness plays a role. So, the next challenge is to fit an EFA to <em>all the trait data</em> - grit, Conscientiousness, and the rest of the traits! You can access that in the <code class="docutils literal notranslate"><span class="pre">grit2</span></code> dataframe already. Use parallel analysis to see how many factors emerge from this. Try setting simulations to 100 to get this to work faster.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Your answer here</span>
+<span class="n">all_factors</span> <span class="o">=</span> <span class="n">parallel_analysis</span><span class="p">(</span><span class="n">grit2</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">(),</span> <span class="n">simulations</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">analysis_type</span><span class="o">=</span><span class="s1">&#39;fa&#39;</span><span class="p">,</span> <span class="n">full_output</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># print number of factors</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">all_factors</span><span class="p">[</span><span class="s1">&#39;factors&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/miniconda3/envs/py11/lib/python3.11/site-packages/scipy/stats/_multivariate.py:931: RuntimeWarning: divide by zero encountered in log
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/miniconda3/envs/py11/lib/python3.11/site-packages/horns/__init__.py:361: RuntimeWarning: invalid value encountered in multiply
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>OMP: Info #276: omp_set_nested routine deprecated, please use omp_set_max_active_levels instead.
+OMP: Info #276: omp_set_nested routine deprecated, please use omp_set_max_active_levels instead.
+OMP: Info #276: omp_set_nested routine deprecated, please use omp_set_max_active_levels instead.
+OMP: Info #276: omp_set_nested routine deprecated, please use omp_set_max_active_levels instead.
+OMP: Info #276: omp_set_nested routine deprecated, please use omp_set_max_active_levels instead.
+OMP: Info #276: omp_set_nested routine deprecated, please use omp_set_max_active_levels instead.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>OMP: Info #276: omp_set_nested routine deprecated, please use omp_set_max_active_levels instead.
+OMP: Info #276: omp_set_nested routine deprecated, please use omp_set_max_active_levels instead.
+OMP: Info #276: omp_set_nested routine deprecated, please use omp_set_max_active_levels instead.
+OMP: Info #276: omp_set_nested routine deprecated, please use omp_set_max_active_levels instead.
+OMP: Info #276: omp_set_nested routine deprecated, please use omp_set_max_active_levels instead.
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>18
+</pre></div>
+</div>
+<img alt="../_images/19d49e234d118fa01958ea6709fca9b101ac9c613b08a8e7758ba215570db30f.png" src="../_images/19d49e234d118fa01958ea6709fca9b101ac9c613b08a8e7758ba215570db30f.png" />
+</div>
+</div>
+<p>This suggests <em>eighteen</em> factors, and is a good example of why you should not always trust blindly in approaches like parallel analysis!</p>
+<p>As a final step, build a 5-factor model with EFA and examine the loadings, showing them in an annotated heatmap.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Your answer here</span>
+<span class="n">all_data_efa</span> <span class="o">=</span> <span class="n">FactorAnalyzer</span><span class="p">(</span><span class="n">n_factors</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">grit2</span><span class="p">)</span>
+
+<span class="c1"># Loadings</span>
+<span class="n">all_loadings</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">all_data_efa</span><span class="o">.</span><span class="n">loadings_</span><span class="p">,</span>
+                           <span class="n">index</span><span class="o">=</span><span class="n">grit2</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+
+<span class="c1"># Heatmap</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span> <span class="c1"># this code</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span> <span class="c1"># and this - makes plot bigger</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">all_loadings</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;Greys&#39;</span><span class="p">,</span> <span class="n">annot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;.2f&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Axes: &gt;
+</pre></div>
+</div>
+<img alt="../_images/417ed11d18703f7a59fdb11cb4dd2b8f8ebe040acb60be0f8b37e79e2eebeb9b.png" src="../_images/417ed11d18703f7a59fdb11cb4dd2b8f8ebe040acb60be0f8b37e79e2eebeb9b.png" />
+</div>
+</div>
+<p>Finally, this is what the criticisms were about. It is interesting to note that when considered against the backdrop of the other traits, Conscientiousness and grit appear on the same factor, but not when considered in isolation. The parallel analysis results also suggest there may be more to this story; and also highlights the theme we have touched on throughout these examples - there are trade offs to building models, and no-one way is correct - both theory and data have to join to build a good model.</p>
+</section>
+<section id="the-nerdiness-scale-how-many-factors-determine-nerd-status">
+<h1>2. The Nerdiness Scale - how many factors determine nerd status?<a class="headerlink" href="#the-nerdiness-scale-how-many-factors-determine-nerd-status" title="Link to this heading">#</a></h1>
+<p>Researchers in personality use EFA and psychometrics to measure other interesting kinds of individual differences. In the following example, we’ll take a look at the development of a ‘nerdiness’ scale, examine its properties, and see how well the models predictions (i.e. scores on a factor) correlate with someones self-reported nerdiness.</p>
+<p>Download the dataset from the following location: <a class="reference external" href="http://openpsychometrics.org/_rawdata/NPAS-data-16December2018.zip">http://openpsychometrics.org/_rawdata/NPAS-data-16December2018.zip</a></p>
+<p>Read in the dataset from that folder, called <code class="docutils literal notranslate"><span class="pre">data.csv</span></code>, using a tab-separated delimeter. I’ve renamed it below just for organisation purposes.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Your answer here</span>
+<span class="c1"># Read in nerdiness with tab</span>
+<span class="n">nerd</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data_nerd.csv&#39;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="n">nerd</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Q1</th>
+      <th>Q2</th>
+      <th>Q3</th>
+      <th>Q4</th>
+      <th>Q5</th>
+      <th>Q6</th>
+      <th>Q7</th>
+      <th>Q8</th>
+      <th>Q9</th>
+      <th>Q10</th>
+      <th>...</th>
+      <th>race_arab</th>
+      <th>race_asian</th>
+      <th>race_black</th>
+      <th>race_white</th>
+      <th>race_hispanic</th>
+      <th>race_nativeam</th>
+      <th>race_nativeau</th>
+      <th>race_other</th>
+      <th>nerdy</th>
+      <th>ASD</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>3</td>
+      <td>5</td>
+      <td>3</td>
+      <td>3</td>
+      <td>5</td>
+      <td>5</td>
+      <td>5</td>
+      <td>3</td>
+      <td>5</td>
+      <td>5</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>7</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>4</td>
+      <td>4</td>
+      <td>4</td>
+      <td>3</td>
+      <td>5</td>
+      <td>2</td>
+      <td>5</td>
+      <td>1</td>
+      <td>4</td>
+      <td>4</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>6</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>5</td>
+      <td>5</td>
+      <td>5</td>
+      <td>5</td>
+      <td>5</td>
+      <td>5</td>
+      <td>5</td>
+      <td>5</td>
+      <td>5</td>
+      <td>5</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>7</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>5</td>
+      <td>5</td>
+      <td>5</td>
+      <td>5</td>
+      <td>5</td>
+      <td>5</td>
+      <td>5</td>
+      <td>3</td>
+      <td>5</td>
+      <td>5</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>7</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>4</td>
+      <td>4</td>
+      <td>4</td>
+      <td>4</td>
+      <td>4</td>
+      <td>4</td>
+      <td>4</td>
+      <td>4</td>
+      <td>4</td>
+      <td>5</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>6</td>
+      <td>2</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 80 columns</p>
+</div></div></div>
+</div>
+<p>Run the following code to subset the data, which selects only the nerd columns (Q1-Q26) and the self-reported nerdiness column.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Run to save typing</span>
+<span class="n">nerd_only</span> <span class="o">=</span> <span class="n">nerd</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">regex</span><span class="o">=</span><span class="s1">&#39;^Q\d+|nerdy&#39;</span><span class="p">)</span>
+<span class="n">nerd_only</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Q1</th>
+      <th>Q2</th>
+      <th>Q3</th>
+      <th>Q4</th>
+      <th>Q5</th>
+      <th>Q6</th>
+      <th>Q7</th>
+      <th>Q8</th>
+      <th>Q9</th>
+      <th>Q10</th>
+      <th>...</th>
+      <th>Q18</th>
+      <th>Q19</th>
+      <th>Q20</th>
+      <th>Q21</th>
+      <th>Q22</th>
+      <th>Q23</th>
+      <th>Q24</th>
+      <th>Q25</th>
+      <th>Q26</th>
+      <th>nerdy</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>3</td>
+      <td>5</td>
+      <td>3</td>
+      <td>3</td>
+      <td>5</td>
+      <td>5</td>
+      <td>5</td>
+      <td>3</td>
+      <td>5</td>
+      <td>5</td>
+      <td>...</td>
+      <td>5</td>
+      <td>5</td>
+      <td>5</td>
+      <td>5</td>
+      <td>5</td>
+      <td>5</td>
+      <td>5</td>
+      <td>5</td>
+      <td>5</td>
+      <td>7</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>4</td>
+      <td>4</td>
+      <td>4</td>
+      <td>3</td>
+      <td>5</td>
+      <td>2</td>
+      <td>5</td>
+      <td>1</td>
+      <td>4</td>
+      <td>4</td>
+      <td>...</td>
+      <td>3</td>
+      <td>1</td>
+      <td>3</td>
+      <td>3</td>
+      <td>3</td>
+      <td>4</td>
+      <td>4</td>
+      <td>4</td>
+      <td>5</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>5</td>
+      <td>5</td>
+      <td>5</td>
+      <td>5</td>
+      <td>5</td>
+      <td>5</td>
+      <td>5</td>
+      <td>5</td>
+      <td>5</td>
+      <td>5</td>
+      <td>...</td>
+      <td>4</td>
+      <td>5</td>
+      <td>5</td>
+      <td>5</td>
+      <td>5</td>
+      <td>5</td>
+      <td>5</td>
+      <td>3</td>
+      <td>5</td>
+      <td>7</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>5</td>
+      <td>5</td>
+      <td>5</td>
+      <td>5</td>
+      <td>5</td>
+      <td>5</td>
+      <td>5</td>
+      <td>3</td>
+      <td>5</td>
+      <td>5</td>
+      <td>...</td>
+      <td>5</td>
+      <td>5</td>
+      <td>5</td>
+      <td>4</td>
+      <td>1</td>
+      <td>5</td>
+      <td>5</td>
+      <td>5</td>
+      <td>5</td>
+      <td>7</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>4</td>
+      <td>4</td>
+      <td>4</td>
+      <td>4</td>
+      <td>4</td>
+      <td>4</td>
+      <td>4</td>
+      <td>4</td>
+      <td>4</td>
+      <td>5</td>
+      <td>...</td>
+      <td>5</td>
+      <td>3</td>
+      <td>5</td>
+      <td>5</td>
+      <td>4</td>
+      <td>4</td>
+      <td>5</td>
+      <td>4</td>
+      <td>0</td>
+      <td>6</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 27 columns</p>
+</div></div></div>
+</div>
+<p>The questions are as follows:</p>
+<ul class="simple">
+<li><p>Q1	I am interested in science.</p></li>
+<li><p>Q2	I was in advanced classes.</p></li>
+<li><p>Q3	I like to play RPGs. (Ex. D&amp;D)</p></li>
+<li><p>Q4	My appearance is not as important as my intelligence.</p></li>
+<li><p>Q5	I collect books.</p></li>
+<li><p>Q6	I prefer academic success to social success.</p></li>
+<li><p>Q7	I watch science related shows.</p></li>
+<li><p>Q8	I spend recreational time researching topics others might find dry or overly rigorous.</p></li>
+<li><p>Q9	I like science fiction.</p></li>
+<li><p>Q10	I would rather read a book than go to a party.</p></li>
+<li><p>Q11	I am more comfortable with my hobbies than I am with other people.</p></li>
+<li><p>Q12	I spend more time at the library than any other public place.</p></li>
+<li><p>Q13	I would describe my smarts as bookish.</p></li>
+<li><p>Q14	I like to read technology news reports.</p></li>
+<li><p>Q15	I have started writing a novel.</p></li>
+<li><p>Q16	I gravitate towards introspection.</p></li>
+<li><p>Q17	I am more comfortable interacting online than in person.</p></li>
+<li><p>Q18	I love to read challenging material.</p></li>
+<li><p>Q19	I have played a lot of video games.</p></li>
+<li><p>Q20	I was a very odd child.</p></li>
+<li><p>Q21	I sometimes prefer fictional people to real ones.</p></li>
+<li><p>Q22	I enjoy learning more than I need to.</p></li>
+<li><p>Q23	I get excited about my ideas and research.</p></li>
+<li><p>Q24	I am a strange person.</p></li>
+<li><p>Q25	I care about super heroes.</p></li>
+<li><p>Q26	I can be socially awkward at times.</p></li>
+</ul>
+<p>From this, drop the ‘nerdy’ column, and do a parallel analysis on the remaining columns to see what the dimensional structure of the questionnaire might be.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Your answer here</span>
+<span class="n">no_nerdy</span> <span class="o">=</span> <span class="n">nerd_only</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="s1">&#39;nerdy&#39;</span><span class="p">)</span>
+
+<span class="c1"># Parallel</span>
+<span class="n">nerd_pa</span> <span class="o">=</span> <span class="n">parallel_analysis</span><span class="p">(</span><span class="n">no_nerdy</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">(),</span> <span class="n">simulations</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">analysis_type</span><span class="o">=</span><span class="s1">&#39;fa&#39;</span><span class="p">,</span> <span class="n">full_output</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># Print results</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">nerd_pa</span><span class="p">[</span><span class="s1">&#39;factors&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>OMP: Info #276: omp_set_nested routine deprecated, please use omp_set_max_active_levels instead.
+OMP: Info #276: omp_set_nested routine deprecated, please use omp_set_max_active_levels instead.
+OMP: Info #276: omp_set_nested routine deprecated, please use omp_set_max_active_levels instead.
+OMP: Info #276: omp_set_nested routine deprecated, please use omp_set_max_active_levels instead.
+OMP: Info #276: omp_set_nested routine deprecated, please use omp_set_max_active_levels instead.
+OMP: Info #276: omp_set_nested routine deprecated, please use omp_set_max_active_levels instead.
+OMP: Info #276: omp_set_nested routine deprecated, please use omp_set_max_active_levels instead.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>OMP: Info #276: omp_set_nested routine deprecated, please use omp_set_max_active_levels instead.
+OMP: Info #276: omp_set_nested routine deprecated, please use omp_set_max_active_levels instead.
+OMP: Info #276: omp_set_nested routine deprecated, please use omp_set_max_active_levels instead.
+OMP: Info #276: omp_set_nested routine deprecated, please use omp_set_max_active_levels instead.
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>9
+</pre></div>
+</div>
+<img alt="../_images/0e05eb5649a3d7d4a8a5a6f4ee1ec9ff68396f3ffc2de3e5df900abd6cdb98eb.png" src="../_images/0e05eb5649a3d7d4a8a5a6f4ee1ec9ff68396f3ffc2de3e5df900abd6cdb98eb.png" />
+</div>
+</div>
+<p>This suggests 9 factors. Let’s explore what those might look like, though this is probably too much! Fit an EFA of 9 factors, extract the loadings, and show the heatmap.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Your answer here</span>
+<span class="n">nerd_efa_9</span> <span class="o">=</span> <span class="n">FactorAnalyzer</span><span class="p">(</span><span class="n">n_factors</span><span class="o">=</span><span class="mi">9</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">no_nerdy</span><span class="p">)</span>
+
+<span class="c1"># Loadings</span>
+<span class="n">nerd_efa_9_loadings</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">nerd_efa_9</span><span class="o">.</span><span class="n">loadings_</span><span class="p">,</span> 
+                                   <span class="n">index</span><span class="o">=</span><span class="n">no_nerdy</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+
+<span class="c1"># Show</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">nerd_efa_9_loadings</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;Greys&#39;</span><span class="p">,</span> <span class="n">annot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;.2f&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Axes: &gt;
+</pre></div>
+</div>
+<img alt="../_images/e68c979d09ff552e2d219c0e4940c3afc462641701b7b4290f11a4c4499364ae.png" src="../_images/e68c979d09ff552e2d219c0e4940c3afc462641701b7b4290f11a4c4499364ae.png" />
+</div>
+</div>
+<p>This shows parallel analysis has found a series of factors that have few high loadings - e.g., it is quite a sparse output. Lets see what the variance explained looks like:</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Your answer here</span>
+<span class="n">nerd_efa_9</span><span class="o">.</span><span class="n">get_factor_variance</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(array([1.80913475, 1.68391653, 1.57982306, 1.5178765 , 1.2784141 ,
+        1.11135939, 0.90480629, 0.65422835, 0.57337248]),
+ array([0.06958211, 0.06476602, 0.06076243, 0.05837987, 0.04916977,
+        0.04274459, 0.03480024, 0.02516263, 0.02205279]),
+ array([0.06958211, 0.13434813, 0.19511055, 0.25349042, 0.30266019,
+        0.34540478, 0.38020502, 0.40536765, 0.42742044]))
+</pre></div>
+</div>
+</div>
+</div>
+<p>Each contributes a small amount, which suggests this isn’t that good of a solution. Let’s see what the communalities look like:</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Your answer here</span>
+<span class="n">nerd_efa_9</span><span class="o">.</span><span class="n">get_communalities</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.65057301, 0.37629346, 0.4854228 , 0.4292649 , 0.47732474,
+       0.32642961, 0.47671123, 0.30240136, 0.29431115, 0.27203165,
+       0.46464797, 0.59778914, 0.4400656 , 0.13828528, 0.41991108,
+       0.38072231, 0.57348669, 0.28334579, 0.79627027, 0.44664745,
+       0.21578513, 0.32416882, 0.70342826, 0.60850485, 0.30315238,
+       0.32595654])
+</pre></div>
+</div>
+</div>
+</div>
+<p>These are all fairly middling, with the occasional high value, which suggests we could revise our factor structure. Reduce the number of factors to 5.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Your answer here</span>
+<span class="n">nerd_efa_5</span> <span class="o">=</span> <span class="n">FactorAnalyzer</span><span class="p">(</span><span class="n">n_factors</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">no_nerdy</span><span class="p">)</span>
+
+<span class="c1"># Loadings</span>
+<span class="n">nerd_efa_5_loadings</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">nerd_efa_5</span><span class="o">.</span><span class="n">loadings_</span><span class="p">,</span> 
+                                   <span class="n">index</span><span class="o">=</span><span class="n">no_nerdy</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+
+<span class="c1"># Show</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">nerd_efa_5_loadings</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;Greys&#39;</span><span class="p">,</span> <span class="n">annot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;.2f&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Axes: &gt;
+</pre></div>
+</div>
+<img alt="../_images/9cf3492d28c322b5aded0c798a7ae6737dff92ecb792af55e7f1e9b716c46fdc.png" src="../_images/9cf3492d28c322b5aded0c798a7ae6737dff92ecb792af55e7f1e9b716c46fdc.png" />
+</div>
+</div>
+<p>There is a some evidence of a clearer pattern here - check the explained variance!</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Your answer here</span>
+<span class="n">nerd_efa_5</span><span class="o">.</span><span class="n">get_factor_variance</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(array([2.94564003, 2.16992506, 1.83222901, 1.48538128, 1.03485483]),
+ array([0.11329385, 0.08345866, 0.07047035, 0.05713005, 0.03980211]),
+ array([0.11329385, 0.1967525 , 0.26722285, 0.3243529 , 0.36415501]))
+</pre></div>
+</div>
+</div>
+</div>
+<p>Its not far stronger, but it does show a mild improvement - finally, check the communalities.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Your answer here</span>
+<span class="n">nerd_efa_5</span><span class="o">.</span><span class="n">get_communalities</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.40237144, 0.37008014, 0.37003355, 0.41325162, 0.3282594 ,
+       0.25575626, 0.6595952 , 0.35995927, 0.35441523, 0.13336557,
+       0.41267179, 0.48688008, 0.47408185, 0.1495102 , 0.35756844,
+       0.41037199, 0.56767258, 0.12039242, 0.39628197, 0.2844804 ,
+       0.32080873, 0.21858848, 0.50649838, 0.27521572, 0.48077126,
+       0.35914825])
+</pre></div>
+</div>
+</div>
+</div>
+<p>These are, sadly, lower - the price of fewer factors is less of a clear association between the factors and the questions. At this stage, we might question whether the scale itself is doing what we want. A conclusion a circumspect psychometrician might have here is that the scale is too diluted to be measuring one thing - or, to expand the definition of nerdiness to be multidimensional. Looking over both the 5 and 9 factor solutions, and the questions, can you find a theme in the questions and their associated factor loadings? This is one of the real challenges of factor analysis - outside of the factors, variances, and values - does it seem to make sense?</p>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./8_EFA"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="QPoP%20-%20Week%208%20Workshop.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">8 - Exploratory Factor Analysis</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Finding latent variables in data - Exercises &amp; Answers</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#grit-what-is-it">1. Grit - what is it?</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#the-nerdiness-scale-how-many-factors-determine-nerd-status">2. The Nerdiness Scale - how many factors determine nerd status?</a></li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Alex Jones, Ph.D
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
