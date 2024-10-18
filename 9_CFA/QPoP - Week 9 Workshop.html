@@ -1,0 +1,2482 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>9 - Confirmatory Factor Analysis &#8212; Statistical Modelling with Python</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '9_CFA/QPoP - Week 9 Workshop';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Fitting latent variables onto data - Exercises &amp; Answers" href="QPoP%20-%20Week%209%20Exercises%20-%20Answers.html" />
+    <link rel="prev" title="Finding latent variables in data - Exercises &amp; Answers" href="../8_EFA/QPoP%20-%20Week%208%20Exercises%20-%20Answers.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt="Statistical Modelling with Python - Home"/>
+    <script>document.write(`<img src="../_static/logo.png" class="logo__image only-dark" alt="Statistical Modelling with Python - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    Statistical Modelling with Python
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Python Basics</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../1_Introduction/QPoP%20-%20Week%201%20Workshop.html">1 - Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../1_Introduction/QPoP%20-%20Week%201%20Exercises%20-%20Answers.html">Using Python for Data Analysis - Exercises &amp; Answers</a></li>
+
+
+
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">The GLM</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../2_The_GLM/QPoP%20-%20Week%202%20Workshop.html">2 - The General Linear Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../2_The_GLM/QPoP%20-%20Week%202%20Exercises%20-%20Answers.html">Getting to grips with linear models in Python - Exercises &amp; Answers</a></li>
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Advancing the GLM</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../3_Advancing_GLM/QPoP%20-%20Week%203%20Workshop.html">3 - Advancing the general linear model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../3_Advancing_GLM/QPoP%20-%20Week%203%20Exercises%20-%20Answers.html">Checking assumptions and including interactions - Exercises &amp; Answers</a></li>
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">The art of prediction</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../4_Prediction/QPoP%20-%20Week%204%20Workshop.html">4 - The art of prediction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../4_Prediction/QPoP%20-%20Week%204%20Exercises%20-%20Answers.html">Asking scientific questions of models - Exercises &amp; Answers</a></li>
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Binary outcome models</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../5_Binary/QPoP%20-%20Week%205%20Workshop.html">5 - Binary outcome models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../5_Binary/QPoP%20-%20Week%205%20Exercises%20-%20Answers.html">Using and understanding probit models - Exercises &amp; Answers</a></li>
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Applications and other kinds of hypotheses</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../6_Applications/QPoP%20-%20Week%206%20Workshop.html">6 - Precision in Predictions</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../6_Applications/QPoP%20-%20Week%206%20Exercises%20-%20Answers.html">Example exercises using skills so far</a></li>
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Linear Mixed Effects Models</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../7_MixedModel/QPoP%20-%20Week%207%20Workshop.html">7 - Linear mixed effects models</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../7_MixedModel/QPoP%20-%20Week%207%20Exercises%20-%20Answers.html">Dealing with repeated measurements - Exercises &amp; Answers</a></li>
+
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Exploratory Factor Analysis</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../8_EFA/QPoP%20-%20Week%208%20Workshop.html">8 - Exploratory Factor Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../8_EFA/QPoP%20-%20Week%208%20Exercises%20-%20Answers.html">Finding latent variables in data - Exercises &amp; Answers</a></li>
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Confirmatory Factor Analysis</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">9 - Confirmatory Factor Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="QPoP%20-%20Week%209%20Exercises%20-%20Answers.html">Fitting latent variables onto data - Exercises &amp; Answers</a></li>
+
+
+
+
+
+
+
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2F9_CFA/QPoP - Week 9 Workshop.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/9_CFA/QPoP - Week 9 Workshop.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>9 - Confirmatory Factor Analysis</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fitting-latent-variables-onto-data">Fitting latent variables onto data</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fitting-cfa-models-in-python-semopy">Fitting CFA models in Python - <code class="docutils literal notranslate"><span class="pre">semopy</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cfa-in-semopy">CFA in <code class="docutils literal notranslate"><span class="pre">semopy</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreting-cfa-models-coefficient-estimates">Interpreting CFA models - coefficient estimates</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreting-cfa-models-fit-statistics">Interpreting CFA models - fit statistics</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#another-example-cfa-models-meet-regression">Another example - CFA models meet regression</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="confirmatory-factor-analysis">
+<h1>9 - Confirmatory Factor Analysis<a class="headerlink" href="#confirmatory-factor-analysis" title="Link to this heading">#</a></h1>
+<section id="fitting-latent-variables-onto-data">
+<h2>Fitting latent variables onto data<a class="headerlink" href="#fitting-latent-variables-onto-data" title="Link to this heading">#</a></h2>
+<p>We continue our journey in multivariate data analysis with the sister technique of exploratory factor analysis - <strong>confirmatory factor analysis</strong> (CFA). Much like EFA, CFA is a framework that draws no distinction between what variables are predictors or outcomes. But unlike EFA, the aim of CFA is to instead a-priori specify a set of latent variables and how some observed data might have given rise to them, and see how well that model specification fits the data.</p>
+<p>That distinction is very important. While EFA will find a number of latent variables that best explain the data you have collected, in CFA it is <strong>your job</strong> to specify the number of latent variables <em>and</em> their relationships with the data you have collected to see how well this model fits - remember that EFA does that for you by computing the loadings of each observed variable on a latent variable, and we can infer what is associated with what from that. In CFA, we have to suggest, up-front, what latent variable is associated with what observed variables, and whether the latent variables are associated themselves! Note these are all linear models as we have seen before, but now on a more complex and interwoven scale.</p>
+<p>How do we come up with these CFA models, determining what is associated with what? This is why EFA and CFA are so interlinked. Theory and EFA can guide us in figuring out what is associated with what, and we can take new data and specify a CFA model to see how well it does. Thus, CFA often follows EFA in modern research practice.</p>
+<section id="fitting-cfa-models-in-python-semopy">
+<h3>Fitting CFA models in Python - <code class="docutils literal notranslate"><span class="pre">semopy</span></code><a class="headerlink" href="#fitting-cfa-models-in-python-semopy" title="Link to this heading">#</a></h3>
+<p>To fit these models in Python, we will use a package called <code class="docutils literal notranslate"><span class="pre">semopy</span></code>. This package is a general-purpose modelling package built specifically for another type of use case - structural equation models (hence the <code class="docutils literal notranslate"><span class="pre">sem</span></code>), of which CFA is actually a specific type. It has a familiar but slightly different syntax for fitting models, as we will explore below. First, lets import it and everything else we’ve used so far.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import what we need</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span> <span class="c1"># dataframes</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span> <span class="c1"># plots</span>
+<span class="kn">import</span> <span class="nn">statsmodels.formula.api</span> <span class="k">as</span> <span class="nn">smf</span> <span class="c1"># Models</span>
+<span class="kn">import</span> <span class="nn">marginaleffects</span> <span class="k">as</span> <span class="nn">me</span> <span class="c1"># marginal effects</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span> <span class="c1"># numpy for some functions</span>
+<span class="kn">import</span> <span class="nn">pingouin</span> <span class="k">as</span> <span class="nn">pg</span>
+<span class="kn">from</span> <span class="nn">factor_analyzer</span> <span class="kn">import</span> <span class="n">FactorAnalyzer</span> <span class="c1"># for EFA</span>
+<span class="kn">import</span> <span class="nn">semopy</span> <span class="k">as</span> <span class="nn">sem</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>To get started, let’s read in some data for which we have a sense of what the latent variables might be. We’ll rely again on a personality measure. In the “nerdiness scale” dataset, there is actually a useful, very short measure of the Big Five, called the TIPI - the Ten Item Personality Inventory. Download the data here: <a class="reference external" href="http://openpsychometrics.org/_rawdata/NPAS-data-16December2018.zip">http://openpsychometrics.org/_rawdata/NPAS-data-16December2018.zip</a></p>
+<p>I’ve saved it as <code class="docutils literal notranslate"><span class="pre">data_nerd.csv</span></code> already, so below it is read in, and we extract the columns with TIPI in the column name.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Read in nerdiness data, keeping only the columns with &#39;TIPI&#39; in it</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data_nerd.csv&#39;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">usecols</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="s1">&#39;TIPI&#39;</span> <span class="ow">in</span> <span class="n">x</span><span class="p">)</span> <span class="c1"># A little shortcut to filter quickly!</span>
+<span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>TIPI1</th>
+      <th>TIPI2</th>
+      <th>TIPI3</th>
+      <th>TIPI4</th>
+      <th>TIPI5</th>
+      <th>TIPI6</th>
+      <th>TIPI7</th>
+      <th>TIPI8</th>
+      <th>TIPI9</th>
+      <th>TIPI10</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>1</td>
+      <td>7</td>
+      <td>1</td>
+      <td>6</td>
+      <td>7</td>
+      <td>7</td>
+      <td>1</td>
+      <td>7</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>5</td>
+      <td>3</td>
+      <td>5</td>
+      <td>4</td>
+      <td>5</td>
+      <td>5</td>
+      <td>5</td>
+      <td>5</td>
+      <td>6</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1</td>
+      <td>6</td>
+      <td>3</td>
+      <td>7</td>
+      <td>6</td>
+      <td>7</td>
+      <td>2</td>
+      <td>6</td>
+      <td>2</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>7</td>
+      <td>2</td>
+      <td>7</td>
+      <td>4</td>
+      <td>7</td>
+      <td>2</td>
+      <td>6</td>
+      <td>1</td>
+      <td>7</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2</td>
+      <td>5</td>
+      <td>4</td>
+      <td>3</td>
+      <td>7</td>
+      <td>6</td>
+      <td>5</td>
+      <td>5</td>
+      <td>6</td>
+      <td>2</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>The questions are as follows:</p>
+<ul class="simple">
+<li><p>TIPI1	- Extraverted, enthusiastic.</p></li>
+<li><p>TIPI2	- Critical, quarrelsome.</p></li>
+<li><p>TIPI3	- Dependable, self-disciplined.</p></li>
+<li><p>TIPI4	- Anxious, easily upset.</p></li>
+<li><p>TIPI5	- Open to new experiences, complex.</p></li>
+<li><p>TIPI6	- Reserved, quiet.</p></li>
+<li><p>TIPI7	- Sympathetic, warm.</p></li>
+<li><p>TIPI8	- Disorganized, careless.</p></li>
+<li><p>TIPI9	- Calm, emotionally stable.</p></li>
+<li><p>TIPI10 - Conventional, uncreative.</p></li>
+</ul>
+<p>Now what? Imagine we’ve already collected a previous sample from this dataset, and an EFA suggests the presence of 5 latent factors (it should do - its measuring the Big 5!). How might we now test whether this is correct or not?</p>
+<p>We specify a model in which there are 5 latent factors, and <strong>only</strong> responses to certain questions load on them. Specifically we might say something like this, in plain English:</p>
+<ul class="simple">
+<li><p>“The Extraversion latent variable comes from TIPI1 and TIPI6”</p></li>
+<li><p>“The Agreeableness latent variable comes from TIPI2 and TIPI7”</p></li>
+<li><p>“The Conscientiousness latent variable comes from TIPI3 and TIPI8”</p></li>
+<li><p>“The Neuroticism latent variable comes from TIPI4 and TIPI9”</p></li>
+<li><p>“The Openness latent variable comes from TIPI5 and TIPI10”</p></li>
+</ul>
+<p>Indeed, those are the questions the authors of the scale posit measure those traits. How much does the data support that kind of model? What we’re saying here is that there are 5 latent factors, and they load ONLY on the questions we say they do. Is that a good model?</p>
+<p>Let’s specify this in <code class="docutils literal notranslate"><span class="pre">semopy</span></code>.</p>
+</section>
+<section id="cfa-in-semopy">
+<h3>CFA in <code class="docutils literal notranslate"><span class="pre">semopy</span></code><a class="headerlink" href="#cfa-in-semopy" title="Link to this heading">#</a></h3>
+<p>We first do this by laying out a long formula string, which we do in triple-quotations, which allows to write long paragraphs of text as a string variable. Notice we are writing linear models as before, but we use a new symbol - <code class="docutils literal notranslate"><span class="pre">=~</span></code> - which means “the thing on the left is a latent variable that gives rise to the things on the right”. Notice too we can name the latent variables with whatever name we like:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create a model string for CFA!</span>
+<span class="n">cfa_model</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">extraversion =~ TIPI1 + TIPI6</span>
+<span class="s2">agreeableness =~ TIPI2 + TIPI7</span>
+<span class="s2">conscientious =~ TIPI3 + TIPI8</span>
+<span class="s2">neuroticism =~ TIPI4 + TIPI9</span>
+<span class="s2">openness =~ TIPI5 + TIPI10</span>
+<span class="s2">&quot;&quot;&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Once we have that, we pass it into <code class="docutils literal notranslate"><span class="pre">semopy</span></code> which has a <code class="docutils literal notranslate"><span class="pre">Model</span></code> function, like so:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create a model from the string</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">sem</span><span class="o">.</span><span class="n">Model</span><span class="p">(</span><span class="n">cfa_model</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>And then, in a slightly different way to <code class="docutils literal notranslate"><span class="pre">statsmodels</span></code>, we fit it to the dataset like this:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Fit it to the data, observing its successful print message</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>SolverResult(fun=0.26553529574171186, success=True, n_it=64, x=array([-5.07648299e-01, -3.35199277e+00, -5.49388913e-01, -1.60867351e+00,
+       -2.48185202e-01,  4.37720720e-17,  2.60000298e+00,  3.23650506e+00,
+        4.19420084e-01,  2.58313761e+00,  1.00286083e-16,  2.14705944e+00,
+        1.25127014e-16,  3.06230987e+00,  1.96602959e-01,  2.62027984e-01,
+       -8.79052543e-02, -2.40102364e-01,  2.26342724e-02, -9.82637531e-02,
+        2.59133618e+00,  1.86467945e-01, -5.75723949e-01,  1.99518616e-01,
+        3.89764596e+00, -2.52805964e-01,  7.09319920e-01,  1.29393368e+00,
+        2.00616766e+00, -2.74134742e-01]), message=&#39;Optimization terminated successfully&#39;, name_method=&#39;SLSQP&#39;, name_obj=&#39;MLW&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<p>While that is easy enough, we now turn to the difficulty of interpreting these models.</p>
+</section>
+</section>
+<section id="interpreting-cfa-models-coefficient-estimates">
+<h2>Interpreting CFA models - coefficient estimates<a class="headerlink" href="#interpreting-cfa-models-coefficient-estimates" title="Link to this heading">#</a></h2>
+<p>First, we might want to check whether the coefficients make any sense in our model. After all, we specified the model similarly to how we have done before, so it makes sense to see how each variable is associated. This is akin to checking the loading matrices in EFA - we are seeing how the observed variables are associated with the latent variables we specified. We can access this like so, by <strong>inspecting</strong> the model:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Access standardised coefficients</span>
+<span class="n">coefs</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">inspect</span><span class="p">(</span><span class="n">std_est</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">coefs</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>lval</th>
+      <th>op</th>
+      <th>rval</th>
+      <th>Estimate</th>
+      <th>Est. Std</th>
+      <th>Std. Err</th>
+      <th>z-value</th>
+      <th>p-value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>TIPI1</td>
+      <td>~</td>
+      <td>extraversion</td>
+      <td>1.000000e+00</td>
+      <td>1.000000e+00</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>TIPI6</td>
+      <td>~</td>
+      <td>extraversion</td>
+      <td>-5.076483e-01</td>
+      <td>-5.645531e-01</td>
+      <td>0.014047</td>
+      <td>-36.139736</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>TIPI2</td>
+      <td>~</td>
+      <td>agreeableness</td>
+      <td>1.000000e+00</td>
+      <td>2.736723e-01</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>TIPI7</td>
+      <td>~</td>
+      <td>agreeableness</td>
+      <td>-3.351993e+00</td>
+      <td>-1.000000e+00</td>
+      <td>0.281172</td>
+      <td>-11.921488</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>TIPI3</td>
+      <td>~</td>
+      <td>conscientious</td>
+      <td>1.000000e+00</td>
+      <td>9.277353e-01</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>TIPI8</td>
+      <td>~</td>
+      <td>conscientious</td>
+      <td>-5.493889e-01</td>
+      <td>-4.510501e-01</td>
+      <td>0.02174</td>
+      <td>-25.271048</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>TIPI4</td>
+      <td>~</td>
+      <td>neuroticism</td>
+      <td>1.000000e+00</td>
+      <td>5.777023e-01</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>TIPI9</td>
+      <td>~</td>
+      <td>neuroticism</td>
+      <td>-1.608674e+00</td>
+      <td>-9.718756e-01</td>
+      <td>0.043491</td>
+      <td>-36.988927</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>TIPI5</td>
+      <td>~</td>
+      <td>openness</td>
+      <td>1.000000e+00</td>
+      <td>1.000000e+00</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>TIPI10</td>
+      <td>~</td>
+      <td>openness</td>
+      <td>-2.481852e-01</td>
+      <td>-2.130050e-01</td>
+      <td>0.023915</td>
+      <td>-10.377881</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>agreeableness</td>
+      <td>~~</td>
+      <td>agreeableness</td>
+      <td>2.620280e-01</td>
+      <td>1.000000e+00</td>
+      <td>0.024277</td>
+      <td>10.793053</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>agreeableness</td>
+      <td>~~</td>
+      <td>conscientious</td>
+      <td>-8.790525e-02</td>
+      <td>-1.066790e-01</td>
+      <td>0.009263</td>
+      <td>-9.490274</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>agreeableness</td>
+      <td>~~</td>
+      <td>extraversion</td>
+      <td>-2.401024e-01</td>
+      <td>-2.375863e-01</td>
+      <td>0.021176</td>
+      <td>-11.338675</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>agreeableness</td>
+      <td>~~</td>
+      <td>neuroticism</td>
+      <td>2.263427e-02</td>
+      <td>3.887198e-02</td>
+      <td>0.004264</td>
+      <td>5.307691</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>agreeableness</td>
+      <td>~~</td>
+      <td>openness</td>
+      <td>-9.826375e-02</td>
+      <td>-1.355301e-01</td>
+      <td>0.009443</td>
+      <td>-10.406511</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>conscientious</td>
+      <td>~~</td>
+      <td>conscientious</td>
+      <td>2.591336e+00</td>
+      <td>1.000000e+00</td>
+      <td>0.101503</td>
+      <td>25.5296</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>conscientious</td>
+      <td>~~</td>
+      <td>extraversion</td>
+      <td>1.864679e-01</td>
+      <td>5.867338e-02</td>
+      <td>0.021543</td>
+      <td>8.655804</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>conscientious</td>
+      <td>~~</td>
+      <td>neuroticism</td>
+      <td>-5.757239e-01</td>
+      <td>-3.144100e-01</td>
+      <td>0.020122</td>
+      <td>-28.611052</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>conscientious</td>
+      <td>~~</td>
+      <td>openness</td>
+      <td>1.995186e-01</td>
+      <td>8.750602e-02</td>
+      <td>0.015485</td>
+      <td>12.884486</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>extraversion</td>
+      <td>~~</td>
+      <td>extraversion</td>
+      <td>3.897646e+00</td>
+      <td>1.000000e+00</td>
+      <td>0.107465</td>
+      <td>36.269113</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>extraversion</td>
+      <td>~~</td>
+      <td>neuroticism</td>
+      <td>-2.528060e-01</td>
+      <td>-1.125719e-01</td>
+      <td>0.016061</td>
+      <td>-15.740773</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>extraversion</td>
+      <td>~~</td>
+      <td>openness</td>
+      <td>7.093199e-01</td>
+      <td>2.536631e-01</td>
+      <td>0.018164</td>
+      <td>39.051735</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>neuroticism</td>
+      <td>~~</td>
+      <td>neuroticism</td>
+      <td>1.293934e+00</td>
+      <td>1.000000e+00</td>
+      <td>0.041927</td>
+      <td>30.861919</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>openness</td>
+      <td>~~</td>
+      <td>openness</td>
+      <td>2.006168e+00</td>
+      <td>1.000000e+00</td>
+      <td>0.185288</td>
+      <td>10.827292</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>openness</td>
+      <td>~~</td>
+      <td>neuroticism</td>
+      <td>-2.741347e-01</td>
+      <td>-1.701471e-01</td>
+      <td>0.01279</td>
+      <td>-21.433455</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>25</th>
+      <td>TIPI1</td>
+      <td>~~</td>
+      <td>TIPI1</td>
+      <td>4.377207e-17</td>
+      <td>1.123039e-17</td>
+      <td>0.101706</td>
+      <td>0.0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>26</th>
+      <td>TIPI10</td>
+      <td>~~</td>
+      <td>TIPI10</td>
+      <td>2.600003e+00</td>
+      <td>9.546289e-01</td>
+      <td>0.025788</td>
+      <td>100.823661</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>27</th>
+      <td>TIPI2</td>
+      <td>~~</td>
+      <td>TIPI2</td>
+      <td>3.236505e+00</td>
+      <td>9.251035e-01</td>
+      <td>0.035777</td>
+      <td>90.464184</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>28</th>
+      <td>TIPI3</td>
+      <td>~~</td>
+      <td>TIPI3</td>
+      <td>4.194201e-01</td>
+      <td>1.393072e-01</td>
+      <td>0.098041</td>
+      <td>4.277989</td>
+      <td>0.000019</td>
+    </tr>
+    <tr>
+      <th>29</th>
+      <td>TIPI4</td>
+      <td>~~</td>
+      <td>TIPI4</td>
+      <td>2.583138e+00</td>
+      <td>6.662600e-01</td>
+      <td>0.0403</td>
+      <td>64.097007</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>30</th>
+      <td>TIPI5</td>
+      <td>~~</td>
+      <td>TIPI5</td>
+      <td>1.002861e-16</td>
+      <td>4.998888e-17</td>
+      <td>0.184425</td>
+      <td>0.0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>31</th>
+      <td>TIPI6</td>
+      <td>~~</td>
+      <td>TIPI6</td>
+      <td>2.147059e+00</td>
+      <td>6.812797e-01</td>
+      <td>0.032442</td>
+      <td>66.181825</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>32</th>
+      <td>TIPI7</td>
+      <td>~~</td>
+      <td>TIPI7</td>
+      <td>1.251270e-16</td>
+      <td>4.250082e-17</td>
+      <td>0.23821</td>
+      <td>0.0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>33</th>
+      <td>TIPI8</td>
+      <td>~~</td>
+      <td>TIPI8</td>
+      <td>3.062310e+00</td>
+      <td>7.965538e-01</td>
+      <td>0.040223</td>
+      <td>76.133203</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>34</th>
+      <td>TIPI9</td>
+      <td>~~</td>
+      <td>TIPI9</td>
+      <td>1.966030e-01</td>
+      <td>5.545791e-02</td>
+      <td>0.085655</td>
+      <td>2.295285</td>
+      <td>0.021717</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>This slew of numbers illustrates many things. Consider the first ten rows:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Get the TIPI-factor associations</span>
+<span class="n">coefs</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">9</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>lval</th>
+      <th>op</th>
+      <th>rval</th>
+      <th>Estimate</th>
+      <th>Est. Std</th>
+      <th>Std. Err</th>
+      <th>z-value</th>
+      <th>p-value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>TIPI1</td>
+      <td>~</td>
+      <td>extraversion</td>
+      <td>1.000000</td>
+      <td>1.000000</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>TIPI6</td>
+      <td>~</td>
+      <td>extraversion</td>
+      <td>-0.507648</td>
+      <td>-0.564553</td>
+      <td>0.014047</td>
+      <td>-36.139736</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>TIPI2</td>
+      <td>~</td>
+      <td>agreeableness</td>
+      <td>1.000000</td>
+      <td>0.273672</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>TIPI7</td>
+      <td>~</td>
+      <td>agreeableness</td>
+      <td>-3.351993</td>
+      <td>-1.000000</td>
+      <td>0.281172</td>
+      <td>-11.921488</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>TIPI3</td>
+      <td>~</td>
+      <td>conscientious</td>
+      <td>1.000000</td>
+      <td>0.927735</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>TIPI8</td>
+      <td>~</td>
+      <td>conscientious</td>
+      <td>-0.549389</td>
+      <td>-0.451050</td>
+      <td>0.02174</td>
+      <td>-25.271048</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>TIPI4</td>
+      <td>~</td>
+      <td>neuroticism</td>
+      <td>1.000000</td>
+      <td>0.577702</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>TIPI9</td>
+      <td>~</td>
+      <td>neuroticism</td>
+      <td>-1.608674</td>
+      <td>-0.971876</td>
+      <td>0.043491</td>
+      <td>-36.988927</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>TIPI5</td>
+      <td>~</td>
+      <td>openness</td>
+      <td>1.000000</td>
+      <td>1.000000</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>TIPI10</td>
+      <td>~</td>
+      <td>openness</td>
+      <td>-0.248185</td>
+      <td>-0.213005</td>
+      <td>0.023915</td>
+      <td>-10.377881</td>
+      <td>0.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>These show the loadings of each observed variable onto the factor. Why are some of them fixed to 1? This is a quirk of the way these models are estimated. The first variable associated with the factor gets its parameter fixed to 1 so as to set a unit or a scale for the latent variable. For example, consider extraversion. The TIPI6 slope is negative. Why? Because TIPI6 asks ‘are you reserved, quiet?’, and TIPI1 - which sets the scale - asks “are you extraverted, enthusiastic?”. Naturally it makes sense for a negative association to appear. Nonetheless, the <code class="docutils literal notranslate"><span class="pre">Est.Std</span></code> column reveals the correlation between each variable and its latent factor, if it can be estimated. The rest of the table shows the variances and covariances of the predicted data - that is, anything that is indicated by a <code class="docutils literal notranslate"><span class="pre">~~</span></code> symbol indicates the variance/covariance between the left and right hand side variable names:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Get variance/covariance</span>
+<span class="n">coefs</span><span class="p">[</span><span class="n">coefs</span><span class="p">[</span><span class="s1">&#39;op&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="s1">&#39;~~&#39;</span><span class="p">)]</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>lval</th>
+      <th>op</th>
+      <th>rval</th>
+      <th>Estimate</th>
+      <th>Est. Std</th>
+      <th>Std. Err</th>
+      <th>z-value</th>
+      <th>p-value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>10</th>
+      <td>agreeableness</td>
+      <td>~~</td>
+      <td>agreeableness</td>
+      <td>0.26</td>
+      <td>1.00</td>
+      <td>0.024277</td>
+      <td>10.793053</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>agreeableness</td>
+      <td>~~</td>
+      <td>conscientious</td>
+      <td>-0.09</td>
+      <td>-0.11</td>
+      <td>0.009263</td>
+      <td>-9.490274</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>agreeableness</td>
+      <td>~~</td>
+      <td>extraversion</td>
+      <td>-0.24</td>
+      <td>-0.24</td>
+      <td>0.021176</td>
+      <td>-11.338675</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>agreeableness</td>
+      <td>~~</td>
+      <td>neuroticism</td>
+      <td>0.02</td>
+      <td>0.04</td>
+      <td>0.004264</td>
+      <td>5.307691</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>agreeableness</td>
+      <td>~~</td>
+      <td>openness</td>
+      <td>-0.10</td>
+      <td>-0.14</td>
+      <td>0.009443</td>
+      <td>-10.406511</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>conscientious</td>
+      <td>~~</td>
+      <td>conscientious</td>
+      <td>2.59</td>
+      <td>1.00</td>
+      <td>0.101503</td>
+      <td>25.5296</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>conscientious</td>
+      <td>~~</td>
+      <td>extraversion</td>
+      <td>0.19</td>
+      <td>0.06</td>
+      <td>0.021543</td>
+      <td>8.655804</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>conscientious</td>
+      <td>~~</td>
+      <td>neuroticism</td>
+      <td>-0.58</td>
+      <td>-0.31</td>
+      <td>0.020122</td>
+      <td>-28.611052</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>conscientious</td>
+      <td>~~</td>
+      <td>openness</td>
+      <td>0.20</td>
+      <td>0.09</td>
+      <td>0.015485</td>
+      <td>12.884486</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>extraversion</td>
+      <td>~~</td>
+      <td>extraversion</td>
+      <td>3.90</td>
+      <td>1.00</td>
+      <td>0.107465</td>
+      <td>36.269113</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>extraversion</td>
+      <td>~~</td>
+      <td>neuroticism</td>
+      <td>-0.25</td>
+      <td>-0.11</td>
+      <td>0.016061</td>
+      <td>-15.740773</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>extraversion</td>
+      <td>~~</td>
+      <td>openness</td>
+      <td>0.71</td>
+      <td>0.25</td>
+      <td>0.018164</td>
+      <td>39.051735</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>neuroticism</td>
+      <td>~~</td>
+      <td>neuroticism</td>
+      <td>1.29</td>
+      <td>1.00</td>
+      <td>0.041927</td>
+      <td>30.861919</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>openness</td>
+      <td>~~</td>
+      <td>openness</td>
+      <td>2.01</td>
+      <td>1.00</td>
+      <td>0.185288</td>
+      <td>10.827292</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>openness</td>
+      <td>~~</td>
+      <td>neuroticism</td>
+      <td>-0.27</td>
+      <td>-0.17</td>
+      <td>0.01279</td>
+      <td>-21.433455</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>25</th>
+      <td>TIPI1</td>
+      <td>~~</td>
+      <td>TIPI1</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.101706</td>
+      <td>0.0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>26</th>
+      <td>TIPI10</td>
+      <td>~~</td>
+      <td>TIPI10</td>
+      <td>2.60</td>
+      <td>0.95</td>
+      <td>0.025788</td>
+      <td>100.823661</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>27</th>
+      <td>TIPI2</td>
+      <td>~~</td>
+      <td>TIPI2</td>
+      <td>3.24</td>
+      <td>0.93</td>
+      <td>0.035777</td>
+      <td>90.464184</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>28</th>
+      <td>TIPI3</td>
+      <td>~~</td>
+      <td>TIPI3</td>
+      <td>0.42</td>
+      <td>0.14</td>
+      <td>0.098041</td>
+      <td>4.277989</td>
+      <td>0.000019</td>
+    </tr>
+    <tr>
+      <th>29</th>
+      <td>TIPI4</td>
+      <td>~~</td>
+      <td>TIPI4</td>
+      <td>2.58</td>
+      <td>0.67</td>
+      <td>0.0403</td>
+      <td>64.097007</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>30</th>
+      <td>TIPI5</td>
+      <td>~~</td>
+      <td>TIPI5</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.184425</td>
+      <td>0.0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>31</th>
+      <td>TIPI6</td>
+      <td>~~</td>
+      <td>TIPI6</td>
+      <td>2.15</td>
+      <td>0.68</td>
+      <td>0.032442</td>
+      <td>66.181825</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>32</th>
+      <td>TIPI7</td>
+      <td>~~</td>
+      <td>TIPI7</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.23821</td>
+      <td>0.0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>33</th>
+      <td>TIPI8</td>
+      <td>~~</td>
+      <td>TIPI8</td>
+      <td>3.06</td>
+      <td>0.80</td>
+      <td>0.040223</td>
+      <td>76.133203</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>34</th>
+      <td>TIPI9</td>
+      <td>~~</td>
+      <td>TIPI9</td>
+      <td>0.20</td>
+      <td>0.06</td>
+      <td>0.085655</td>
+      <td>2.295285</td>
+      <td>0.021717</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>We can also visualise our model structure by using the <code class="docutils literal notranslate"><span class="pre">semplot</span></code> function, for which we can save our structure to a file to put in a paper, talk, etc:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Show and save</span>
+<span class="n">sem</span><span class="o">.</span><span class="n">semplot</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s1">&#39;test.png&#39;</span><span class="p">,</span> <span class="n">std_ests</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/732821a22a95e48eca53cf0734f469cbfbdd114246f3711158fe75544b489b58.svg" src="../_images/732821a22a95e48eca53cf0734f469cbfbdd114246f3711158fe75544b489b58.svg" />
+</div>
+</div>
+</section>
+<section id="interpreting-cfa-models-fit-statistics">
+<h2>Interpreting CFA models - fit statistics<a class="headerlink" href="#interpreting-cfa-models-fit-statistics" title="Link to this heading">#</a></h2>
+<p>While standard GLM’s can be interpreted in terms of the quality of their predictions, it is harder to do this with CFA models. CFA models produce a range of ‘fit statistics’ which describe how well the model we suppose fits the data. We obtain these with the <code class="docutils literal notranslate"><span class="pre">sem.calc_stats</span></code> function on the model, like this:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Obtain fit statistics</span>
+<span class="n">fit_stats</span> <span class="o">=</span> <span class="n">sem</span><span class="o">.</span><span class="n">calc_stats</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">fit_stats</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>DoF</th>
+      <td>25.000000</td>
+    </tr>
+    <tr>
+      <th>DoF Baseline</th>
+      <td>45.000000</td>
+    </tr>
+    <tr>
+      <th>chi2</th>
+      <td>6698.393370</td>
+    </tr>
+    <tr>
+      <th>chi2 p-value</th>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>chi2 Baseline</th>
+      <td>40411.592111</td>
+    </tr>
+    <tr>
+      <th>CFI</th>
+      <td>0.834680</td>
+    </tr>
+    <tr>
+      <th>GFI</th>
+      <td>0.834246</td>
+    </tr>
+    <tr>
+      <th>AGFI</th>
+      <td>0.701642</td>
+    </tr>
+    <tr>
+      <th>NFI</th>
+      <td>0.834246</td>
+    </tr>
+    <tr>
+      <th>TLI</th>
+      <td>0.702425</td>
+    </tr>
+    <tr>
+      <th>RMSEA</th>
+      <td>0.102870</td>
+    </tr>
+    <tr>
+      <th>AIC</th>
+      <td>59.468929</td>
+    </tr>
+    <tr>
+      <th>BIC</th>
+      <td>303.537844</td>
+    </tr>
+    <tr>
+      <th>LogLik</th>
+      <td>0.265535</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>This array of statistics is confusing, but they all exist in some form to help us interpret how well the model fits the data. Here we highlight the ones that are worth paying attention to, and offer some rules-of-thumb in how to interpret them.</p>
+<ul class="simple">
+<li><p><strong>DOF, DOF Baseline, chi2, and chi2 p-value</strong> These values tell us whether the model we specify is satisfactorily reproducing the data that goes into it. Specifically, it is looking for the differences between the correlation matrix of all the variables in our observed data, and the correlation matrix of the predictions from the model. If that is large - i.e., the model is doing a bad job of replicating the data - then this test will be <em>significant</em>, and this <em>is a bad thing</em>. Confusing, I know! This test is however very sensitive to sample size, with larger samples like we have here producing significant results even if the discrepancy is quite small.</p></li>
+<li><p><strong>CFI</strong> This is the <em>Comparative Fit Index</em>, which compares the fit of the model we specified to a null model that has no associations amongst variables. This has an established cut-off in the literature - it should be <strong>greater than .90</strong> for a ‘good’ fit.</p></li>
+<li><p><strong>GFI and AGFI</strong> These are the <em>(Adjusted) Goodness of Fit</em> index, which are the CFA equivalent of <span class="math notranslate nohighlight">\(R^2\)</span>, or how much variance the model can explain in the data that goes into it. These too have cutoffs, and should be <strong>greater than .90 and .95 respectively</strong>.</p></li>
+<li><p><strong>NFI and TLI</strong> The Normed Fit index, and its more conservative version, the Tucker-Lewis Index, are another way to check the discrepancy of the model against a null model by focusing on the chi-square statistic. Again, there is a strong suggestion these values <strong>should be above .95</strong>.</p></li>
+<li><p><strong>RMSEA</strong> The root-mean-square-error of-approximation tells us - much like the RMSE in OLS - what the average amount of error the model gives. As such, a low value is better, and there is also a cutoff here - <strong>it should be less than .06</strong>.</p></li>
+</ul>
+<p>Taken together (and its a lot to take!), this suggests this model is <em>not a good fit</em>. In other words, the data do not support the proposed latent factor structure we have suggested. In this case, the standard advice would be to carry out an EFA and see what is going on.</p>
+</section>
+<section id="another-example-cfa-models-meet-regression">
+<h2>Another example - CFA models meet regression<a class="headerlink" href="#another-example-cfa-models-meet-regression" title="Link to this heading">#</a></h2>
+<p>Here, we demonstrate how CFA can be used to map observed variables to latent variables, and then see if those latent variables can predict another variable of interest. This sort of CFA - plus - regression approach technically falls under the SEM approach, but it is a useful demonstration of how all of these techniques are connected.</p>
+<p>To demonstrate, we’ll use a dataset that comes with <code class="docutils literal notranslate"><span class="pre">semopy</span></code>, the Holzinger-Swineford -39 dataset. This classic dataset has a set of scores for seventh and eighth grade students on a a series of mental ability tests (in the dataset, they are <code class="docutils literal notranslate"><span class="pre">x1</span></code> through to <code class="docutils literal notranslate"><span class="pre">x9</span></code>). Interestingly, these tests are supposed to capture three specific latent aspects of intelligence/mental ability - visual, textual, and processing speed.</p>
+<p>First let us load the data and examine it:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Pull the data from the examples</span>
+<span class="n">hlz</span> <span class="o">=</span> <span class="n">sem</span><span class="o">.</span><span class="n">examples</span><span class="o">.</span><span class="n">holzinger39</span><span class="o">.</span><span class="n">get_data</span><span class="p">()</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">how</span><span class="o">=</span><span class="s1">&#39;any&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">({</span><span class="s1">&#39;sex&#39;</span><span class="p">:</span> <span class="p">{</span><span class="mi">2</span><span class="p">:</span> <span class="mi">0</span><span class="p">}})</span>
+<span class="n">hlz</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>id</th>
+      <th>sex</th>
+      <th>ageyr</th>
+      <th>agemo</th>
+      <th>school</th>
+      <th>grade</th>
+      <th>x1</th>
+      <th>x2</th>
+      <th>x3</th>
+      <th>x4</th>
+      <th>x5</th>
+      <th>x6</th>
+      <th>x7</th>
+      <th>x8</th>
+      <th>x9</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>1</td>
+      <td>1</td>
+      <td>13</td>
+      <td>1</td>
+      <td>Pasteur</td>
+      <td>7.0</td>
+      <td>3.333333</td>
+      <td>7.75</td>
+      <td>0.375</td>
+      <td>2.333333</td>
+      <td>5.75</td>
+      <td>1.285714</td>
+      <td>3.391304</td>
+      <td>5.75</td>
+      <td>6.361111</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2</td>
+      <td>0</td>
+      <td>13</td>
+      <td>7</td>
+      <td>Pasteur</td>
+      <td>7.0</td>
+      <td>5.333333</td>
+      <td>5.25</td>
+      <td>2.125</td>
+      <td>1.666667</td>
+      <td>3.00</td>
+      <td>1.285714</td>
+      <td>3.782609</td>
+      <td>6.25</td>
+      <td>7.916667</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>3</td>
+      <td>0</td>
+      <td>13</td>
+      <td>1</td>
+      <td>Pasteur</td>
+      <td>7.0</td>
+      <td>4.500000</td>
+      <td>5.25</td>
+      <td>1.875</td>
+      <td>1.000000</td>
+      <td>1.75</td>
+      <td>0.428571</td>
+      <td>3.260870</td>
+      <td>3.90</td>
+      <td>4.416667</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>4</td>
+      <td>1</td>
+      <td>13</td>
+      <td>2</td>
+      <td>Pasteur</td>
+      <td>7.0</td>
+      <td>5.333333</td>
+      <td>7.75</td>
+      <td>3.000</td>
+      <td>2.666667</td>
+      <td>4.50</td>
+      <td>2.428571</td>
+      <td>3.000000</td>
+      <td>5.30</td>
+      <td>4.861111</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>5</td>
+      <td>0</td>
+      <td>12</td>
+      <td>2</td>
+      <td>Pasteur</td>
+      <td>7.0</td>
+      <td>4.833333</td>
+      <td>4.75</td>
+      <td>0.875</td>
+      <td>2.666667</td>
+      <td>4.00</td>
+      <td>2.571429</td>
+      <td>3.695652</td>
+      <td>6.30</td>
+      <td>5.916667</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>The variables x1 through to x9 represent the tests.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">x1</span></code>, <code class="docutils literal notranslate"><span class="pre">x2</span></code>, <code class="docutils literal notranslate"><span class="pre">x3</span></code> represent visual ability</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">x4</span></code>, <code class="docutils literal notranslate"><span class="pre">x5</span></code>, <code class="docutils literal notranslate"><span class="pre">x6</span></code> represent text ability</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">x7</span></code>, <code class="docutils literal notranslate"><span class="pre">x8</span></code>, <code class="docutils literal notranslate"><span class="pre">x9</span></code> represent processing speed.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sex</span></code> represents the sex of the child.</p></li>
+</ul>
+<p>Imagine we wanted to predict the sex of a child given scores on the variables - i.e., could we classify a child’s sex given their test scores? With only the observed variables, we would have to run a model like this (ideally a logistic model, but we can use a GLM as an example):</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Observed model only</span>
+<span class="n">obs_only</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="s1">&#39;sex ~ x1 + x2 + x3 + x4 + x5 + x6 + x7 + x8 + x9&#39;</span><span class="p">,</span>
+                   <span class="n">data</span><span class="o">=</span><span class="n">hlz</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+
+<span class="n">obs_only</span><span class="o">.</span><span class="n">summary</span><span class="p">(</span><span class="n">slim</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table class="simpletable">
+<caption>OLS Regression Results</caption>
+<tr>
+  <th>Dep. Variable:</th>       <td>sex</td>    <th>  R-squared:         </th> <td>   0.092</td>
+</tr>
+<tr>
+  <th>Model:</th>               <td>OLS</td>    <th>  Adj. R-squared:    </th> <td>   0.064</td>
+</tr>
+<tr>
+  <th>No. Observations:</th>  <td>   300</td>   <th>  F-statistic:       </th> <td>   3.261</td>
+</tr>
+<tr>
+  <th>Covariance Type:</th>  <td>nonrobust</td> <th>  Prob (F-statistic):</th> <td>0.000854</td>
+</tr>
+</table>
+<table class="simpletable">
+<tr>
+      <td></td>         <th>coef</th>     <th>std err</th>      <th>t</th>      <th>P>|t|</th>  <th>[0.025</th>    <th>0.975]</th>  
+</tr>
+<tr>
+  <th>Intercept</th> <td>    0.4374</td> <td>    0.234</td> <td>    1.870</td> <td> 0.063</td> <td>   -0.023</td> <td>    0.898</td>
+</tr>
+<tr>
+  <th>x1</th>        <td>    0.0290</td> <td>    0.030</td> <td>    0.966</td> <td> 0.335</td> <td>   -0.030</td> <td>    0.088</td>
+</tr>
+<tr>
+  <th>x2</th>        <td>    0.0264</td> <td>    0.026</td> <td>    1.009</td> <td> 0.314</td> <td>   -0.025</td> <td>    0.078</td>
+</tr>
+<tr>
+  <th>x3</th>        <td>    0.0791</td> <td>    0.029</td> <td>    2.702</td> <td> 0.007</td> <td>    0.021</td> <td>    0.137</td>
+</tr>
+<tr>
+  <th>x4</th>        <td>   -0.0990</td> <td>    0.039</td> <td>   -2.511</td> <td> 0.013</td> <td>   -0.177</td> <td>   -0.021</td>
+</tr>
+<tr>
+  <th>x5</th>        <td>    0.0145</td> <td>    0.036</td> <td>    0.403</td> <td> 0.687</td> <td>   -0.056</td> <td>    0.085</td>
+</tr>
+<tr>
+  <th>x6</th>        <td>    0.0348</td> <td>    0.040</td> <td>    0.861</td> <td> 0.390</td> <td>   -0.045</td> <td>    0.114</td>
+</tr>
+<tr>
+  <th>x7</th>        <td>   -0.0493</td> <td>    0.031</td> <td>   -1.595</td> <td> 0.112</td> <td>   -0.110</td> <td>    0.012</td>
+</tr>
+<tr>
+  <th>x8</th>        <td>    0.0510</td> <td>    0.034</td> <td>    1.487</td> <td> 0.138</td> <td>   -0.017</td> <td>    0.119</td>
+</tr>
+<tr>
+  <th>x9</th>        <td>   -0.0645</td> <td>    0.034</td> <td>   -1.877</td> <td> 0.062</td> <td>   -0.132</td> <td>    0.003</td>
+</tr>
+</table><br/><br/>Notes:<br/>[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.</div></div>
+</div>
+<p>We might infer from this that x3 and x4 (tests from visual and text ability) discriminate betwen males and females. This is a difficult interpretation; especially since we know that these variables are manifestations of a latent factor. We could identify those using a CFA in <code class="docutils literal notranslate"><span class="pre">semopy</span></code> like this:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Identify latent factors</span>
+<span class="n">cfa_model</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">visual =~ x1 + x2 + x3</span>
+<span class="s2">text =~ x4 + x5 + x6</span>
+<span class="s2">speed =~ x7 + x8 + x9</span>
+<span class="s2">&quot;&quot;&quot;</span>
+
+<span class="c1"># Model</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">sem</span><span class="o">.</span><span class="n">Model</span><span class="p">(</span><span class="n">cfa_model</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">hlz</span><span class="p">)</span>
+
+<span class="c1"># Inspect</span>
+<span class="n">model</span><span class="o">.</span><span class="n">inspect</span><span class="p">(</span><span class="n">std_est</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;op == &quot;~&quot;&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>lval</th>
+      <th>op</th>
+      <th>rval</th>
+      <th>Estimate</th>
+      <th>Est. Std</th>
+      <th>Std. Err</th>
+      <th>z-value</th>
+      <th>p-value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>x1</td>
+      <td>~</td>
+      <td>visual</td>
+      <td>1.000000</td>
+      <td>0.777342</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>x2</td>
+      <td>~</td>
+      <td>visual</td>
+      <td>0.547286</td>
+      <td>0.421642</td>
+      <td>0.098837</td>
+      <td>5.537259</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>x3</td>
+      <td>~</td>
+      <td>visual</td>
+      <td>0.721594</td>
+      <td>0.579708</td>
+      <td>0.107978</td>
+      <td>6.682768</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>x4</td>
+      <td>~</td>
+      <td>text</td>
+      <td>1.000000</td>
+      <td>0.851913</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>x5</td>
+      <td>~</td>
+      <td>text</td>
+      <td>1.110345</td>
+      <td>0.854666</td>
+      <td>0.065422</td>
+      <td>16.972147</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>x6</td>
+      <td>~</td>
+      <td>text</td>
+      <td>0.924403</td>
+      <td>0.837303</td>
+      <td>0.055503</td>
+      <td>16.655118</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>x7</td>
+      <td>~</td>
+      <td>speed</td>
+      <td>1.000000</td>
+      <td>0.571303</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>x8</td>
+      <td>~</td>
+      <td>speed</td>
+      <td>1.179437</td>
+      <td>0.727401</td>
+      <td>0.164363</td>
+      <td>7.175814</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>x9</td>
+      <td>~</td>
+      <td>speed</td>
+      <td>1.075818</td>
+      <td>0.663566</td>
+      <td>0.14983</td>
+      <td>7.180238</td>
+      <td>0.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>These look reasonably sensible, what about the fit?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Get fit</span>
+<span class="n">sem</span><span class="o">.</span><span class="n">calc_stats</span><span class="p">(</span><span class="n">model</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>DoF</th>
+      <td>24.00</td>
+    </tr>
+    <tr>
+      <th>DoF Baseline</th>
+      <td>36.00</td>
+    </tr>
+    <tr>
+      <th>chi2</th>
+      <td>85.94</td>
+    </tr>
+    <tr>
+      <th>chi2 p-value</th>
+      <td>0.00</td>
+    </tr>
+    <tr>
+      <th>chi2 Baseline</th>
+      <td>918.20</td>
+    </tr>
+    <tr>
+      <th>CFI</th>
+      <td>0.93</td>
+    </tr>
+    <tr>
+      <th>GFI</th>
+      <td>0.91</td>
+    </tr>
+    <tr>
+      <th>AGFI</th>
+      <td>0.86</td>
+    </tr>
+    <tr>
+      <th>NFI</th>
+      <td>0.91</td>
+    </tr>
+    <tr>
+      <th>TLI</th>
+      <td>0.89</td>
+    </tr>
+    <tr>
+      <th>RMSEA</th>
+      <td>0.09</td>
+    </tr>
+    <tr>
+      <th>AIC</th>
+      <td>41.43</td>
+    </tr>
+    <tr>
+      <th>BIC</th>
+      <td>119.21</td>
+    </tr>
+    <tr>
+      <th>LogLik</th>
+      <td>0.29</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Not <em>too</em> bad overall, though a mix of different statistics that might suggest that the model isn’t a solid fit, but it hints at the fact the three latent variables underpin the scores. We can now expand our CFA model to let the latent variables actually predict the sex of the child, all in one step, like so:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Identify latent factors</span>
+<span class="n">cfa_model</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2"># Specifies the latent factors</span>
+<span class="s2">visual =~ x1 + x2 + x3</span>
+<span class="s2">text =~ x4 + x5 + x6</span>
+<span class="s2">speed =~ x7 + x8 + x9</span>
+
+<span class="s2"># Uses them to predict sex</span>
+<span class="s2">sex ~ visual + text + speed</span>
+<span class="s2">&quot;&quot;&quot;</span>
+
+<span class="c1"># Model</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">sem</span><span class="o">.</span><span class="n">Model</span><span class="p">(</span><span class="n">cfa_model</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">hlz</span><span class="p">)</span>
+
+<span class="c1"># Inspect</span>
+<span class="n">model</span><span class="o">.</span><span class="n">inspect</span><span class="p">(</span><span class="n">std_est</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;op == &quot;~&quot;&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>lval</th>
+      <th>op</th>
+      <th>rval</th>
+      <th>Estimate</th>
+      <th>Est. Std</th>
+      <th>Std. Err</th>
+      <th>z-value</th>
+      <th>p-value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>x1</td>
+      <td>~</td>
+      <td>visual</td>
+      <td>1.000000</td>
+      <td>0.740218</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>x2</td>
+      <td>~</td>
+      <td>visual</td>
+      <td>0.600939</td>
+      <td>0.440813</td>
+      <td>0.102441</td>
+      <td>5.866185</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>x3</td>
+      <td>~</td>
+      <td>visual</td>
+      <td>0.796922</td>
+      <td>0.609516</td>
+      <td>0.11097</td>
+      <td>7.181421</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>x4</td>
+      <td>~</td>
+      <td>text</td>
+      <td>1.000000</td>
+      <td>0.855219</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>x5</td>
+      <td>~</td>
+      <td>text</td>
+      <td>1.104548</td>
+      <td>0.853538</td>
+      <td>0.064873</td>
+      <td>17.026223</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>x6</td>
+      <td>~</td>
+      <td>text</td>
+      <td>0.918146</td>
+      <td>0.835135</td>
+      <td>0.055047</td>
+      <td>16.679216</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>x7</td>
+      <td>~</td>
+      <td>speed</td>
+      <td>1.000000</td>
+      <td>0.565775</td>
+      <td>-</td>
+      <td>-</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>x8</td>
+      <td>~</td>
+      <td>speed</td>
+      <td>1.158891</td>
+      <td>0.707608</td>
+      <td>0.162125</td>
+      <td>7.148138</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>x9</td>
+      <td>~</td>
+      <td>speed</td>
+      <td>1.116640</td>
+      <td>0.682020</td>
+      <td>0.156292</td>
+      <td>7.144581</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>sex</td>
+      <td>~</td>
+      <td>visual</td>
+      <td>0.200401</td>
+      <td>0.346385</td>
+      <td>0.060752</td>
+      <td>3.298669</td>
+      <td>0.000971</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>sex</td>
+      <td>~</td>
+      <td>text</td>
+      <td>-0.096535</td>
+      <td>-0.192281</td>
+      <td>0.037118</td>
+      <td>-2.600795</td>
+      <td>0.009301</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>sex</td>
+      <td>~</td>
+      <td>speed</td>
+      <td>-0.126927</td>
+      <td>-0.156546</td>
+      <td>0.071654</td>
+      <td>-1.771402</td>
+      <td>0.076494</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>We can see here that the visual and text latent scores are negative predictors, e.g. as latent scores go up, the likelihood of the scores belonging to one sex or another decreases.</p>
+<p>As is hopefully clear, the idea of CFA is quite general - it allows us to specify a set of latent variables, and link them to specific observed variables, testing the goodness of fit of that arrangement. If we want to, we can further expand these models to use the latent variables to predict other variables, just like a standard GLM.</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./9_CFA"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../8_EFA/QPoP%20-%20Week%208%20Exercises%20-%20Answers.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Finding latent variables in data - Exercises &amp; Answers</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="QPoP%20-%20Week%209%20Exercises%20-%20Answers.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Fitting latent variables onto data - Exercises &amp; Answers</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fitting-latent-variables-onto-data">Fitting latent variables onto data</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fitting-cfa-models-in-python-semopy">Fitting CFA models in Python - <code class="docutils literal notranslate"><span class="pre">semopy</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cfa-in-semopy">CFA in <code class="docutils literal notranslate"><span class="pre">semopy</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreting-cfa-models-coefficient-estimates">Interpreting CFA models - coefficient estimates</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreting-cfa-models-fit-statistics">Interpreting CFA models - fit statistics</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#another-example-cfa-models-meet-regression">Another example - CFA models meet regression</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Alex Jones, Ph.D
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
