@@ -465,7 +465,7 @@ document.write(`
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Fitting latent groups in data - Exercises &amp; Answers</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#applied-clustering-types-of-fertility-issues">1. Applied clustering - types of fertility issues</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#applied-clustering-grouping-penguins">2. Applied clustering - grouping penguins</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#applied-clustering-combining-efa-and-clustering">Applied clustering - combining EFA and clustering</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#applied-clustering-combining-efa-and-clustering">3. Applied clustering - combining EFA and clustering</a></li>
 </ul>
 
             </nav>
@@ -1013,10 +1013,10 @@ document.write(`
 </div>
 </details>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.FacetGrid at 0x14927ef10&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.FacetGrid at 0x134a73890&gt;
 </pre></div>
 </div>
-<img alt="../_images/2f2a808d3247a398f144bc609f9e4cb0086ef5413b4a51196bd24b3eaef14617.png" src="../_images/2f2a808d3247a398f144bc609f9e4cb0086ef5413b4a51196bd24b3eaef14617.png" />
+<img alt="../_images/86375b4241d92a4af4091a442c5c941da3509a9f4410b05711edbae0c9f66865.png" src="../_images/86375b4241d92a4af4091a442c5c941da3509a9f4410b05711edbae0c9f66865.png" />
 </div>
 </div>
 <p>There is a clear pattern in this.</p>
@@ -1328,7 +1328,7 @@ document.write(`
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Axes: xlabel=&#39;measure&#39;, ylabel=&#39;score&#39;&gt;
 </pre></div>
 </div>
-<img alt="../_images/d418608ffa7e08f43f9be9685183e9c0ab71d722ef8a9445768aa0c4a51cd19a.png" src="../_images/d418608ffa7e08f43f9be9685183e9c0ab71d722ef8a9445768aa0c4a51cd19a.png" />
+<img alt="../_images/521f4bd32c0b098edc75e4b002888390115e506d1776a72934b3072e70782870.png" src="../_images/521f4bd32c0b098edc75e4b002888390115e506d1776a72934b3072e70782870.png" />
 </div>
 </div>
 <p>This shows the actual biological pattern. Adelie’s have shorter bills than Chinstrap and Gentoo penguins, but on the rest of the variables, the Gentoo’s are very dissimilar. Now create a bar plot that illustrates the <em>clusters</em> in the same way.</p>
@@ -1349,13 +1349,13 @@ document.write(`
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Axes: xlabel=&#39;measure&#39;, ylabel=&#39;score&#39;&gt;
 </pre></div>
 </div>
-<img alt="../_images/69a60b6b5054e6ce3c079f577f33fee8461b0ccfdabeb6a1a0c04c154e745042.png" src="../_images/69a60b6b5054e6ce3c079f577f33fee8461b0ccfdabeb6a1a0c04c154e745042.png" />
+<img alt="../_images/6dc5efc4f8ab7739a2337d8f063115dc29be42d6ebf7857e0212ca2511950a1b.png" src="../_images/6dc5efc4f8ab7739a2337d8f063115dc29be42d6ebf7857e0212ca2511950a1b.png" />
 </div>
 </div>
 <p>From this its hopefully clear that the clustering algorithm has noticed the Gentoo penguins are so different on the other variables and has considered them to be a ‘different sort’ of penguin - the pattern closely resembles the actual biological speciation!</p>
 </section>
 <section id="applied-clustering-combining-efa-and-clustering">
-<h1>Applied clustering - combining EFA and clustering<a class="headerlink" href="#applied-clustering-combining-efa-and-clustering" title="Link to this heading">#</a></h1>
+<h1>3. Applied clustering - combining EFA and clustering<a class="headerlink" href="#applied-clustering-combining-efa-and-clustering" title="Link to this heading">#</a></h1>
 <p>We turn now to a more advanced task, but one that in practice is often used and is very powerful. So far, we have used clustering on datasets with a relatively small number of variables (i.e., columns) of no more than 10 variables. One interesting mathematical issue is that as the number of variables increases, clusters become harder and harder to find due to the <em>curse of dimensionality</em> - each observation is almost equally far away from other points when there are many, many variables.</p>
 <p>Fortunately we can solve this problem easily. We already know how. EFA allows us to reduce a large number of variables (e.g. scores on individual personality questions etc) to a smaller set, keeping a portion of the variance in the dataset. Carrying out clustering on the latent variables themselves and not the observed variables can offer some really interesting insights into a dataset. Here, we will use this approach to figure out if there are a set of ‘personality profiles’ in a Big 5 dataset we have seen before!</p>
 <p>We will read in some raw Big 5 questionnaire data from this link: <a class="reference external" href="https://vincentarelbundock.github.io/Rdatasets/csv/psych/bfi.csv">https://vincentarelbundock.github.io/Rdatasets/csv/psych/bfi.csv</a></p>
@@ -1785,10 +1785,10 @@ document.write(`
 </div>
 </details>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.FacetGrid at 0x14a4f9790&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.FacetGrid at 0x134c89250&gt;
 </pre></div>
 </div>
-<img alt="../_images/0f8ace8cea3949fa18bb7fe6d85fb289b42eb9dbe2309d16b00ec4e835cb15a1.png" src="../_images/0f8ace8cea3949fa18bb7fe6d85fb289b42eb9dbe2309d16b00ec4e835cb15a1.png" />
+<img alt="../_images/77d638191a9b36eb9e217db3dcac6d9153c1786ee82f6750055fb480c04bafba.png" src="../_images/77d638191a9b36eb9e217db3dcac6d9153c1786ee82f6750055fb480c04bafba.png" />
 </div>
 </div>
 <p>Cluster 0 are relaxed, outgoing, friendly, and conscientious. Conversely, cluster 1 are neurotic, introverted, unfriendly, and not very conscientious! Remember though, clustering is a <em>descriptive</em> technique. It is not an inferential model like OLS or factor analysis of any form, and so its findings can be very dataset specific - it is a powerful way to explore data, and we have touched only one approach to clustering here. There are in fact model-based clustering approaches that use probability distributions which can be more inferentially robust, but they too come with their own drawbacks. Taken together though, clustering is a very useful tool to have, as long as it is treated with respect.</p>
@@ -1852,7 +1852,7 @@ document.write(`
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Fitting latent groups in data - Exercises &amp; Answers</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#applied-clustering-types-of-fertility-issues">1. Applied clustering - types of fertility issues</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#applied-clustering-grouping-penguins">2. Applied clustering - grouping penguins</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#applied-clustering-combining-efa-and-clustering">Applied clustering - combining EFA and clustering</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#applied-clustering-combining-efa-and-clustering">3. Applied clustering - combining EFA and clustering</a></li>
 </ul>
 
   </nav></div>
