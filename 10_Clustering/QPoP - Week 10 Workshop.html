@@ -1,0 +1,1267 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>10 - Clustering &#8212; Statistical Modelling with Python</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '10_Clustering/QPoP - Week 10 Workshop';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Fitting latent groups in data - Exercises &amp; Answers" href="QPoP%20-%20Week%2010%20Exercises%20-%20Answers.html" />
+    <link rel="prev" title="Fitting latent variables onto data - Exercises &amp; Answers" href="../9_CFA/QPoP%20-%20Week%209%20Exercises%20-%20Answers.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt="Statistical Modelling with Python - Home"/>
+    <script>document.write(`<img src="../_static/logo.png" class="logo__image only-dark" alt="Statistical Modelling with Python - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    Statistical Modelling with Python
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Python Basics</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../1_Introduction/QPoP%20-%20Week%201%20Workshop.html">1 - Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../1_Introduction/QPoP%20-%20Week%201%20Exercises%20-%20Answers.html">Using Python for Data Analysis - Exercises &amp; Answers</a></li>
+
+
+
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">The GLM</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../2_The_GLM/QPoP%20-%20Week%202%20Workshop.html">2 - The General Linear Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../2_The_GLM/QPoP%20-%20Week%202%20Exercises%20-%20Answers.html">Getting to grips with linear models in Python - Exercises &amp; Answers</a></li>
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Advancing the GLM</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../3_Advancing_GLM/QPoP%20-%20Week%203%20Workshop.html">3 - Advancing the general linear model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../3_Advancing_GLM/QPoP%20-%20Week%203%20Exercises%20-%20Answers.html">Checking assumptions and including interactions - Exercises &amp; Answers</a></li>
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">The art of prediction</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../4_Prediction/QPoP%20-%20Week%204%20Workshop.html">4 - The art of prediction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../4_Prediction/QPoP%20-%20Week%204%20Exercises%20-%20Answers.html">Asking scientific questions of models - Exercises &amp; Answers</a></li>
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Binary outcome models</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../5_Binary/QPoP%20-%20Week%205%20Workshop.html">5 - Binary outcome models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../5_Binary/QPoP%20-%20Week%205%20Exercises%20-%20Answers.html">Using and understanding probit models - Exercises &amp; Answers</a></li>
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Applications and other kinds of hypotheses</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../6_Applications/QPoP%20-%20Week%206%20Workshop.html">6 - Precision in Predictions</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../6_Applications/QPoP%20-%20Week%206%20Exercises%20-%20Answers.html">Example exercises using skills so far</a></li>
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Linear Mixed Effects Models</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../7_MixedModel/QPoP%20-%20Week%207%20Workshop.html">7 - Linear mixed effects models</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../7_MixedModel/QPoP%20-%20Week%207%20Exercises%20-%20Answers.html">Dealing with repeated measurements - Exercises &amp; Answers</a></li>
+
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Exploratory Factor Analysis</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../8_EFA/QPoP%20-%20Week%208%20Workshop.html">8 - Exploratory Factor Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../8_EFA/QPoP%20-%20Week%208%20Exercises%20-%20Answers.html">Finding latent variables in data - Exercises &amp; Answers</a></li>
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Confirmatory Factor Analysis</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../9_CFA/QPoP%20-%20Week%209%20Workshop.html">9 - Confirmatory Factor Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../9_CFA/QPoP%20-%20Week%209%20Exercises%20-%20Answers.html">Fitting latent variables onto data - Exercises &amp; Answers</a></li>
+
+
+
+
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Clustering</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">10 - Clustering</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="QPoP%20-%20Week%2010%20Exercises%20-%20Answers.html">Fitting latent groups in data - Exercises &amp; Answers</a></li>
+
+
+
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2F10_Clustering/QPoP - Week 10 Workshop.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/10_Clustering/QPoP - Week 10 Workshop.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>10 - Clustering</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">10 - Clustering</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#finding-latent-groups-in-data">Finding latent groups in data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#building-a-tree-the-workings-of-hierarchical-clustering">Building a tree - the workings of hierarchical clustering</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#building-a-tree-the-linkage-array">Building a tree - the linkage array</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#building-a-tree-the-dendrogram">Building a tree - the dendrogram</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cutting-a-tree-getting-clusters-from-trees">Cutting a tree - getting clusters from trees</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluating-a-tree-determining-the-quality-of-a-cluster">Evaluating a tree - determining the quality of a cluster</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#an-applied-example-clustering-cultures-based-on-personality-traits">An applied example - clustering cultures based on personality traits</a></li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="clustering">
+<h1>10 - Clustering<a class="headerlink" href="#clustering" title="Link to this heading">#</a></h1>
+<section id="finding-latent-groups-in-data">
+<h2>Finding latent groups in data<a class="headerlink" href="#finding-latent-groups-in-data" title="Link to this heading">#</a></h2>
+<p>We continue our journey in multivariate data analysis, but this time we consider the issue from another angle. While EFA and CFA were concerned with taking a set of variables and finding a new set of <em>variables</em> - the factors - that underpinned the originals, we will consider a complimentary approach that aims to find groups of individual <em>observations</em> that exist in the data.</p>
+<p>These clustering approaches are typically not linear models, but are more algorithmic in nature. This means that they are often more descriptive in nature rather than inferential, but are nonetheless a useful tool to explore data with. Similarly to EFA, the clustering approaches we will use require us to select the number of clusters or groups of observations in order to obtain them, but with slight differences.</p>
+<p>Unlike EFA and CFA, there are <em>many</em> types of clustering algorithms. We will focus on just one here, which is the <strong>hierarchical clustering</strong> approach (absolutely no relation to hierarchical linear models!). While this is not a linear model, it has a clear and intuitive appeal because it builds a ‘tree’ of all the observations in the dataset, and arranges them in terms of how similar they are to one another. This is the <em>dendrogram</em>. While we don’t need to know the details of this similarity, suffice it to say that the approach figures this out by working out the straight-line distance between observations, and those which are closer together are arranged together.</p>
+<p>Let’s see how we do this. To carry it out we’ll use a some new packages, namely the<code class="docutils literal notranslate"><span class="pre">scipy</span></code> submodule dedicated to hierarchical clustering and visualising the trees. We’ll also rely on a metric that establishes cluster quality from a package called <code class="docutils literal notranslate"><span class="pre">sklearn</span></code> called the <em>silhouette coefficient</em>. Lets import these things along with everything else we need - notice here we also import <code class="docutils literal notranslate"><span class="pre">matplotlib.pyplot</span> <span class="pre">as</span> <span class="pre">plt</span></code>, which allows us much more flexibility in our graphs.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import all needed packages</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span> <span class="c1"># dataframes</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span> <span class="c1"># plots</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span> <span class="c1"># numpy for some functions</span>
+<span class="kn">import</span> <span class="nn">scipy.cluster.hierarchy</span> <span class="k">as</span> <span class="nn">shc</span> <span class="c1"># for clustering</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">silhouette_score</span> <span class="c1"># The silhouette coefficient function</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span> <span class="c1"># more flexible plotting</span>
+
+<span class="n">sns</span><span class="o">.</span><span class="n">set_style</span><span class="p">(</span><span class="s1">&#39;whitegrid&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="building-a-tree-the-workings-of-hierarchical-clustering">
+<h2>Building a tree - the workings of hierarchical clustering<a class="headerlink" href="#building-a-tree-the-workings-of-hierarchical-clustering" title="Link to this heading">#</a></h2>
+<p>To demonstrate how hierarchical clustering works, we’ll first read in a dataset that can illustrate it. This <code class="docutils literal notranslate"><span class="pre">xclara</span></code> is of simulated, idealised data that has a few obvious clusters present on just two variables. Clustering can work on datasets with many columns, its just easy to plot one with two columns!</p>
+<p>First, we’ll read it in and make a scatterplot:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Read in xclara dataset and plot</span>
+<span class="n">xclara</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;https://vincentarelbundock.github.io/Rdatasets/csv/cluster/xclara.csv&#39;</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">xclara</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>
+
+<span class="c1"># Scatter</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">xclara</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;V1&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;V2&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">.5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>rownames</th>
+      <th>V1</th>
+      <th>V2</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>2.072345</td>
+      <td>-3.241693</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>17.936710</td>
+      <td>15.784810</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3</td>
+      <td>1.083576</td>
+      <td>7.319176</td>
+    </tr>
+  </tbody>
+</table>
+</div></div><div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Axes: xlabel=&#39;V1&#39;, ylabel=&#39;V2&#39;&gt;
+</pre></div>
+</div>
+<img alt="../_images/b8669eb8e5b1887e1f38fc7ac8e700384eee3b8409153f7bf3f5937f92a97c8a.png" src="../_images/b8669eb8e5b1887e1f38fc7ac8e700384eee3b8409153f7bf3f5937f92a97c8a.png" />
+</div>
+</div>
+<p>Unlike most of the datasets we’ve seen so far, this one doesn’t really <em>mean</em> anything, it just serves to nicely illustrate what clusters look like if they exist! They are pretty obvious here. Our goal is to use our hierarchical clustering approach to see if each data point can be assigned to a specific “group”.</p>
+<section id="building-a-tree-the-linkage-array">
+<h3>Building a tree - the linkage array<a class="headerlink" href="#building-a-tree-the-linkage-array" title="Link to this heading">#</a></h3>
+<p>The build our hierarchical tree, we compute something called the linkage array. The technical details of this are unimportant, but the basic idea is that it describes how the algorithm moves through the dataset, figuring out how similar each datapoint is to all the others, and then joining the most similar datapoints into a cluster of their own, and repeating the process until <em>all</em> the datapoints are in a single cluster. Indeed, how the algorithm decides to group datapoints is itself something we need to decide on. We’ll stick to something called ‘Wards method’ here, which for our purposes simply means a cluster will be formed when the variance of a set of points that <em>might</em> be a cluster is as low as possible. Despite the technical aside, actually computing this is very simple, like so:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Compute the linkage array</span>
+<span class="n">tree</span> <span class="o">=</span> <span class="n">shc</span><span class="o">.</span><span class="n">linkage</span><span class="p">(</span><span class="n">xclara</span><span class="p">[[</span><span class="s1">&#39;V1&#39;</span><span class="p">,</span> <span class="s1">&#39;V2&#39;</span><span class="p">]],</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;ward&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We simply pass the data we want to cluster into it, and set the method to ‘ward’.</p>
+</section>
+</section>
+<section id="building-a-tree-the-dendrogram">
+<h2>Building a tree - the dendrogram<a class="headerlink" href="#building-a-tree-the-dendrogram" title="Link to this heading">#</a></h2>
+<p>After obtaining the linkage array, we can now visualise it. This will reveal where the technique gets its name.</p>
+<p>To visualise the actual clustering tree, we use the the <code class="docutils literal notranslate"><span class="pre">.dendrogram</span></code> plotting function. With large datasets like this one, it can be hard to see, so we will ask <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code> to make the figure larger:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Plot </span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span> <span class="c1"># Makes a larger plot</span>
+
+<span class="c1"># Plot the tree</span>
+<span class="n">dendrogram</span> <span class="o">=</span> <span class="n">shc</span><span class="o">.</span><span class="n">dendrogram</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">no_labels</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="c1"># Plots the dendrogram</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/bbbfe423aa7630e98bbe17502cdbe7fb03e4d773cc835ec8b46084a0b0710046.png" src="../_images/bbbfe423aa7630e98bbe17502cdbe7fb03e4d773cc835ec8b46084a0b0710046.png" />
+</div>
+</div>
+<p>What are we looking at here? The very bottom of the dendrogram shows the individual datapoints. From the perspective of the algorithm, these individual datapoints are actually just groups with a single observation in them. As you move up the tree, those individuals cluster together with their most similar individuals, forming new groups. This process continues up the three until there is a single cluster that encompasses <em>everyone</em>. To press the tree analogy, this is the root, and the invididuals at the bottom are the leaves.</p>
+<p>What is interesting here is the appearance of a clear set of ‘branches’ in the centre of the plot, with all the subsequent observations grouping together into them quite neatly (as you’d expect for a dataset designed to illustrate clustering!). The dendrogram offers a clear visualisation of the structure of similarity amongst datapoints.</p>
+</section>
+<section id="cutting-a-tree-getting-clusters-from-trees">
+<h2>Cutting a tree - getting clusters from trees<a class="headerlink" href="#cutting-a-tree-getting-clusters-from-trees" title="Link to this heading">#</a></h2>
+<p>While a dendrogram is a very nice visual description of the clustering process any patterns in that process, we still do not have what we came for - groups! The next step is to decide how many groups we want to extract from the tree, and we can do that by literally cutting the tree across the Y-axis. All values that fall below the Y-axis cut fall into the cluster that they are connected to directly above the Y-axis cut.</p>
+<p>For example, let’s visually cut the dendrogram at a Y-axis position of 2000. We can add a line to demonstrate, and also tell the <code class="docutils literal notranslate"><span class="pre">dendrogram</span></code> function to colour things in separately for observations below that point.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Plot </span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span> <span class="c1"># Makes a larger plot</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="mi">2000</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;dashed&#39;</span><span class="p">)</span> <span class="c1"># Adds a visual cut</span>
+
+<span class="c1"># Plot the tree, colouring below 2000</span>
+<span class="n">dendrogram</span> <span class="o">=</span> <span class="n">shc</span><span class="o">.</span><span class="n">dendrogram</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">no_labels</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">color_threshold</span><span class="o">=</span><span class="mi">2000</span><span class="p">)</span> <span class="c1"># Plots the dendrogram</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/75cffa8a6548314f235705da61daef87871d757f89c9b48633f06a8b0e7e1e12.png" src="../_images/75cffa8a6548314f235705da61daef87871d757f89c9b48633f06a8b0e7e1e12.png" />
+</div>
+</div>
+<p>This clearly gives us <em>two</em> clusters, because those observations falling below that point are subsumed by two ‘branches’. Equivalently, if we were to cut at 2,600:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Plot </span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span> <span class="c1"># Makes a larger plot</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="mi">2600</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;dashed&#39;</span><span class="p">)</span> <span class="c1"># Adds a visual cut</span>
+
+<span class="c1"># Plot the tree, colouring below 2000</span>
+<span class="n">dendrogram</span> <span class="o">=</span> <span class="n">shc</span><span class="o">.</span><span class="n">dendrogram</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">no_labels</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">color_threshold</span><span class="o">=</span><span class="mi">2600</span><span class="p">)</span> <span class="c1"># Plots the dendrogram</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/6ead3066f1d509130b6a2888e419f5d09e0a30abf2b316b5ad5768be9abb4ca8.png" src="../_images/6ead3066f1d509130b6a2888e419f5d09e0a30abf2b316b5ad5768be9abb4ca8.png" />
+</div>
+</div>
+<p>Everything is a uniform colour, because everything falls below that point. Similarly then, if we cut at 300:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Plot </span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span> <span class="c1"># Makes a larger plot</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="mi">300</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;dashed&#39;</span><span class="p">)</span> <span class="c1"># Adds a visual cut</span>
+
+<span class="c1"># Plot the tree, colouring below 2000</span>
+<span class="n">dendrogram</span> <span class="o">=</span> <span class="n">shc</span><span class="o">.</span><span class="n">dendrogram</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">no_labels</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">color_threshold</span><span class="o">=</span><span class="mi">300</span><span class="p">)</span> <span class="c1"># Plots the dendrogram</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/04b233d227e2731bb9101c329a6212fce439e90525d6a04d9f464a3e36bbe99a.png" src="../_images/04b233d227e2731bb9101c329a6212fce439e90525d6a04d9f464a3e36bbe99a.png" />
+</div>
+</div>
+<p>A multitude of clusters are obtained as the cut is above many branches leading to separate clusters.</p>
+<p>With the visual intuition behind our chops, lets now actually make a cut and obtain the clusters. We do this using the <code class="docutils literal notranslate"><span class="pre">cut_tree</span></code> function, and tell it the height at which we cut the three. We’ll use a height of 1500 as this looks like it can represent three clusters well. We cut the tree which will give each observation a group label (e.g. group 0, 1, 2) and add it back to the original dataframe, <code class="docutils literal notranslate"><span class="pre">xclara</span></code>, alongside the data:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Cutting the tree</span>
+<span class="n">labels</span> <span class="o">=</span> <span class="n">shc</span><span class="o">.</span><span class="n">cut_tree</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">1500</span><span class="p">)</span>
+
+<span class="c1"># add to dataframe with the name &#39;cluster&#39;</span>
+<span class="n">xclara</span><span class="p">[</span><span class="s1">&#39;cluster&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">labels</span>
+
+<span class="c1"># Show</span>
+<span class="n">xclara</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>rownames</th>
+      <th>V1</th>
+      <th>V2</th>
+      <th>cluster</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>2.072345</td>
+      <td>-3.241693</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>17.936710</td>
+      <td>15.784810</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3</td>
+      <td>1.083576</td>
+      <td>7.319176</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4</td>
+      <td>11.120670</td>
+      <td>14.406780</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5</td>
+      <td>23.711550</td>
+      <td>2.557729</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>And now we can visualise our results, colouring each point by its assigned group:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Visualise</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">xclara</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;V1&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;V2&#39;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;cluster&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">.5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Axes: xlabel=&#39;V1&#39;, ylabel=&#39;V2&#39;&gt;
+</pre></div>
+</div>
+<img alt="../_images/7a31f92f5b5b352de0ecf844de55f482ac812c4bc39b373a4214448a37613434.png" src="../_images/7a31f92f5b5b352de0ecf844de55f482ac812c4bc39b373a4214448a37613434.png" />
+</div>
+</div>
+<p>As can be seen, the algorithm did a fantastic job of tying together those separate groups of points! One of the nice benefits of this tree-like approach to clustering is that it allows the researcher to make a visual judgement and reason about the likely number of clusters in the data. Note that here we could easily visualise these clusters because the original dataset was two dimensional, and this will not always be the case!</p>
+</section>
+<section id="evaluating-a-tree-determining-the-quality-of-a-cluster">
+<h2>Evaluating a tree - determining the quality of a cluster<a class="headerlink" href="#evaluating-a-tree-determining-the-quality-of-a-cluster" title="Link to this heading">#</a></h2>
+<p>With EFA, we could evaluate our clustering by looking at the cumulative variance explained - how much variance the factors explained in the original dataset. How can we evaluate our clustering? We use a statistic called the <strong>silhouette coefficient</strong>. The general intuition of this statistic, which varies from -1 to 1, is that it compares the similarity of data points within a cluster to the similarity of the data points in other clusters. If this value, is on average, high (above 0.70 or so), then the number of clusters is appropriate. If it is between 0.5 and 0.70 then it is reasoable, and above 0.25 to 0.5 a weak clustering. Below those values it indicates the clustering is poor, or indeed, if it is less than 0 it suggests observations in clusters are more similar to those in <em>other</em> clusters. Its calculation is simple - we pass the original data and the cluster labels obtained from our tree cutting to the <code class="docutils literal notranslate"><span class="pre">silhouette_score</span></code> function:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Calculate silhouette</span>
+<span class="n">silhouette_score</span><span class="p">(</span><span class="n">xclara</span><span class="p">[[</span><span class="s1">&#39;V1&#39;</span><span class="p">,</span> <span class="s1">&#39;V2&#39;</span><span class="p">]],</span> <span class="n">xclara</span><span class="p">[</span><span class="s1">&#39;cluster&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.6941949594065251
+</pre></div>
+</div>
+</div>
+</div>
+<p>This suggests a reasonably strong clustering solution with three clusters.</p>
+</section>
+</section>
+<section id="an-applied-example-clustering-cultures-based-on-personality-traits">
+<h1>An applied example - clustering cultures based on personality traits<a class="headerlink" href="#an-applied-example-clustering-cultures-based-on-personality-traits" title="Link to this heading">#</a></h1>
+<p>A real-world example will cement these principles.</p>
+<p>Grice &amp; Iwasaki (2007) collected data from three different cultural groups in the United States - European Americans, ostensibly Caucasian individuals who had lived in the US all their life, Asian Americans, who were Asian individuals who had lived in the US since at least early childhood, and Asian Internationals, Asian individuals who had moved to the US after their sixth birthday. Each respondent completed a Big 5 personality questionnaire, obtaining a score on each of the 5 traits. While we know ahead of time there are groups in this data - <em>which we often dont</em> - we can still use this dataset to see if clusters do indeed emerge solely from the personality scores.</p>
+<p>We read in the data from this link: <a class="reference external" href="https://vincentarelbundock.github.io/Rdatasets/csv/heplots/Iwasaki_Big_Five.csv">https://vincentarelbundock.github.io/Rdatasets/csv/heplots/Iwasaki_Big_Five.csv</a></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Read in data</span>
+<span class="n">five_culture</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;https://vincentarelbundock.github.io/Rdatasets/csv/heplots/Iwasaki_Big_Five.csv&#39;</span><span class="p">)</span>
+<span class="n">five_culture</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>rownames</th>
+      <th>ID</th>
+      <th>Group</th>
+      <th>N</th>
+      <th>E</th>
+      <th>O</th>
+      <th>A</th>
+      <th>C</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>1</td>
+      <td>Asian_Intl</td>
+      <td>87</td>
+      <td>117</td>
+      <td>130</td>
+      <td>124</td>
+      <td>127</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>2</td>
+      <td>Asian_Intl</td>
+      <td>101</td>
+      <td>134</td>
+      <td>123</td>
+      <td>115</td>
+      <td>124</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3</td>
+      <td>3</td>
+      <td>Asian_Intl</td>
+      <td>63</td>
+      <td>135</td>
+      <td>111</td>
+      <td>71</td>
+      <td>134</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4</td>
+      <td>4</td>
+      <td>Asian_Intl</td>
+      <td>104</td>
+      <td>118</td>
+      <td>108</td>
+      <td>107</td>
+      <td>111</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5</td>
+      <td>5</td>
+      <td>Asian_Intl</td>
+      <td>70</td>
+      <td>114</td>
+      <td>110</td>
+      <td>119</td>
+      <td>120</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>This is self explanatory. We will ignore (for now) the <code class="docutils literal notranslate"><span class="pre">Group</span></code> variable, and build a hierarchical tree on the personality score columns (OCEAN). It is sometimes useful to standardise your data before clustering, especially if the variables are measured on different scales, which we will do as an extra step below. We will then build a tree and visualise it.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Standardise columns</span>
+<span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">zscore</span> <span class="c1"># Grab the zscore function</span>
+
+<span class="c1"># Standardise</span>
+<span class="n">five_culture</span><span class="p">[[</span><span class="s1">&#39;N&#39;</span><span class="p">,</span> <span class="s1">&#39;E&#39;</span><span class="p">,</span> <span class="s1">&#39;O&#39;</span><span class="p">,</span> <span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">five_culture</span><span class="p">[[</span><span class="s1">&#39;N&#39;</span><span class="p">,</span> <span class="s1">&#39;E&#39;</span><span class="p">,</span> <span class="s1">&#39;O&#39;</span><span class="p">,</span> <span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">zscore</span><span class="p">)</span> <span class="c1"># Overwrite columns with a zscored version</span>
+
+<span class="c1"># Build a tree</span>
+<span class="n">tree</span> <span class="o">=</span> <span class="n">shc</span><span class="o">.</span><span class="n">linkage</span><span class="p">(</span><span class="n">five_culture</span><span class="p">[[</span><span class="s1">&#39;N&#39;</span><span class="p">,</span> <span class="s1">&#39;E&#39;</span><span class="p">,</span> <span class="s1">&#39;O&#39;</span><span class="p">,</span> <span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">]],</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;ward&#39;</span><span class="p">)</span>
+
+<span class="c1"># Visualise</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="n">big_five_tree</span> <span class="o">=</span> <span class="n">shc</span><span class="o">.</span><span class="n">dendrogram</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span> <span class="n">no_labels</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/a1104b819d1b71078053bb0001012e85c476e4fdc3a83e4863c25bffac5347e8.png" src="../_images/a1104b819d1b71078053bb0001012e85c476e4fdc3a83e4863c25bffac5347e8.png" />
+</div>
+</div>
+<p>This sort of pattern is much more representative of clustering with real data. We can see evidence of around four clusters here, imagining a cut at around 12.5, though we could even consider a cut at around 10, which would yield us five. We could even cut this into three clusters at a Y-axis value of 13. This is up to us of course - there are no ‘right’ answers. We can evaluate a set of cuts with the silhouette coefficient, which we do next.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Make a set of cuts</span>
+<span class="n">clusters_3</span> <span class="o">=</span> <span class="n">shc</span><span class="o">.</span><span class="n">cut_tree</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+<span class="n">clusters_4</span> <span class="o">=</span> <span class="n">shc</span><span class="o">.</span><span class="n">cut_tree</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mf">12.5</span><span class="p">)</span>
+<span class="n">clusters_5</span> <span class="o">=</span> <span class="n">shc</span><span class="o">.</span><span class="n">cut_tree</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+<span class="c1"># And evaluate these with the silhouette score</span>
+<span class="c1"># the &#39;flatten&#39; method makes the labels 1 dimensional which silhouette_score wants</span>
+<span class="n">silhouette_3</span> <span class="o">=</span> <span class="n">silhouette_score</span><span class="p">(</span><span class="n">five_culture</span><span class="p">[[</span><span class="s1">&#39;N&#39;</span><span class="p">,</span> <span class="s1">&#39;E&#39;</span><span class="p">,</span> <span class="s1">&#39;O&#39;</span><span class="p">,</span> <span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">]],</span> <span class="n">clusters_3</span><span class="o">.</span><span class="n">flatten</span><span class="p">())</span> 
+<span class="n">silhouette_4</span> <span class="o">=</span> <span class="n">silhouette_score</span><span class="p">(</span><span class="n">five_culture</span><span class="p">[[</span><span class="s1">&#39;N&#39;</span><span class="p">,</span> <span class="s1">&#39;E&#39;</span><span class="p">,</span> <span class="s1">&#39;O&#39;</span><span class="p">,</span> <span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">]],</span> <span class="n">clusters_4</span><span class="o">.</span><span class="n">flatten</span><span class="p">())</span>
+<span class="n">silhouette_5</span> <span class="o">=</span> <span class="n">silhouette_score</span><span class="p">(</span><span class="n">five_culture</span><span class="p">[[</span><span class="s1">&#39;N&#39;</span><span class="p">,</span> <span class="s1">&#39;E&#39;</span><span class="p">,</span> <span class="s1">&#39;O&#39;</span><span class="p">,</span> <span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">]],</span> <span class="n">clusters_5</span><span class="o">.</span><span class="n">flatten</span><span class="p">())</span>
+
+<span class="c1"># Display</span>
+<span class="n">display</span><span class="p">(</span><span class="s1">&#39;Three clusters:&#39;</span><span class="p">,</span> <span class="n">silhouette_3</span><span class="p">,</span> <span class="s1">&#39;Four clusters:&#39;</span><span class="p">,</span> <span class="n">silhouette_4</span><span class="p">,</span> <span class="s1">&#39;Five clusters:&#39;</span><span class="p">,</span> <span class="n">silhouette_5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;Three clusters:&#39;
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.13628548582932207
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;Four clusters:&#39;
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.153040712987108
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;Five clusters:&#39;
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.15455977226524698
+</pre></div>
+</div>
+</div>
+</div>
+<p>What have we learned here? It seems like that however many clusters we pick, they are actually quite weak. This indicates to us that the clusters are not particularly strong. However, it does also suggest that a four or five cluster solution is marginally better. Which to pick? You could take either, but I will select four since it is simpler. We will continute with that, adding those cluster labels back to the dataset.</p>
+<p>We could then visualise the personality profiles of those four groups, after melting our data (refer to chapter one for a refresher!).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Add the 5 cluster labels back</span>
+<span class="n">five_culture</span><span class="p">[</span><span class="s1">&#39;clusters&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">clusters_4</span>
+
+<span class="c1"># Melt the data for plotting</span>
+<span class="n">plot_this</span> <span class="o">=</span> <span class="n">five_culture</span><span class="o">.</span><span class="n">melt</span><span class="p">(</span><span class="n">id_vars</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;ID&#39;</span><span class="p">,</span> <span class="s1">&#39;Group&#39;</span><span class="p">,</span> <span class="s1">&#39;clusters&#39;</span><span class="p">],</span>
+                              <span class="n">value_vars</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;N&#39;</span><span class="p">,</span> <span class="s1">&#39;E&#39;</span><span class="p">,</span> <span class="s1">&#39;O&#39;</span><span class="p">,</span> <span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">],</span>
+                              <span class="n">var_name</span><span class="o">=</span><span class="s1">&#39;trait&#39;</span><span class="p">,</span> <span class="n">value_name</span><span class="o">=</span><span class="s1">&#39;score&#39;</span><span class="p">)</span>
+
+<span class="n">display</span><span class="p">(</span><span class="n">plot_this</span><span class="o">.</span><span class="n">head</span><span class="p">())</span> <span class="c1"># Show the melted data</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>ID</th>
+      <th>Group</th>
+      <th>clusters</th>
+      <th>trait</th>
+      <th>score</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>Asian_Intl</td>
+      <td>0</td>
+      <td>N</td>
+      <td>-0.420411</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>Asian_Intl</td>
+      <td>0</td>
+      <td>N</td>
+      <td>0.240434</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3</td>
+      <td>Asian_Intl</td>
+      <td>1</td>
+      <td>N</td>
+      <td>-1.553288</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4</td>
+      <td>Asian_Intl</td>
+      <td>1</td>
+      <td>N</td>
+      <td>0.382044</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5</td>
+      <td>Asian_Intl</td>
+      <td>0</td>
+      <td>N</td>
+      <td>-1.222866</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>And visualise:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># visualise</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">catplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">plot_this</span><span class="p">,</span>
+            <span class="n">x</span><span class="o">=</span><span class="s1">&#39;trait&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;score&#39;</span><span class="p">,</span> 
+            <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;trait&#39;</span><span class="p">,</span> <span class="n">col</span><span class="o">=</span><span class="s1">&#39;clusters&#39;</span><span class="p">,</span>
+            <span class="n">col_wrap</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;bar&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.FacetGrid at 0x14b417810&gt;
+</pre></div>
+</div>
+<img alt="../_images/b84b45d8475d2062c7f69e59d52d33f71410a79bbd758cf5561349838d858011.png" src="../_images/b84b45d8475d2062c7f69e59d52d33f71410a79bbd758cf5561349838d858011.png" />
+</div>
+</div>
+<p>What we’ve learned here is that:</p>
+<ul class="simple">
+<li><p>People in cluster 0 have lower than average Neuroticism, very average Openness, and slightly higher than average Extraversion, Agreeableness, and Conscientiousness.</p></li>
+<li><p>People in cluster 1 have much lower than average Agreeableness (not nice people!), very average Conscientiousness and Openness, with slightly higher scores on Extraversion and Neuroticism.</p></li>
+<li><p>People in cluster 2 have rather lower than average Extraversion, Openness, and Conscientiousness, and average scores on Neuroticism and Agreeableness.</p></li>
+<li><p>People in cluster 4 have high scores on Neuroticism, Openness, and Agreeableness, but lower scores on Extraversion and Conscientiousness.</p></li>
+</ul>
+<p>Coarsely speaking we might imagine:</p>
+<ul class="simple">
+<li><p>Those in cluster 0 as relaxed, outgoing, friendly, and hard working, but not particularly creative.</p></li>
+<li><p>Those in cluster 1 as unfriendly, slightly anxious but outgoing, and not particularly creative or hardworking.</p></li>
+<li><p>Those in cluster 2 as introverted, close minded, and disorganised.</p></li>
+<li><p>Those in cluster 3 as anxious, disorganised, and a little introverted, but very creative and very friendly.</p></li>
+</ul>
+<p>But remember - this clustering solution was quite weak! As a final interesting test we might compare the cluster labels with the actual ethnic groups to see if there is any concordance, using <code class="docutils literal notranslate"><span class="pre">pd.crosstab</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Crosstabs</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">crosstab</span><span class="p">(</span><span class="n">five_culture</span><span class="p">[</span><span class="s1">&#39;Group&#39;</span><span class="p">],</span> <span class="n">five_culture</span><span class="p">[</span><span class="s1">&#39;clusters&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>clusters</th>
+      <th>0</th>
+      <th>1</th>
+      <th>2</th>
+      <th>3</th>
+    </tr>
+    <tr>
+      <th>Group</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Asian_Amer</th>
+      <td>25</td>
+      <td>15</td>
+      <td>23</td>
+      <td>9</td>
+    </tr>
+    <tr>
+      <th>Asian_Intl</th>
+      <td>39</td>
+      <td>18</td>
+      <td>15</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>Eur</th>
+      <td>22</td>
+      <td>7</td>
+      <td>12</td>
+      <td>15</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Not really!</p>
+<p>Clustering is again a powerful tool but must be used with circumspection, requiring careful consideration of the data, questions, and problem at hand. Its possible to also combined clustering and techniques like factor analysis, where a researcher might reduce a large number of column-variables down to their latent factors, and then perform clustering on the factor scores to see how people group together on those latent variables.</p>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./10_Clustering"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../9_CFA/QPoP%20-%20Week%209%20Exercises%20-%20Answers.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Fitting latent variables onto data - Exercises &amp; Answers</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="QPoP%20-%20Week%2010%20Exercises%20-%20Answers.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Fitting latent groups in data - Exercises &amp; Answers</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">10 - Clustering</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#finding-latent-groups-in-data">Finding latent groups in data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#building-a-tree-the-workings-of-hierarchical-clustering">Building a tree - the workings of hierarchical clustering</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#building-a-tree-the-linkage-array">Building a tree - the linkage array</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#building-a-tree-the-dendrogram">Building a tree - the dendrogram</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cutting-a-tree-getting-clusters-from-trees">Cutting a tree - getting clusters from trees</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluating-a-tree-determining-the-quality-of-a-cluster">Evaluating a tree - determining the quality of a cluster</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#an-applied-example-clustering-cultures-based-on-personality-traits">An applied example - clustering cultures based on personality traits</a></li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Alex Jones, Ph.D
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
