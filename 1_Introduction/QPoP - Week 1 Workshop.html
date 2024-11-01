@@ -234,9 +234,36 @@
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Linear Mixed Effects Models</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../7_MixedModel/QPoP%20-%20Week%207%20Workshop.html">7 - Linear mixed effects models</a></li>
-
 <li class="toctree-l1"><a class="reference internal" href="../7_MixedModel/QPoP%20-%20Week%207%20Exercises%20-%20Answers.html">Dealing with repeated measurements - Exercises &amp; Answers</a></li>
 
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Exploratory Factor Analysis</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../8_EFA/QPoP%20-%20Week%208%20Workshop.html">8 - Exploratory Factor Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../8_EFA/QPoP%20-%20Week%208%20Exercises%20-%20Answers.html">Finding latent variables in data - Exercises &amp; Answers</a></li>
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Confirmatory Factor Analysis</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../9_CFA/QPoP%20-%20Week%209%20Workshop.html">9 - Confirmatory Factor Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../9_CFA/QPoP%20-%20Week%209%20Exercises%20-%20Answers.html">Fitting latent variables onto data - Exercises &amp; Answers</a></li>
+
+
+
+
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Clustering</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../10_Clustering/QPoP%20-%20Week%2010%20Workshop.html">10 - Clustering</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../10_Clustering/QPoP%20-%20Week%2010%20Exercises%20-%20Answers.html">Fitting latent groups in data - Exercises &amp; Answers</a></li>
 
 
 
@@ -435,32 +462,28 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#using-python-for-data-analysis">Using Python for Data Analysis</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#part-1-basic-syntax">Part 1 - Basic syntax</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#variables">Variables</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#types">Types</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#data-containers">Data Containers</a><ul class="nav section-nav flex-column">
-<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#lists">Lists</a></li>
-<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#dictionaries">Dictionaries</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#using-python-for-data-analysis">Using Python for Data Analysis</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#part-1-basic-syntax">Part 1 - Basic syntax</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#variables">Variables</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#types">Types</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-containers">Data Containers</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lists">Lists</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dictionaries">Dictionaries</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#part-2-pandas">Part 2 - Pandas</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-at-a-glance-describe-and-info">Data at a glance - .describe() and .info()</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#accessing-data-in-pandas">Accessing data in Pandas</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#filtering-a-dataframe">Filtering a dataframe</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dropping-data-imputing-values-and-getting-a-summary-statistic">Dropping data, imputing values, and getting a summary statistic</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#aggregating">Aggregating</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#aggregating-by-groups">Aggregating by groups</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reshaping-data">Reshaping data</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#wide-to-long">Wide to long</a></li>
 </ul>
 </li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#part-2-pandas">Part 2 - Pandas</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#data-at-a-glance-describe-and-info">Data at a glance - .describe() and .info()</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#accessing-data-in-pandas">Accessing data in Pandas</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#filtering-a-dataframe">Filtering a dataframe</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#dropping-data-imputing-values-and-getting-a-summary-statistic">Dropping data, imputing values, and getting a summary statistic</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#aggregating">Aggregating</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#aggregating-by-groups">Aggregating by groups</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#reshaping-data">Reshaping data</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#wide-to-long">Wide to long</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#long-to-wide">Long to wide</a></li>
-</ul>
-</li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#part-3-statistical-plots-with-seaborn">Part 3 - Statistical Plots with Seaborn</a></li>
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#long-to-wide">Long to wide</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#part-3-statistical-plots-with-seaborn">Part 3 - Statistical Plots with Seaborn</a></li>
 </ul>
             </nav>
         </div>
@@ -483,8 +506,9 @@ document.write(`
 <li><p>Visualise the data through plots</p></li>
 </ul>
 <p>While there are a range of uses for the tools we will cover, particularly the art of ‘data wrangling’, these are outside the scope of the content. You will however get the skills to learn these more advanced approaches and there are many resources to advance you.</p>
+</section>
 <section id="part-1-basic-syntax">
-<h3>Part 1 - Basic syntax<a class="headerlink" href="#part-1-basic-syntax" title="Link to this heading">#</a></h3>
+<h2>Part 1 - Basic syntax<a class="headerlink" href="#part-1-basic-syntax" title="Link to this heading">#</a></h2>
 <p>Here, we take a look at the basic syntax, or rules, we can use to get Python working for us.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -520,8 +544,9 @@ document.write(`
 </div>
 </div>
 </div>
+</section>
 <section id="variables">
-<h4>Variables<a class="headerlink" href="#variables" title="Link to this heading">#</a></h4>
+<h2>Variables<a class="headerlink" href="#variables" title="Link to this heading">#</a></h2>
 <p>We will do more than simple maths with Python, and this involves using <strong>variables</strong> to store information, or the results of operations, or even vast collections of data, under a single name - think of it like a box you place results in.</p>
 <p>Naming a variable is a simple but strict process:</p>
 <ul class="simple">
@@ -566,9 +591,8 @@ document.write(`
 </div>
 </div>
 </div>
-</section>
 <section id="types">
-<h4>Types<a class="headerlink" href="#types" title="Link to this heading">#</a></h4>
+<h3>Types<a class="headerlink" href="#types" title="Link to this heading">#</a></h3>
 <p>There are several common data types that you see during analysis.</p>
 <ul class="simple">
 <li><p>Integers, known as <code class="docutils literal notranslate"><span class="pre">int</span></code>. These are whole numbers, e.g. <code class="docutils literal notranslate"><span class="pre">1</span></code>, <code class="docutils literal notranslate"><span class="pre">45</span></code>.</p></li>
@@ -657,11 +681,13 @@ Hello worldHello again
 </div>
 </div>
 </section>
+</section>
 <section id="data-containers">
-<h4>Data Containers<a class="headerlink" href="#data-containers" title="Link to this heading">#</a></h4>
+<h2>Data Containers<a class="headerlink" href="#data-containers" title="Link to this heading">#</a></h2>
 <p>Variables are not just single numbers or strings. Often they are collections of information. There are many containers but two you <em>must</em> know about are <strong>lists</strong> and <strong>dictionaries</strong>.</p>
+</section>
 <section id="lists">
-<h5>Lists<a class="headerlink" href="#lists" title="Link to this heading">#</a></h5>
+<h2>Lists<a class="headerlink" href="#lists" title="Link to this heading">#</a></h2>
 <p>A <strong>list</strong> is an ordered collection of other bits of data that is all kept together in a single group. You use square brackets <code class="docutils literal notranslate"><span class="pre">[]</span></code> to indicate a list and everything that is to go inside it is separated with a comma.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -692,7 +718,7 @@ Hello worldHello again
 <p>Some statistical output will be given to you in a list, or you will specify inputs to analysis programs, plots, and so on, as lists.</p>
 </section>
 <section id="dictionaries">
-<h5>Dictionaries<a class="headerlink" href="#dictionaries" title="Link to this heading">#</a></h5>
+<h2>Dictionaries<a class="headerlink" href="#dictionaries" title="Link to this heading">#</a></h2>
 <p>A <strong>dictionary</strong> is an <em>un</em>ordered collection of other bits of data that is also kept together in a single group. You use curly brackets <code class="docutils literal notranslate"><span class="pre">{}</span></code> to indicate a dictionary, but the difference is that everything that goes in needs a ‘key’ that is associated with a ‘value’, like a real dictionary that has entries and definitions. The keys are strings, but the values can be anything!</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -721,10 +747,8 @@ dict_keys([&#39;one&#39;, &#39;two&#39;, &#39;three&#39;, &#39;four&#39;])
 </div>
 <p>Dictionaries are again often used to give inputs to statistical methods or plots, or you will have results returned to you in a dictionary.</p>
 </section>
-</section>
-</section>
 <section id="part-2-pandas">
-<h3>Part 2 - Pandas<a class="headerlink" href="#part-2-pandas" title="Link to this heading">#</a></h3>
+<h2>Part 2 - Pandas<a class="headerlink" href="#part-2-pandas" title="Link to this heading">#</a></h2>
 <p>We come now to the workhorse of our Python journey - pandas (<strong>Pan</strong>el <strong>Da</strong>ta). This package allows us to read in and manipulate data, and also to pass this data off to various other packages that will do our statistics and plots for us. A good way to think of it is the ‘Excel’ of Python, but the data is stored in something called a <strong>DataFrame</strong>.</p>
 <p>In order to work with pandas, we must first <code class="docutils literal notranslate"><span class="pre">import</span></code> it, as it is an ‘add-on’ to basic Python.</p>
 <div class="cell docutils container">
@@ -939,8 +963,9 @@ dict_keys([&#39;one&#39;, &#39;two&#39;, &#39;three&#39;, &#39;four&#39;])
 </table>
 </div></div></div>
 </div>
+</section>
 <section id="data-at-a-glance-describe-and-info">
-<h4>Data at a glance - .describe() and .info()<a class="headerlink" href="#data-at-a-glance-describe-and-info" title="Link to this heading">#</a></h4>
+<h2>Data at a glance - .describe() and .info()<a class="headerlink" href="#data-at-a-glance-describe-and-info" title="Link to this heading">#</a></h2>
 <p>With a dataset now ‘in memory’, analysis can begin. DataFrames come with a few methods give you some at a glance information about your data.</p>
 <p><code class="docutils literal notranslate"><span class="pre">.info()</span></code> returns information about the size and shape of the DataFrame, as well as the type of the data in each column. Very useful to check as sometimes data will be in the wrong format - e.g. strings as numbers.
 <code class="docutils literal notranslate"><span class="pre">.describe()</span></code> computes summary statistics for any numeric data columns, including mean, quartiles, and range.</p>
@@ -1158,7 +1183,7 @@ dtype: object
 </div>
 </section>
 <section id="accessing-data-in-pandas">
-<h4>Accessing data in Pandas<a class="headerlink" href="#accessing-data-in-pandas" title="Link to this heading">#</a></h4>
+<h2>Accessing data in Pandas<a class="headerlink" href="#accessing-data-in-pandas" title="Link to this heading">#</a></h2>
 <p>You can access data in pandas much like a dictionary, and sometimes you’ll need to do this. You can get a single column, or multiple columns, via using column names in a list. You’ll need to do this sometimes for some applications!</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1357,7 +1382,7 @@ dtype: object
 </div>
 </section>
 <section id="filtering-a-dataframe">
-<h4>Filtering a dataframe<a class="headerlink" href="#filtering-a-dataframe" title="Link to this heading">#</a></h4>
+<h2>Filtering a dataframe<a class="headerlink" href="#filtering-a-dataframe" title="Link to this heading">#</a></h2>
 <p>Selecting specific rows is easy. We use the <code class="docutils literal notranslate"><span class="pre">.query</span></code> method on a dataframe, and using a short expression to say what we want variables to be equal to, or less or more than:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1778,7 +1803,7 @@ dtype: object
 </ul>
 </section>
 <section id="dropping-data-imputing-values-and-getting-a-summary-statistic">
-<h4>Dropping data, imputing values, and getting a summary statistic<a class="headerlink" href="#dropping-data-imputing-values-and-getting-a-summary-statistic" title="Link to this heading">#</a></h4>
+<h2>Dropping data, imputing values, and getting a summary statistic<a class="headerlink" href="#dropping-data-imputing-values-and-getting-a-summary-statistic" title="Link to this heading">#</a></h2>
 <p>Sometimes, your data will have missing values. Here I replace a few values with a ‘missing’ indicator, and show how we can remove them, or replace them.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -3431,7 +3456,7 @@ dtype: bool
 </div>
 </section>
 <section id="aggregating">
-<h4>Aggregating<a class="headerlink" href="#aggregating" title="Link to this heading">#</a></h4>
+<h2>Aggregating<a class="headerlink" href="#aggregating" title="Link to this heading">#</a></h2>
 <p>We can aggregate columns to get specific statistics. pandas has shortcuts where we can state the name of a function we’d like to use as a string to the <code class="docutils literal notranslate"><span class="pre">agg</span></code> function in a dictionary - the key being the name of the column to work on!</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -3486,7 +3511,7 @@ dtype: bool
 </div>
 </section>
 <section id="aggregating-by-groups">
-<h4>Aggregating by groups<a class="headerlink" href="#aggregating-by-groups" title="Link to this heading">#</a></h4>
+<h2>Aggregating by groups<a class="headerlink" href="#aggregating-by-groups" title="Link to this heading">#</a></h2>
 <p>Often, we may wish to aggregate our data by a <em>specific</em> variable or sets of them. For example, if we wanted to compute the average horsepower (<code class="docutils literal notranslate"><span class="pre">hp</span></code>) of each of the manual and automatic (<code class="docutils literal notranslate"><span class="pre">am</span></code>) cars, we need to do a <code class="docutils literal notranslate"><span class="pre">groupby</span></code>:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -3537,16 +3562,15 @@ dtype: bool
 </div>
 </section>
 <section id="reshaping-data">
-<h4>Reshaping data<a class="headerlink" href="#reshaping-data" title="Link to this heading">#</a></h4>
+<h2>Reshaping data<a class="headerlink" href="#reshaping-data" title="Link to this heading">#</a></h2>
 <p>Data comes in two formats - <strong>wide</strong>, and <strong>long</strong>.</p>
 <ul class="simple">
 <li><p>Wide data has a single row per observation, and multiple columns that denote different variables. This is the format you’re used to seeing in programs like JASP or Excel.</p></li>
 <li><p>Long data has multiple rows for a single observation, and columns that ‘track’ the scores on the variables.</p></li>
 </ul>
 <p>You need to be able to move between these for things like plots or analysis functions. Fortunately, its not too difficult, but can take practice!</p>
-</section>
 <section id="wide-to-long">
-<h4>Wide to long<a class="headerlink" href="#wide-to-long" title="Link to this heading">#</a></h4>
+<h3>Wide to long<a class="headerlink" href="#wide-to-long" title="Link to this heading">#</a></h3>
 <p>To go from a wide dataset to a long one, we need to <code class="docutils literal notranslate"><span class="pre">melt</span></code> a dataframe.. This requires us to specify two things.</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">id_vars</span></code> - the names of columns to keep as a ‘tracker’ for which observation the scores belong to.</p></li>
@@ -3698,8 +3722,9 @@ dtype: bool
 </div></div></div>
 </div>
 </section>
+</section>
 <section id="long-to-wide">
-<h4>Long to wide<a class="headerlink" href="#long-to-wide" title="Link to this heading">#</a></h4>
+<h2>Long to wide<a class="headerlink" href="#long-to-wide" title="Link to this heading">#</a></h2>
 <p>To go from a long dataframe to a wide one, we must <code class="docutils literal notranslate"><span class="pre">pivot</span></code> it. This requires us to specify three things:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">index</span></code>, the name of the column that represents the identifier keeping track of what observation is what.</p></li>
@@ -3818,9 +3843,8 @@ dtype: bool
 </div></div></div>
 </div>
 </section>
-</section>
 <section id="part-3-statistical-plots-with-seaborn">
-<h3>Part 3 - Statistical Plots with Seaborn<a class="headerlink" href="#part-3-statistical-plots-with-seaborn" title="Link to this heading">#</a></h3>
+<h2>Part 3 - Statistical Plots with Seaborn<a class="headerlink" href="#part-3-statistical-plots-with-seaborn" title="Link to this heading">#</a></h2>
 <p>Pandas gives us the power to work with raw data, but Seaborn allows us to <em>visualise</em> that data easily. Seaborn can produce a vast array of plots, and we will use it to visualise different aspects of the data we work with. Lets see some basic examples.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -3900,7 +3924,6 @@ dtype: bool
 </div>
 </section>
 </section>
-</section>
 
     <script type="text/x-thebe-config">
     {
@@ -3966,32 +3989,28 @@ dtype: bool
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#using-python-for-data-analysis">Using Python for Data Analysis</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#part-1-basic-syntax">Part 1 - Basic syntax</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#variables">Variables</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#types">Types</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#data-containers">Data Containers</a><ul class="nav section-nav flex-column">
-<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#lists">Lists</a></li>
-<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#dictionaries">Dictionaries</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#using-python-for-data-analysis">Using Python for Data Analysis</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#part-1-basic-syntax">Part 1 - Basic syntax</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#variables">Variables</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#types">Types</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-containers">Data Containers</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lists">Lists</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dictionaries">Dictionaries</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#part-2-pandas">Part 2 - Pandas</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-at-a-glance-describe-and-info">Data at a glance - .describe() and .info()</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#accessing-data-in-pandas">Accessing data in Pandas</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#filtering-a-dataframe">Filtering a dataframe</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dropping-data-imputing-values-and-getting-a-summary-statistic">Dropping data, imputing values, and getting a summary statistic</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#aggregating">Aggregating</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#aggregating-by-groups">Aggregating by groups</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reshaping-data">Reshaping data</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#wide-to-long">Wide to long</a></li>
 </ul>
 </li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#part-2-pandas">Part 2 - Pandas</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#data-at-a-glance-describe-and-info">Data at a glance - .describe() and .info()</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#accessing-data-in-pandas">Accessing data in Pandas</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#filtering-a-dataframe">Filtering a dataframe</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#dropping-data-imputing-values-and-getting-a-summary-statistic">Dropping data, imputing values, and getting a summary statistic</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#aggregating">Aggregating</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#aggregating-by-groups">Aggregating by groups</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#reshaping-data">Reshaping data</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#wide-to-long">Wide to long</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#long-to-wide">Long to wide</a></li>
-</ul>
-</li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#part-3-statistical-plots-with-seaborn">Part 3 - Statistical Plots with Seaborn</a></li>
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#long-to-wide">Long to wide</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#part-3-statistical-plots-with-seaborn">Part 3 - Statistical Plots with Seaborn</a></li>
 </ul>
   </nav></div>
 

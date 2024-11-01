@@ -233,7 +233,6 @@
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Linear Mixed Effects Models</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../7_MixedModel/QPoP%20-%20Week%207%20Workshop.html">7 - Linear mixed effects models</a></li>
-
 <li class="toctree-l1"><a class="reference internal" href="../7_MixedModel/QPoP%20-%20Week%207%20Exercises%20-%20Answers.html">Dealing with repeated measurements - Exercises &amp; Answers</a></li>
 
 
@@ -1013,10 +1012,10 @@ document.write(`
 </div>
 </details>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.FacetGrid at 0x134a73890&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.FacetGrid at 0x146171110&gt;
 </pre></div>
 </div>
-<img alt="../_images/86375b4241d92a4af4091a442c5c941da3509a9f4410b05711edbae0c9f66865.png" src="../_images/86375b4241d92a4af4091a442c5c941da3509a9f4410b05711edbae0c9f66865.png" />
+<img alt="../_images/3bb3fa7dc6a44f3f8750c478a679a228030af5d89ed121635d260e8e58a98dbd.png" src="../_images/3bb3fa7dc6a44f3f8750c478a679a228030af5d89ed121635d260e8e58a98dbd.png" />
 </div>
 </div>
 <p>There is a clear pattern in this.</p>
@@ -1328,7 +1327,7 @@ document.write(`
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Axes: xlabel=&#39;measure&#39;, ylabel=&#39;score&#39;&gt;
 </pre></div>
 </div>
-<img alt="../_images/521f4bd32c0b098edc75e4b002888390115e506d1776a72934b3072e70782870.png" src="../_images/521f4bd32c0b098edc75e4b002888390115e506d1776a72934b3072e70782870.png" />
+<img alt="../_images/23120e4071d972bef8b45e3053f9f1532eed0fe3f0a3294c8da6f97230534db0.png" src="../_images/23120e4071d972bef8b45e3053f9f1532eed0fe3f0a3294c8da6f97230534db0.png" />
 </div>
 </div>
 <p>This shows the actual biological pattern. Adelie’s have shorter bills than Chinstrap and Gentoo penguins, but on the rest of the variables, the Gentoo’s are very dissimilar. Now create a bar plot that illustrates the <em>clusters</em> in the same way.</p>
@@ -1349,7 +1348,7 @@ document.write(`
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Axes: xlabel=&#39;measure&#39;, ylabel=&#39;score&#39;&gt;
 </pre></div>
 </div>
-<img alt="../_images/6dc5efc4f8ab7739a2337d8f063115dc29be42d6ebf7857e0212ca2511950a1b.png" src="../_images/6dc5efc4f8ab7739a2337d8f063115dc29be42d6ebf7857e0212ca2511950a1b.png" />
+<img alt="../_images/e3010f7c1d27b5c7a58e32f78877cf7f0b536e723d05587e344df13aa5c3545c.png" src="../_images/e3010f7c1d27b5c7a58e32f78877cf7f0b536e723d05587e344df13aa5c3545c.png" />
 </div>
 </div>
 <p>From this its hopefully clear that the clustering algorithm has noticed the Gentoo penguins are so different on the other variables and has considered them to be a ‘different sort’ of penguin - the pattern closely resembles the actual biological speciation!</p>
@@ -1785,10 +1784,10 @@ document.write(`
 </div>
 </details>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.FacetGrid at 0x134c89250&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.FacetGrid at 0x147961f10&gt;
 </pre></div>
 </div>
-<img alt="../_images/77d638191a9b36eb9e217db3dcac6d9153c1786ee82f6750055fb480c04bafba.png" src="../_images/77d638191a9b36eb9e217db3dcac6d9153c1786ee82f6750055fb480c04bafba.png" />
+<img alt="../_images/b384969742efd918ebf3d1a58a5d2547cf6580bf874c2984204a99c7033e69d1.png" src="../_images/b384969742efd918ebf3d1a58a5d2547cf6580bf874c2984204a99c7033e69d1.png" />
 </div>
 </div>
 <p>Cluster 0 are relaxed, outgoing, friendly, and conscientious. Conversely, cluster 1 are neurotic, introverted, unfriendly, and not very conscientious! Remember though, clustering is a <em>descriptive</em> technique. It is not an inferential model like OLS or factor analysis of any form, and so its findings can be very dataset specific - it is a powerful way to explore data, and we have touched only one approach to clustering here. There are in fact model-based clustering approaches that use probability distributions which can be more inferentially robust, but they too come with their own drawbacks. Taken together though, clustering is a very useful tool to have, as long as it is treated with respect.</p>

@@ -236,7 +236,6 @@
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Linear Mixed Effects Models</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../7_MixedModel/QPoP%20-%20Week%207%20Workshop.html">7 - Linear mixed effects models</a></li>
-
 <li class="toctree-l1"><a class="reference internal" href="../7_MixedModel/QPoP%20-%20Week%207%20Exercises%20-%20Answers.html">Dealing with repeated measurements - Exercises &amp; Answers</a></li>
 
 
@@ -258,6 +257,15 @@
 
 
 
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Clustering</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../10_Clustering/QPoP%20-%20Week%2010%20Workshop.html">10 - Clustering</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../10_Clustering/QPoP%20-%20Week%2010%20Exercises%20-%20Answers.html">Fitting latent groups in data - Exercises &amp; Answers</a></li>
 
 
 
@@ -671,14 +679,14 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>SolverResult(fun=0.26553529574171186, success=True, n_it=64, x=array([-5.07648299e-01, -3.35199277e+00, -5.49388913e-01, -1.60867351e+00,
-       -2.48185202e-01,  4.37720720e-17,  2.60000298e+00,  3.23650506e+00,
-        4.19420084e-01,  2.58313761e+00,  1.00286083e-16,  2.14705944e+00,
-        1.25127014e-16,  3.06230987e+00,  1.96602959e-01,  2.62027984e-01,
-       -8.79052543e-02, -2.40102364e-01,  2.26342724e-02, -9.82637531e-02,
-        2.59133618e+00,  1.86467945e-01, -5.75723949e-01,  1.99518616e-01,
-        3.89764596e+00, -2.52805964e-01,  7.09319920e-01,  1.29393368e+00,
-        2.00616766e+00, -2.74134742e-01]), message=&#39;Optimization terminated successfully&#39;, name_method=&#39;SLSQP&#39;, name_obj=&#39;MLW&#39;)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>SolverResult(fun=0.2655352957417101, success=True, n_it=64, x=array([-5.07648299e-01, -3.35199277e+00, -5.49388913e-01, -1.60867351e+00,
+       -2.48185202e-01,  6.85668047e-17,  2.60000298e+00,  3.23650506e+00,
+        4.19420084e-01,  2.58313761e+00,  0.00000000e+00,  2.14705944e+00,
+        1.77085103e-17,  3.06230987e+00,  1.96602959e-01,  2.62027984e-01,
+       -2.40102364e-01, -9.82637531e-02,  2.59133618e+00, -8.79052543e-02,
+        1.86467945e-01,  1.99518616e-01,  3.89764596e+00,  7.09319920e-01,
+        1.29393368e+00,  2.26342724e-02, -5.75723949e-01, -2.52805964e-01,
+       -2.74134742e-01,  2.00616766e+00]), message=&#39;Optimization terminated successfully&#39;, name_method=&#39;SLSQP&#39;, name_obj=&#39;MLW&#39;)
 </pre></div>
 </div>
 </div>
@@ -852,17 +860,6 @@ document.write(`
       <th>11</th>
       <td>agreeableness</td>
       <td>~~</td>
-      <td>conscientious</td>
-      <td>-8.790525e-02</td>
-      <td>-1.066790e-01</td>
-      <td>0.009263</td>
-      <td>-9.490274</td>
-      <td>0.0</td>
-    </tr>
-    <tr>
-      <th>12</th>
-      <td>agreeableness</td>
-      <td>~~</td>
       <td>extraversion</td>
       <td>-2.401024e-01</td>
       <td>-2.375863e-01</td>
@@ -871,18 +868,7 @@ document.write(`
       <td>0.0</td>
     </tr>
     <tr>
-      <th>13</th>
-      <td>agreeableness</td>
-      <td>~~</td>
-      <td>neuroticism</td>
-      <td>2.263427e-02</td>
-      <td>3.887198e-02</td>
-      <td>0.004264</td>
-      <td>5.307691</td>
-      <td>0.0</td>
-    </tr>
-    <tr>
-      <th>14</th>
+      <th>12</th>
       <td>agreeableness</td>
       <td>~~</td>
       <td>openness</td>
@@ -893,7 +879,7 @@ document.write(`
       <td>0.0</td>
     </tr>
     <tr>
-      <th>15</th>
+      <th>13</th>
       <td>conscientious</td>
       <td>~~</td>
       <td>conscientious</td>
@@ -904,7 +890,18 @@ document.write(`
       <td>0.0</td>
     </tr>
     <tr>
-      <th>16</th>
+      <th>14</th>
+      <td>conscientious</td>
+      <td>~~</td>
+      <td>agreeableness</td>
+      <td>-8.790525e-02</td>
+      <td>-1.066790e-01</td>
+      <td>0.009263</td>
+      <td>-9.490274</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>15</th>
       <td>conscientious</td>
       <td>~~</td>
       <td>extraversion</td>
@@ -915,18 +912,7 @@ document.write(`
       <td>0.0</td>
     </tr>
     <tr>
-      <th>17</th>
-      <td>conscientious</td>
-      <td>~~</td>
-      <td>neuroticism</td>
-      <td>-5.757239e-01</td>
-      <td>-3.144100e-01</td>
-      <td>0.020122</td>
-      <td>-28.611052</td>
-      <td>0.0</td>
-    </tr>
-    <tr>
-      <th>18</th>
+      <th>16</th>
       <td>conscientious</td>
       <td>~~</td>
       <td>openness</td>
@@ -937,7 +923,7 @@ document.write(`
       <td>0.0</td>
     </tr>
     <tr>
-      <th>19</th>
+      <th>17</th>
       <td>extraversion</td>
       <td>~~</td>
       <td>extraversion</td>
@@ -948,18 +934,7 @@ document.write(`
       <td>0.0</td>
     </tr>
     <tr>
-      <th>20</th>
-      <td>extraversion</td>
-      <td>~~</td>
-      <td>neuroticism</td>
-      <td>-2.528060e-01</td>
-      <td>-1.125719e-01</td>
-      <td>0.016061</td>
-      <td>-15.740773</td>
-      <td>0.0</td>
-    </tr>
-    <tr>
-      <th>21</th>
+      <th>18</th>
       <td>extraversion</td>
       <td>~~</td>
       <td>openness</td>
@@ -970,7 +945,7 @@ document.write(`
       <td>0.0</td>
     </tr>
     <tr>
-      <th>22</th>
+      <th>19</th>
       <td>neuroticism</td>
       <td>~~</td>
       <td>neuroticism</td>
@@ -981,7 +956,51 @@ document.write(`
       <td>0.0</td>
     </tr>
     <tr>
+      <th>20</th>
+      <td>neuroticism</td>
+      <td>~~</td>
+      <td>agreeableness</td>
+      <td>2.263427e-02</td>
+      <td>3.887198e-02</td>
+      <td>0.004264</td>
+      <td>5.307691</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>neuroticism</td>
+      <td>~~</td>
+      <td>conscientious</td>
+      <td>-5.757239e-01</td>
+      <td>-3.144100e-01</td>
+      <td>0.020122</td>
+      <td>-28.611052</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>neuroticism</td>
+      <td>~~</td>
+      <td>extraversion</td>
+      <td>-2.528060e-01</td>
+      <td>-1.125719e-01</td>
+      <td>0.016061</td>
+      <td>-15.740773</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
       <th>23</th>
+      <td>neuroticism</td>
+      <td>~~</td>
+      <td>openness</td>
+      <td>-2.741347e-01</td>
+      <td>-1.701471e-01</td>
+      <td>0.01279</td>
+      <td>-21.433455</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>24</th>
       <td>openness</td>
       <td>~~</td>
       <td>openness</td>
@@ -992,23 +1011,12 @@ document.write(`
       <td>0.0</td>
     </tr>
     <tr>
-      <th>24</th>
-      <td>openness</td>
-      <td>~~</td>
-      <td>neuroticism</td>
-      <td>-2.741347e-01</td>
-      <td>-1.701471e-01</td>
-      <td>0.01279</td>
-      <td>-21.433455</td>
-      <td>0.0</td>
-    </tr>
-    <tr>
       <th>25</th>
       <td>TIPI1</td>
       <td>~~</td>
       <td>TIPI1</td>
-      <td>4.377207e-17</td>
-      <td>1.123039e-17</td>
+      <td>6.856680e-17</td>
+      <td>1.759185e-17</td>
       <td>0.101706</td>
       <td>0.0</td>
       <td>1.0</td>
@@ -1062,8 +1070,8 @@ document.write(`
       <td>TIPI5</td>
       <td>~~</td>
       <td>TIPI5</td>
-      <td>1.002861e-16</td>
-      <td>4.998888e-17</td>
+      <td>0.000000e+00</td>
+      <td>0.000000e+00</td>
       <td>0.184425</td>
       <td>0.0</td>
       <td>1.0</td>
@@ -1084,8 +1092,8 @@ document.write(`
       <td>TIPI7</td>
       <td>~~</td>
       <td>TIPI7</td>
-      <td>1.251270e-16</td>
-      <td>4.250082e-17</td>
+      <td>1.770851e-17</td>
+      <td>6.014897e-18</td>
       <td>0.23821</td>
       <td>0.0</td>
       <td>1.0</td>
@@ -1321,17 +1329,6 @@ document.write(`
       <th>11</th>
       <td>agreeableness</td>
       <td>~~</td>
-      <td>conscientious</td>
-      <td>-0.09</td>
-      <td>-0.11</td>
-      <td>0.009263</td>
-      <td>-9.490274</td>
-      <td>0.0</td>
-    </tr>
-    <tr>
-      <th>12</th>
-      <td>agreeableness</td>
-      <td>~~</td>
       <td>extraversion</td>
       <td>-0.24</td>
       <td>-0.24</td>
@@ -1340,18 +1337,7 @@ document.write(`
       <td>0.0</td>
     </tr>
     <tr>
-      <th>13</th>
-      <td>agreeableness</td>
-      <td>~~</td>
-      <td>neuroticism</td>
-      <td>0.02</td>
-      <td>0.04</td>
-      <td>0.004264</td>
-      <td>5.307691</td>
-      <td>0.0</td>
-    </tr>
-    <tr>
-      <th>14</th>
+      <th>12</th>
       <td>agreeableness</td>
       <td>~~</td>
       <td>openness</td>
@@ -1362,7 +1348,7 @@ document.write(`
       <td>0.0</td>
     </tr>
     <tr>
-      <th>15</th>
+      <th>13</th>
       <td>conscientious</td>
       <td>~~</td>
       <td>conscientious</td>
@@ -1373,7 +1359,18 @@ document.write(`
       <td>0.0</td>
     </tr>
     <tr>
-      <th>16</th>
+      <th>14</th>
+      <td>conscientious</td>
+      <td>~~</td>
+      <td>agreeableness</td>
+      <td>-0.09</td>
+      <td>-0.11</td>
+      <td>0.009263</td>
+      <td>-9.490274</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>15</th>
       <td>conscientious</td>
       <td>~~</td>
       <td>extraversion</td>
@@ -1384,18 +1381,7 @@ document.write(`
       <td>0.0</td>
     </tr>
     <tr>
-      <th>17</th>
-      <td>conscientious</td>
-      <td>~~</td>
-      <td>neuroticism</td>
-      <td>-0.58</td>
-      <td>-0.31</td>
-      <td>0.020122</td>
-      <td>-28.611052</td>
-      <td>0.0</td>
-    </tr>
-    <tr>
-      <th>18</th>
+      <th>16</th>
       <td>conscientious</td>
       <td>~~</td>
       <td>openness</td>
@@ -1406,7 +1392,7 @@ document.write(`
       <td>0.0</td>
     </tr>
     <tr>
-      <th>19</th>
+      <th>17</th>
       <td>extraversion</td>
       <td>~~</td>
       <td>extraversion</td>
@@ -1417,18 +1403,7 @@ document.write(`
       <td>0.0</td>
     </tr>
     <tr>
-      <th>20</th>
-      <td>extraversion</td>
-      <td>~~</td>
-      <td>neuroticism</td>
-      <td>-0.25</td>
-      <td>-0.11</td>
-      <td>0.016061</td>
-      <td>-15.740773</td>
-      <td>0.0</td>
-    </tr>
-    <tr>
-      <th>21</th>
+      <th>18</th>
       <td>extraversion</td>
       <td>~~</td>
       <td>openness</td>
@@ -1439,7 +1414,7 @@ document.write(`
       <td>0.0</td>
     </tr>
     <tr>
-      <th>22</th>
+      <th>19</th>
       <td>neuroticism</td>
       <td>~~</td>
       <td>neuroticism</td>
@@ -1450,7 +1425,51 @@ document.write(`
       <td>0.0</td>
     </tr>
     <tr>
+      <th>20</th>
+      <td>neuroticism</td>
+      <td>~~</td>
+      <td>agreeableness</td>
+      <td>0.02</td>
+      <td>0.04</td>
+      <td>0.004264</td>
+      <td>5.307691</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>neuroticism</td>
+      <td>~~</td>
+      <td>conscientious</td>
+      <td>-0.58</td>
+      <td>-0.31</td>
+      <td>0.020122</td>
+      <td>-28.611052</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>neuroticism</td>
+      <td>~~</td>
+      <td>extraversion</td>
+      <td>-0.25</td>
+      <td>-0.11</td>
+      <td>0.016061</td>
+      <td>-15.740773</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
       <th>23</th>
+      <td>neuroticism</td>
+      <td>~~</td>
+      <td>openness</td>
+      <td>-0.27</td>
+      <td>-0.17</td>
+      <td>0.01279</td>
+      <td>-21.433455</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>24</th>
       <td>openness</td>
       <td>~~</td>
       <td>openness</td>
@@ -1458,17 +1477,6 @@ document.write(`
       <td>1.00</td>
       <td>0.185288</td>
       <td>10.827292</td>
-      <td>0.0</td>
-    </tr>
-    <tr>
-      <th>24</th>
-      <td>openness</td>
-      <td>~~</td>
-      <td>neuroticism</td>
-      <td>-0.27</td>
-      <td>-0.17</td>
-      <td>0.01279</td>
-      <td>-21.433455</td>
       <td>0.0</td>
     </tr>
     <tr>
@@ -1594,7 +1602,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/732821a22a95e48eca53cf0734f469cbfbdd114246f3711158fe75544b489b58.svg" src="../_images/732821a22a95e48eca53cf0734f469cbfbdd114246f3711158fe75544b489b58.svg" />
+<img alt="../_images/652047bbfd756b12abb0d3c7bc45d6f8b8d2890819dc3f056b1d6080fd684156.svg" src="../_images/652047bbfd756b12abb0d3c7bc45d6f8b8d2890819dc3f056b1d6080fd684156.svg" />
 </div>
 </div>
 </section>

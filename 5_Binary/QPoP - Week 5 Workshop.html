@@ -183,7 +183,7 @@
         </ul>
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Python Basics</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../1_Introduction/QPoP%20-%20Week%201%20Workshop.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../1_Introduction/QPoP%20-%20Week%201%20Workshop.html">1 - Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../1_Introduction/QPoP%20-%20Week%201%20Exercises%20-%20Answers.html">Using Python for Data Analysis - Exercises &amp; Answers</a></li>
 
 
@@ -228,13 +228,46 @@
 
 
 
-<li class="toctree-l1"><a class="reference internal" href="../6_Applications/QPoP%20-%20Week%206%20Exercises%20-%20Answers.html">Quantitative Perspectives on Psychology</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../6_Applications/QPoP%20-%20Week%206%20Exercises%20-%20Answers.html">Example exercises using skills so far</a></li>
+
 
 
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Linear Mixed Effects Models</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../7_MixedModel/QPoP%20-%20Week%207%20Workshop.html">7 - Linear mixed effects models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../7_MixedModel/QPoP%20-%20Week%207%20Exercises%20-%20Answers.html">Dealing with repeated measurements - Exercises &amp; Answers</a></li>
+
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Exploratory Factor Analysis</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../8_EFA/QPoP%20-%20Week%208%20Workshop.html">8 - Exploratory Factor Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../8_EFA/QPoP%20-%20Week%208%20Exercises%20-%20Answers.html">Finding latent variables in data - Exercises &amp; Answers</a></li>
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Confirmatory Factor Analysis</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../9_CFA/QPoP%20-%20Week%209%20Workshop.html">9 - Confirmatory Factor Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../9_CFA/QPoP%20-%20Week%209%20Exercises%20-%20Answers.html">Fitting latent variables onto data - Exercises &amp; Answers</a></li>
+
+
+
+
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Clustering</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../10_Clustering/QPoP%20-%20Week%2010%20Workshop.html">10 - Clustering</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../10_Clustering/QPoP%20-%20Week%2010%20Exercises%20-%20Answers.html">Fitting latent groups in data - Exercises &amp; Answers</a></li>
+
+
 
 </ul>
 
@@ -589,8 +622,7 @@ Name: count, dtype: int64
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
 <span class="c1"># Digitise the affairs column for 1 or more, put into a new column in the dataframe</span>
-<span class="c1">#affairs[&#39;affairyes&#39;] = np.digitize(affairs[&#39;affairs&#39;], [1])</span>
-<span class="n">affairs</span><span class="p">[</span><span class="s1">&#39;affairyes&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">affairs</span><span class="p">[</span><span class="s1">&#39;affairs&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">ge</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">affairs</span><span class="p">[</span><span class="s1">&#39;affairyes&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">digitize</span><span class="p">(</span><span class="n">affairs</span><span class="p">[</span><span class="s1">&#39;affairs&#39;</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 
 <span class="c1"># Scatter</span>
 <span class="n">sns</span><span class="o">.</span><span class="n">pointplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">affairs</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;affairs&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;affairyes&#39;</span><span class="p">)</span>
@@ -638,10 +670,10 @@ Name: count, dtype: int64
   <th>Method:</th>                 <td>MLE</td>       <th>  Df Model:          </th>  <td>     3</td>  
 </tr>
 <tr>
-  <th>Date:</th>            <td>Wed, 02 Oct 2024</td> <th>  Pseudo R-squ.:     </th>  <td>0.06470</td> 
+  <th>Date:</th>            <td>Fri, 01 Nov 2024</td> <th>  Pseudo R-squ.:     </th>  <td>0.06470</td> 
 </tr>
 <tr>
-  <th>Time:</th>                <td>14:57:20</td>     <th>  Log-Likelihood:    </th> <td> -315.84</td> 
+  <th>Time:</th>                <td>00:54:58</td>     <th>  Log-Likelihood:    </th> <td> -315.84</td> 
 </tr>
 <tr>
   <th>converged:</th>             <td>True</td>       <th>  LL-Null:           </th> <td> -337.69</td> 
@@ -693,7 +725,7 @@ Name: count, dtype: int64
   white-space: pre-wrap;
 }
 </style>
-<small>shape: (5, 19)</small><table border="1" class="dataframe"><thead><tr><th>rating</th><th>rowid</th><th>estimate</th><th>std_error</th><th>statistic</th><th>p_value</th><th>s_value</th><th>conf_low</th><th>conf_high</th><th>rownames</th><th>affairs</th><th>gender</th><th>age</th><th>yearsmarried</th><th>children</th><th>religiousness</th><th>education</th><th>occupation</th><th>affairyes</th></tr><tr><td>i64</td><td>i32</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>i64</td><td>i64</td><td>str</td><td>f64</td><td>f64</td><td>str</td><td>i64</td><td>i64</td><td>i64</td><td>i64</td></tr></thead><tbody><tr><td>1</td><td>0</td><td>0.55826</td><td>0.062539</td><td>8.926567</td><td>0.0</td><td>inf</td><td>0.435685</td><td>0.680834</td><td>1752</td><td>0</td><td>&quot;female&quot;</td><td>32.487521</td><td>8.177696</td><td>&quot;yes&quot;</td><td>4</td><td>14</td><td>5</td><td>0</td></tr><tr><td>2</td><td>1</td><td>0.449339</td><td>0.045342</td><td>9.910018</td><td>0.0</td><td>inf</td><td>0.360471</td><td>0.538208</td><td>1752</td><td>0</td><td>&quot;female&quot;</td><td>32.487521</td><td>8.177696</td><td>&quot;yes&quot;</td><td>4</td><td>14</td><td>5</td><td>0</td></tr><tr><td>3</td><td>2</td><td>0.344129</td><td>0.029661</td><td>11.602137</td><td>0.0</td><td>inf</td><td>0.285995</td><td>0.402263</td><td>1752</td><td>0</td><td>&quot;female&quot;</td><td>32.487521</td><td>8.177696</td><td>&quot;yes&quot;</td><td>4</td><td>14</td><td>5</td><td>0</td></tr><tr><td>4</td><td>3</td><td>0.249803</td><td>0.022909</td><td>10.904162</td><td>0.0</td><td>inf</td><td>0.204902</td><td>0.294703</td><td>1752</td><td>0</td><td>&quot;female&quot;</td><td>32.487521</td><td>8.177696</td><td>&quot;yes&quot;</td><td>4</td><td>14</td><td>5</td><td>0</td></tr><tr><td>5</td><td>4</td><td>0.17131</td><td>0.024463</td><td>7.002925</td><td>2.5067e-12</td><td>38.53737</td><td>0.123364</td><td>0.219256</td><td>1752</td><td>0</td><td>&quot;female&quot;</td><td>32.487521</td><td>8.177696</td><td>&quot;yes&quot;</td><td>4</td><td>14</td><td>5</td><td>0</td></tr></tbody></table></div></div></div>
+<small>shape: (5, 19)</small><table border="1" class="dataframe"><thead><tr><th>rating</th><th>rowid</th><th>estimate</th><th>std_error</th><th>statistic</th><th>p_value</th><th>s_value</th><th>conf_low</th><th>conf_high</th><th>rownames</th><th>affairs</th><th>gender</th><th>age</th><th>yearsmarried</th><th>children</th><th>religiousness</th><th>education</th><th>occupation</th><th>affairyes</th></tr><tr><td>i64</td><td>i32</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>i64</td><td>i64</td><td>str</td><td>f64</td><td>f64</td><td>str</td><td>i64</td><td>i64</td><td>i64</td><td>i64</td></tr></thead><tbody><tr><td>1</td><td>0</td><td>0.55826</td><td>0.062539</td><td>8.926567</td><td>0.0</td><td>inf</td><td>0.435685</td><td>0.680834</td><td>217</td><td>0</td><td>&quot;female&quot;</td><td>32.487521</td><td>8.177696</td><td>&quot;yes&quot;</td><td>4</td><td>14</td><td>5</td><td>0</td></tr><tr><td>2</td><td>1</td><td>0.449339</td><td>0.045342</td><td>9.910018</td><td>0.0</td><td>inf</td><td>0.360471</td><td>0.538208</td><td>217</td><td>0</td><td>&quot;female&quot;</td><td>32.487521</td><td>8.177696</td><td>&quot;yes&quot;</td><td>4</td><td>14</td><td>5</td><td>0</td></tr><tr><td>3</td><td>2</td><td>0.344129</td><td>0.029661</td><td>11.602137</td><td>0.0</td><td>inf</td><td>0.285995</td><td>0.402263</td><td>217</td><td>0</td><td>&quot;female&quot;</td><td>32.487521</td><td>8.177696</td><td>&quot;yes&quot;</td><td>4</td><td>14</td><td>5</td><td>0</td></tr><tr><td>4</td><td>3</td><td>0.249803</td><td>0.022909</td><td>10.904162</td><td>0.0</td><td>inf</td><td>0.204902</td><td>0.294703</td><td>217</td><td>0</td><td>&quot;female&quot;</td><td>32.487521</td><td>8.177696</td><td>&quot;yes&quot;</td><td>4</td><td>14</td><td>5</td><td>0</td></tr><tr><td>5</td><td>4</td><td>0.17131</td><td>0.024463</td><td>7.002925</td><td>2.5067e-12</td><td>38.53737</td><td>0.123364</td><td>0.219256</td><td>217</td><td>0</td><td>&quot;female&quot;</td><td>32.487521</td><td>8.177696</td><td>&quot;yes&quot;</td><td>4</td><td>14</td><td>5</td><td>0</td></tr></tbody></table></div></div></div>
 </div>
 <p>If we plot this we see the slightly non-linear relationship:</p>
 <div class="cell docutils container">
@@ -781,10 +813,10 @@ Name: count, dtype: int64
   <th>Method:</th>                 <td>MLE</td>       <th>  Df Model:          </th>  <td>     3</td>  
 </tr>
 <tr>
-  <th>Date:</th>            <td>Wed, 02 Oct 2024</td> <th>  Pseudo R-squ.:     </th>  <td>0.06470</td> 
+  <th>Date:</th>            <td>Fri, 01 Nov 2024</td> <th>  Pseudo R-squ.:     </th>  <td>0.06470</td> 
 </tr>
 <tr>
-  <th>Time:</th>                <td>14:57:20</td>     <th>  Log-Likelihood:    </th> <td> -315.84</td> 
+  <th>Time:</th>                <td>00:54:58</td>     <th>  Log-Likelihood:    </th> <td> -315.84</td> 
 </tr>
 <tr>
   <th>converged:</th>             <td>True</td>       <th>  LL-Null:           </th> <td> -337.69</td> 
@@ -828,8 +860,8 @@ Name: count, dtype: int64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[&lt;matplotlib.axis.YTick at 0x14e74a850&gt;,
-  &lt;matplotlib.axis.YTick at 0x14e748b10&gt;],
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[&lt;matplotlib.axis.YTick at 0x151e99e90&gt;,
+  &lt;matplotlib.axis.YTick at 0x151ead8d0&gt;],
  Text(0, 0.5, &#39;Predicted Affair Status&#39;),
  Text(0.5, 0, &#39;Predicted Probability of Affair&#39;)]
 </pre></div>
@@ -1003,10 +1035,10 @@ Name: count, dtype: int64
   <th>Method:</th>                 <td>MLE</td>       <th>  Df Model:          </th>  <td>     8</td>  
 </tr>
 <tr>
-  <th>Date:</th>            <td>Wed, 02 Oct 2024</td> <th>  Pseudo R-squ.:     </th>  <td>0.07713</td> 
+  <th>Date:</th>            <td>Fri, 01 Nov 2024</td> <th>  Pseudo R-squ.:     </th>  <td>0.07713</td> 
 </tr>
 <tr>
-  <th>Time:</th>                <td>14:57:20</td>     <th>  Log-Likelihood:    </th> <td> -311.64</td> 
+  <th>Time:</th>                <td>00:54:58</td>     <th>  Log-Likelihood:    </th> <td> -311.64</td> 
 </tr>
 <tr>
   <th>converged:</th>             <td>True</td>       <th>  LL-Null:           </th> <td> -337.69</td> 
@@ -1075,7 +1107,7 @@ Name: count, dtype: int64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.FacetGrid at 0x14ef6ced0&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.FacetGrid at 0x151e579d0&gt;
 </pre></div>
 </div>
 <img alt="../_images/fddf0bb3c21579f4c2f7afde8bbf4166a3f181bc732efdb24d85e87a80dd12ec.png" src="../_images/fddf0bb3c21579f4c2f7afde8bbf4166a3f181bc732efdb24d85e87a80dd12ec.png" />

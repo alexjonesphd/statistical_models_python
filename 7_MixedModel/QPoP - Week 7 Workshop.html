@@ -62,7 +62,8 @@
     <script>DOCUMENTATION_OPTIONS.pagename = '7_MixedModel/QPoP - Week 7 Workshop';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="prev" title="Quantitative Perspectives on Psychology" href="../6_Applications/QPoP%20-%20Week%206%20Exercises%20-%20Answers.html" />
+    <link rel="next" title="Dealing with repeated measurements - Exercises &amp; Answers" href="QPoP%20-%20Week%207%20Exercises%20-%20Answers.html" />
+    <link rel="prev" title="Example exercises using skills so far" href="../6_Applications/QPoP%20-%20Week%206%20Exercises%20-%20Answers.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -182,7 +183,7 @@
         </ul>
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Python Basics</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../1_Introduction/QPoP%20-%20Week%201%20Workshop.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../1_Introduction/QPoP%20-%20Week%201%20Workshop.html">1 - Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../1_Introduction/QPoP%20-%20Week%201%20Exercises%20-%20Answers.html">Using Python for Data Analysis - Exercises &amp; Answers</a></li>
 
 
@@ -227,13 +228,46 @@
 
 
 
-<li class="toctree-l1"><a class="reference internal" href="../6_Applications/QPoP%20-%20Week%206%20Exercises%20-%20Answers.html">Quantitative Perspectives on Psychology</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../6_Applications/QPoP%20-%20Week%206%20Exercises%20-%20Answers.html">Example exercises using skills so far</a></li>
+
 
 
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Linear Mixed Effects Models</span></p>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">7 - Linear mixed effects models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="QPoP%20-%20Week%207%20Exercises%20-%20Answers.html">Dealing with repeated measurements - Exercises &amp; Answers</a></li>
+
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Exploratory Factor Analysis</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../8_EFA/QPoP%20-%20Week%208%20Workshop.html">8 - Exploratory Factor Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../8_EFA/QPoP%20-%20Week%208%20Exercises%20-%20Answers.html">Finding latent variables in data - Exercises &amp; Answers</a></li>
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Confirmatory Factor Analysis</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../9_CFA/QPoP%20-%20Week%209%20Workshop.html">9 - Confirmatory Factor Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../9_CFA/QPoP%20-%20Week%209%20Exercises%20-%20Answers.html">Fitting latent variables onto data - Exercises &amp; Answers</a></li>
+
+
+
+
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Clustering</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../10_Clustering/QPoP%20-%20Week%2010%20Workshop.html">10 - Clustering</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../10_Clustering/QPoP%20-%20Week%2010%20Exercises%20-%20Answers.html">Fitting latent groups in data - Exercises &amp; Answers</a></li>
+
+
 
 </ul>
 
@@ -430,7 +464,6 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">7 - Linear mixed effects models</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dealing-with-repeated-measurements">Dealing with repeated measurements</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#professors-and-repeated-measurements">Professors and repeated measurements</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#random-effects-how-mixed-models-work">Random effects - how mixed models work</a><ul class="nav section-nav flex-column">
@@ -444,11 +477,8 @@ document.write(`
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#variance-components-is-beauty-in-the-eye-of-the-beholder-or-a-property-of-faces">Variance components - is beauty in the eye of the beholder, or a property of faces?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#predictions-with-mixed-models">Predictions with mixed models</a></li>
 </ul>
-</li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#predictions-with-mixed-models">Predictions with mixed models</a></li>
-</ul>
-
             </nav>
         </div>
     </div>
@@ -1598,7 +1628,7 @@ document.write(`
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Axes: xlabel=&#39;cosmetics&#39;, ylabel=&#39;rating&#39;&gt;
 </pre></div>
 </div>
-<img alt="../_images/c9357c12a9fe46d99787de3c93fdb93409be928b025434f535e567e0ebb38d1a.png" src="../_images/c9357c12a9fe46d99787de3c93fdb93409be928b025434f535e567e0ebb38d1a.png" />
+<img alt="../_images/1727cde27ceed3d0b5b51bcad674f14823361ade29a5d9e93d957a6719f02204.png" src="../_images/1727cde27ceed3d0b5b51bcad674f14823361ade29a5d9e93d957a6719f02204.png" />
 </div>
 </div>
 <p>But this ignores the variability in the dataset from models and participants. Lets see how we can fit the structured model.</p>
@@ -2532,9 +2562,8 @@ document.write(`
 </div>
 <p>This suggests faces contribute about 24%, and participants - the eye of the beholder - contributes 28%!</p>
 </section>
-</section>
 <section id="predictions-with-mixed-models">
-<h1>Predictions with mixed models<a class="headerlink" href="#predictions-with-mixed-models" title="Link to this heading">#</a></h1>
+<h2>Predictions with mixed models<a class="headerlink" href="#predictions-with-mixed-models" title="Link to this heading">#</a></h2>
 <p>We can rely on <code class="docutils literal notranslate"><span class="pre">marginaleffects</span></code> to make predictions from models in the usual way. There is however a philosophical wrinkle when you make predictions with mixed models. Namely, what <em>kind</em> of prediction do you want?</p>
 <p>A mixed model can make predictions using only the global coefficient estimates (in the summary tables). These are properly the things we want - given we know X, what is Y on average? But these ignore the sources of variability in the data. For example, a mixed model can make specific predictions about an individual participant better than a GLM can, because it knows the random effect of the participant.</p>
 <p>Most of the time, predictions are focused only on the former, global effects. This is what <code class="docutils literal notranslate"><span class="pre">marginaleffects</span></code> will use when making predictions, and will ignore the random effects:</p>
@@ -2555,6 +2584,7 @@ document.write(`
 </style>
 <small>shape: (1, 8)</small><table border="1" class="dataframe"><thead><tr><th>term</th><th>estimate</th><th>std_error</th><th>statistic</th><th>p_value</th><th>s_value</th><th>conf_low</th><th>conf_high</th></tr><tr><td>str</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td></tr></thead><tbody><tr><td>&quot;b1=b2&quot;</td><td>1.161886</td><td>0.132362</td><td>8.778118</td><td>0.0</td><td>inf</td><td>0.902462</td><td>1.42131</td></tr></tbody></table></div></div></div>
 </div>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -2593,8 +2623,17 @@ document.write(`
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Quantitative Perspectives on Psychology</p>
+        <p class="prev-next-title">Example exercises using skills so far</p>
       </div>
+    </a>
+    <a class="right-next"
+       href="QPoP%20-%20Week%207%20Exercises%20-%20Answers.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Dealing with repeated measurements - Exercises &amp; Answers</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
     </a>
 </div>
                 </footer>
@@ -2612,7 +2651,6 @@ document.write(`
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">7 - Linear mixed effects models</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dealing-with-repeated-measurements">Dealing with repeated measurements</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#professors-and-repeated-measurements">Professors and repeated measurements</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#random-effects-how-mixed-models-work">Random effects - how mixed models work</a><ul class="nav section-nav flex-column">
@@ -2626,11 +2664,8 @@ document.write(`
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#variance-components-is-beauty-in-the-eye-of-the-beholder-or-a-property-of-faces">Variance components - is beauty in the eye of the beholder, or a property of faces?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#predictions-with-mixed-models">Predictions with mixed models</a></li>
 </ul>
-</li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#predictions-with-mixed-models">Predictions with mixed models</a></li>
-</ul>
-
   </nav></div>
 
 </div></div>

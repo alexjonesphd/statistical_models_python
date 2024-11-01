@@ -62,7 +62,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = '6_Applications/QPoP - Week 6 Workshop';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Quantitative Perspectives on Psychology" href="QPoP%20-%20Week%206%20Exercises%20-%20Answers.html" />
+    <link rel="next" title="Example exercises using skills so far" href="QPoP%20-%20Week%206%20Exercises%20-%20Answers.html" />
     <link rel="prev" title="Using and understanding probit models - Exercises &amp; Answers" href="../5_Binary/QPoP%20-%20Week%205%20Exercises%20-%20Answers.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -183,7 +183,7 @@
         </ul>
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Python Basics</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../1_Introduction/QPoP%20-%20Week%201%20Workshop.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../1_Introduction/QPoP%20-%20Week%201%20Workshop.html">1 - Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../1_Introduction/QPoP%20-%20Week%201%20Exercises%20-%20Answers.html">Using Python for Data Analysis - Exercises &amp; Answers</a></li>
 
 
@@ -228,13 +228,46 @@
 
 
 
-<li class="toctree-l1"><a class="reference internal" href="QPoP%20-%20Week%206%20Exercises%20-%20Answers.html">Quantitative Perspectives on Psychology</a></li>
+<li class="toctree-l1"><a class="reference internal" href="QPoP%20-%20Week%206%20Exercises%20-%20Answers.html">Example exercises using skills so far</a></li>
+
 
 
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Linear Mixed Effects Models</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../7_MixedModel/QPoP%20-%20Week%207%20Workshop.html">7 - Linear mixed effects models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../7_MixedModel/QPoP%20-%20Week%207%20Exercises%20-%20Answers.html">Dealing with repeated measurements - Exercises &amp; Answers</a></li>
+
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Exploratory Factor Analysis</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../8_EFA/QPoP%20-%20Week%208%20Workshop.html">8 - Exploratory Factor Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../8_EFA/QPoP%20-%20Week%208%20Exercises%20-%20Answers.html">Finding latent variables in data - Exercises &amp; Answers</a></li>
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Confirmatory Factor Analysis</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../9_CFA/QPoP%20-%20Week%209%20Workshop.html">9 - Confirmatory Factor Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../9_CFA/QPoP%20-%20Week%209%20Exercises%20-%20Answers.html">Fitting latent variables onto data - Exercises &amp; Answers</a></li>
+
+
+
+
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Clustering</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../10_Clustering/QPoP%20-%20Week%2010%20Workshop.html">10 - Clustering</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../10_Clustering/QPoP%20-%20Week%2010%20Exercises%20-%20Answers.html">Fitting latent groups in data - Exercises &amp; Answers</a></li>
+
+
 
 </ul>
 
@@ -625,7 +658,7 @@ document.write(`
   white-space: pre-wrap;
 }
 </style>
-<small>shape: (2, 13)</small><table border="1" class="dataframe"><thead><tr><th>trt</th><th>age</th><th>rowid</th><th>estimate</th><th>std_error</th><th>statistic</th><th>p_value</th><th>s_value</th><th>conf_low</th><th>conf_high</th><th>rownames</th><th>id</th><th>cog</th></tr><tr><td>str</td><td>i64</td><td>i32</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>i64</td><td>i64</td><td>i64</td></tr></thead><tbody><tr><td>&quot;Y&quot;</td><td>2</td><td>0</td><td>97.681844</td><td>1.343884</td><td>72.68623</td><td>0.0</td><td>inf</td><td>95.04788</td><td>100.315807</td><td>82</td><td>973</td><td>96</td></tr><tr><td>&quot;N&quot;</td><td>2</td><td>1</td><td>88.19155</td><td>1.445289</td><td>61.019992</td><td>0.0</td><td>inf</td><td>85.358835</td><td>91.024265</td><td>82</td><td>973</td><td>96</td></tr></tbody></table></div></div></div>
+<small>shape: (2, 13)</small><table border="1" class="dataframe"><thead><tr><th>trt</th><th>age</th><th>rowid</th><th>estimate</th><th>std_error</th><th>statistic</th><th>p_value</th><th>s_value</th><th>conf_low</th><th>conf_high</th><th>rownames</th><th>id</th><th>cog</th></tr><tr><td>str</td><td>i64</td><td>i32</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>f64</td><td>i64</td><td>i64</td><td>i64</td></tr></thead><tbody><tr><td>&quot;Y&quot;</td><td>2</td><td>0</td><td>97.681844</td><td>1.343884</td><td>72.68623</td><td>0.0</td><td>inf</td><td>95.04788</td><td>100.315807</td><td>208</td><td>152</td><td>96</td></tr><tr><td>&quot;N&quot;</td><td>2</td><td>1</td><td>88.19155</td><td>1.445289</td><td>61.019992</td><td>0.0</td><td>inf</td><td>85.358835</td><td>91.024265</td><td>208</td><td>152</td><td>96</td></tr></tbody></table></div></div></div>
 </div>
 <p>The <code class="docutils literal notranslate"><span class="pre">conf_low</span></code> and <code class="docutils literal notranslate"><span class="pre">conf_high</span></code> represent the 95% confidence interval bounds.</p>
 <div class="cell docutils container">
@@ -640,7 +673,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.collections.LineCollection at 0x14d097310&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.collections.LineCollection at 0x143084e90&gt;
 </pre></div>
 </div>
 <img alt="../_images/89eb791ac7f874ae2562ec860de0db125c8fcb749f41e256ffed08d047f32298.png" src="../_images/89eb791ac7f874ae2562ec860de0db125c8fcb749f41e256ffed08d047f32298.png" />
@@ -684,7 +717,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.collections.LineCollection at 0x14d1a5850&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.collections.LineCollection at 0x143087ad0&gt;
 </pre></div>
 </div>
 <img alt="../_images/e660923137ea6116cd3728ba3cecc7ae6179b1dd3825532601f8d7a45701e68f.png" src="../_images/e660923137ea6116cd3728ba3cecc7ae6179b1dd3825532601f8d7a45701e68f.png" />
@@ -765,7 +798,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.lines.Line2D at 0x14d1f78d0&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.lines.Line2D at 0x145788450&gt;
 </pre></div>
 </div>
 <img alt="../_images/525a0a42e1fb031b88527e870023a9e17a6320b77d6288413709d80e8e1ef6d0.png" src="../_images/525a0a42e1fb031b88527e870023a9e17a6320b77d6288413709d80e8e1ef6d0.png" />
@@ -927,7 +960,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.lines.Line2D at 0x14e25f390&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.lines.Line2D at 0x145686b10&gt;
 </pre></div>
 </div>
 <img alt="../_images/d4fd6a789bdb9868ae8e9c21bff622c44f9ef18453554c77dbce619b5e6b9a8e.png" src="../_images/d4fd6a789bdb9868ae8e9c21bff622c44f9ef18453554c77dbce619b5e6b9a8e.png" />
@@ -980,7 +1013,7 @@ document.write(`
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Quantitative Perspectives on Psychology</p>
+        <p class="prev-next-title">Example exercises using skills so far</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
